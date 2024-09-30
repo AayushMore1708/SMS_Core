@@ -1,0 +1,174 @@
+﻿@model SMS.Models.LoginModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Sign in to Student Management System";
+}
+
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .image-container {
+            flex: 1;
+            background: url('../Images/vpm.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        .login-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            align-items: center; /* Center horizontally */
+            text-align: center; /* Center text */
+        }
+
+            .login-box h5 {
+                margin-bottom: 20px;
+            }
+
+            .login-box input[type="text"], .login-box input[type="password"], .login-box select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            .login-box input[type="checkbox"] {
+                margin-right: 10px;
+            }
+
+            .login-box input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                .login-box input[type="submit"]:hover {
+                    background-color: #0056b3;
+                }
+
+            .login-box input[type="text"],
+            .login-box input[type="password"],
+            .login-box select {
+                width: 70%;
+                padding: 12px; /* Increased padding for a better look */
+                margin-bottom: 15px; /* Increased margin for spacing */
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+                font-size: 16px; /* Increased font size for better readability */
+            }
+
+
+
+                .login-box input[type="text"]:focus,
+                .login-box input[type="password"]:focus,
+                .login-box select:focus {
+                    border-color: #007bff; /* Blue border on focus */
+                    outline: none; /* Remove default outline */
+                    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Shadow effect on focus */
+                }
+
+
+        .footer {
+            width: 100%;
+            background-color: aliceblue; /* Dark background color for contrast */
+            color: #fff; /* White text color */
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+        }
+
+            .footer a {
+                color: black; /* White color for links */
+                text-decoration: none; /* Remove underline from links */
+            }
+
+            .footer img {
+                vertical-align: middle; /* Align image with text */
+                margin-left: 10px; /* Space between text and image */
+            }
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="image-container"></div>
+        <div class="login-container">
+            <div class="login-box">
+                <img src="~/Images/vpm1.jpg" width="150" height="100" alt="Logo" />
+                <div>
+                    <span>VIDYA PRASARAK MANDAL'S </span><br />
+                    <span>VIDYA MANDIR</span>
+                </div>
+                <br />
+                <h3>Log in</h3>
+                <form asp-controller="Home" asp-action="Index" method="post">
+                    <!-- Your form fields here -->
+                    <div>
+                        <input asp-for="UsernName" placeholder="UserName" />
+                        <span asp-validation-for="UsernName" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <input asp-for="Password" type="password" placeholder="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <select asp-for="SelectedAcademicYear" asp-items="Model.AcademicYears"></select>
+                    </div>
+                    <div>
+                        <input asp-for="RememberMe" type="checkbox" /> Keep me signed in
+                    </div>
+                    <div>
+                        <input type="submit" value="Sign in" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <span><a href="http://www.satams.com">Powered by</a><img width="60" height="30" src="~/Images/satams.png" /></span>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
