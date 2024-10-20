@@ -1,10 +1,12 @@
 ﻿@model SMS_Core.Models.Student
 
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Add Students";
 }
 
-<h2 style="text-align: center;background-color:rgb(150, 102, 216)" class="card center mx-auto p-2">Add a New Student</h2>
+<h2 style="text-align: center;background-color:rgb(150, 102, 216)" class="card center mx-auto p-2">Add a New Student
+</h2>
 <div class="card center mx-auto p-2" style="width: 18rem;background-color:rgb(185, 146, 239)">
     <div class="card-body">
         <form asp-action="AddStudent" method="post" class="card-title">
@@ -36,5 +38,3 @@
 <div>
     <a asp-action="ViewStudData" class="btn btn-secondary">Back to Students List</a>
 </div>
-
-
