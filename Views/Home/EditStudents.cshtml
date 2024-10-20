@@ -1,0 +1,44 @@
+@model SMS_Core.Models.Student
+
+@{
+    ViewData["Title"] = "Edit Students";
+}
+
+<h2 style="text-align: center;background-color:rgb(150, 102, 216)" class="card center mx-auto p-2">Edit Student Data</h2>
+<div class="card center mx-auto p-2" style="width: 18rem;background-color:rgb(185, 146, 239)">
+    <div class="card-body">
+        <form asp-action="EditStudent" method="post" class="card-title">
+            <div class="form-group">
+                <label asp-for="ID" class="control-label"></label>
+                <input asp-for="ID" class="form-control" readonly />
+                <span asp-validation-for="ID" style="display:none" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" style="display:none" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" style="display:none" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Grade" class="control-label"></label>
+                <input asp-for="Grade" class="form-control" />
+                <span asp-validation-for="Grade" style="display:none" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <br />
+                <br />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ViewStudData" class="btn btn-secondary">Back to Students List</a>
+</div>
+
