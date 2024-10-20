@@ -1,6 +1,6 @@
 ﻿@model SMS.Models.LoginModel
 @{
-    Layout = "_Layout";
+    Layout = null;
     ViewData["Title"] = "Sign in to Student Management System";
 }
 
@@ -14,27 +14,40 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=23319&format=png&color=000000">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container-fluid  d-flex mx-auto  ">
-        <div class="row flex-nowrap ">
+    <div class="container-fluid d-flex align-items-center justify-content-center vh-100">
+        <!-- Use vh-100 to take full height -->
+        <div class="row flex-nowrap">
             <!-- Left Image Section -->
-            <div class="col-md-6 d-none d-md-flex ">
-                <img src="~/Images/SMS_Brouchure.jpg" class="img-fluid" alt="Brochure Image" >
+            <div class="col-md-6 d-none d-md-flex">
+                <a href="https://satams.com" target="_blank">
+                    <img src="~/Images/SMS_Brouchure.jpg" class="img-fluid" alt="Brochure Image">
+                </a>
             </div>
 
             <!-- Right Login Form Section -->
-            <div class="col-md-6 d-flex card border border-primary border-5 ">
-                <div >
+            <div class="col-md-6 d-flex justify-content-center"> <!-- Center the card horizontally -->
+                <div class="card border border-primary border-5 p-4" style="background-color: rgb(222, 152, 246);">
+                    <!-- Added padding for better spacing -->
                     <div class="text-center">
-                        <img src="~/Images/vpm1.jpg" width="150" height="100" alt="Logo" >
-                        <h4 class="fw-bold">Satam's</h4>
+                        <img src="~/Images/vpm1.jpg" width="150" height="100" alt="Logo">
+                        <h4 class="fw-bold mt-3">Satam's</h4>
                         <h4 class="fw-bold">Student Management System</h4>
-                        <h3>Log in</h3>
+                        <h4>Log in</h4>
                     </div>
 
-                    <form asp-controller="Home" asp-action="Index" method="post" class="needs-validation" novalidate>
+                    <form asp-controller="Home" asp-action="Index" method="post" class="needs-validation"
+                        autocapitalize="on" autocomplete="on" onsubmit="showAlert(event)">
                         <div class="mb-3">
                             <label asp-for="UsernName" class="form-label">Username</label>
                             <input asp-for="UsernName" class="form-control" placeholder="Enter your username" required>
@@ -42,41 +55,70 @@
                         </div>
                         <div class="mb-3">
                             <label asp-for="Password" class="form-label">Password</label>
-                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" required>
+                            <input asp-for="Password" type="password" class="form-control"
+                                placeholder="Enter your password" required>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
-                        <div class="mb-3">
-                            <label asp-for="SelectedAcademicYear" class="form-label">Select Academic Year</label>
-                            <select asp-for="SelectedAcademicYear" class="form-select" required>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                                <option value="2022">2022</option>
-                                <option value="2023">2023</option>
-                                <option value="2024">2024</option>
-                            </select>
+                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                            <div>
+                                <label asp-for="SelectedAcademicYear" class="form-label w-auto mx-auto">Select Academic
+                                    Year</label>
+                                <select asp-for="SelectedAcademicYear" class="form-select" required>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                </select>
+                            </div>
+                            <div class="form-check">
+                                <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
+                                <label asp-for="RememberMe" class="form-check-label">Remember Me</label>
+                            </div>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
-                            <label asp-for="RememberMe" class="form-check-label">Remember Me</label>
-                        </div>
+
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                            <button type="submit" class="btn btn-primary w-100" id="liveToastBtn">Sign in</button>
                         </div>
                     </form>
                 </div>
+                <div class="toast-container bottom-0 end-0 p-3 text-small text-center">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                        style="min-width: 250px; max-width: 300px;">
+                        <div class="toast-header py-1">
+                            <img src="https://img.icons8.com/?size=100&id=23319&format=png&color=000000"
+                                class="rounded me-2" alt="...">
+                            <strong class="me-auto fs-6">Satams Corporation</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body py-1 fs-6 ">
+                            Welcome to <br/>Student Management System
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
+    <script>
+        function showAlert(event) {
+            event.preventDefault(); // Prevent form submission
 
-    <!-- Footer Section -->
-    <footer class="text-light text-center py-4">
-        <span>
-            <a href="http://www.satams.com" class="text-dark text-decoration-none">Powered by</a>
-            <img src="~/Images/satams.png" width="60" height="30" alt="Satams Logo" />
-        </span>
-    </footer>
+            // Show the toast
+            const toastLiveExample = document.getElementById('liveToast');
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+            toastBootstrap.show();
 
+            // Optionally, submit the form after a delay
+            setTimeout(() => {
+                event.target.submit(); // Submit the form
+            }, 2000); // Adjust delay as needed
+        }
+    </script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

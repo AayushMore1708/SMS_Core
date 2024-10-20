@@ -5,172 +5,311 @@
 }
 
 <!DOCTYPE html>
-<html dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <title>@ViewData["Title"]</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="-1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
+<html dir="ltr" ; <head>
+<meta charset="utf-8">
+<title>SMS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        .app-bar {
-            background-color: #6a1b9a;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+<style>
+    body {
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
 
-        .app-bar > div {
-            display: flex;
-            align-items: center;
-        }
+    a.tile:nth-child(1) {
+        background-color: #03a9f4;
+    }
 
-        .app-bar > div > span {
-            margin-right: 10px;
-            
-        }
+    /* Blue */
+    a.tile:nth-child(2) {
+        background-color: #ff9800;
+    }
 
-        .app-bar > div > a {
-            color: white;
-            text-decoration: none;
-        }
+    /* Orange */
+    a.tile:nth-child(3) {
+        background-color: #009688;
+    }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
- 
-        }
+    /* Teal */
+    a.tile:nth-child(4) {
+        background-color: #8bc34a;
+    }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(150px, 1fr));
-            grid-template-rows: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .icons
-        {
-                    gap: 30px;
-            
-        }
-        .tile {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background-color: #4caf50; /* Default color */
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-        }
+    /* Light Green */
+    a.tile:nth-child(5) {
+        background-color: #795548;
+    }
 
-        /* Custom colors for tiles */
-        .tile.institute { background-color: #03a9f4; }
-        .tile.academic-year { background-color: #ff9800; }
-        .tile.students { background-color: #009688; }
-        .tile.visitors { background-color: #8bc34a; }
-        .tile.leave { background-color: #795548; }
-        .tile.exam { background-color: #9c27b0; }
-        .tile.assignments { background-color: #795548; }
-        .tile.notes { background-color: #795548; }
+    /* Brown */
+    a.tile:nth-child(6) {
+        background-color: #9c27b0;
+    }
 
-        .tile:hover {
-            background-color: #333; /* Hover effect */
-        }
-        body {
-  transition: background-color 0.1s ease-in;
-}
+    /* Purple */
+    a.tile:nth-child(7) {
+        background-color: #e91e63;
+    }
 
-        .footer {
-            width: 100%;
-            background-color: #9c66f8;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-            position: relative;
-            bottom: 0;
-        }
+    /* Pink */
+    a.tile:nth-child(8) {
+        background-color: #607d8b;
+    }
 
-        .footer a {
-            color: white;
-            text-decoration: none;
-        }
-        a{
-        color:white;
-        text-decoration:none;
-        }
-    </style>
-    <link rel="stylesheet" href="~/css/site.scss" />
+    /* Blue Grey */
+    a.tile:nth-child(9) {
+        background-color: #f44336;
+    }
+
+    /* Red */
+    a.tile:nth-child(10) {
+        background-color: #3f51b5;
+    }
+
+    /* Indigo */
+    a.tile:nth-child(11) {
+        background-color: #4caf50;
+    }
+
+    /* Green */
+    a.tile:nth-child(12) {
+        background-color: #ff5722;
+    }
+
+    /* Deep Orange */
+    a.tile:nth-child(13) {
+        background-color: #00bcd4;
+    }
+
+    /* Cyan */
+    a.tile:nth-child(14) {
+        background-color: #8e24aa;
+    }
+
+    /* Dark Purple */
+    a.tile:nth-child(15) {
+        background-color: #cddc39;
+    }
+
+    /* Lime */
+    a.tile:nth-child(16) {
+        background-color: #ffc107;
+    }
+
+    /* Amber */
+    a.tile:nth-child(17) {
+        background-color: #9e9e9e;
+    }
+
+    /* Grey */
+    a.tile:nth-child(18) {
+        background-color: #673ab7;
+    }
+
+    /* Deep Purple */
+    a.tile:nth-child(19) {
+        background-color: #00acc1;
+    }
+
+    /* Light Blue */
+    a.tile:nth-child(20) {
+        background-color: #b71c1c;
+    }
+
+    /* Dark Red */
+    a.tile:nth-child(21) {
+        background-color: #33691e;
+    }
+
+    /* Dark Green */
+    a.tile:nth-child(22) {
+        background-color: #fdd835;
+    }
+
+    /* Yellow */
+    a.tile:nth-child(23) {
+        background-color: #6d4c41;
+    }
+
+    /* Dark Brown */
+    a.tile:nth-child(24) {
+        background-color: #1e88e5;
+    }
+
+    /* Bright Blue */
+    a.tile:nth-child(25) {
+        background-color: #ad1457;
+    }
+
+    /* Raspberry */
+    a.tile:nth-child(26) {
+        background-color: #ff6f00;
+    }
+
+    /* Bright Orange */
+    a.tile:nth-child(27) {
+        background-color: #43a047;
+    }
+
+    /* Leaf Green */
+
+    .app-bar {
+        background-color: #9b26e4;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .app-bar>div {
+        display: flex;
+        align-items: center;
+    }
+
+    .app-bar>div>span {
+        margin-right: 10px;
+
+    }
+
+    .app-bar>div>a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        min-height: 100vh;
+        /* Ensure it takes full screen height */
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        /* Make it responsive */
+        gap: 20px;
+        margin-top: 1rem;
+        /* Reduce unnecessary margin */
+        width: 100%;
+        /* Use full width of the container */
+        max-width: 1200px;
+        /* Optional: Limit max width */
+        overflow: auto;
+        /* Allow scrolling if needed */
+    }
+
+
+    .icons {
+        gap: 30px;
+
+    }
+
+    .tile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #4caf50;
+        /* Default color */
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition-property: background-color, box-shadow, transform;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in-out;
+    }
+
+    .tile:hover {
+        background-color: #333;
+        transform: scale(1.2);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+        transition: background-color 0.1s ease-in;
+    }
+
+    .footer {
+        width: 100%;
+        background-color: #9c66f8;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+    }
+
+    .footer a {
+        color: white;
+        text-decoration: none;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+    a.tile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+    }
+</style>
 </head>
 
 <body>
-    <div >
+    <div class="container mb-5">
         <div>
-            <span>SMS</span>
+            <h1 class="mt-5">Main Menu</h1>
         </div>
-        <div class="icons">
-            <a href="#"><i class="fas fa-cog" aria-hidden="true"></i></a>
-            <a href="#"><i class="fas fa-question-circle" aria-hidden="true"></i></a>
-        </div>
-    </div>
-<h1 align="center">
-    Student Management System
-</h1>
-    <div class="container">
         <div class="grid">
-           <div class="tile institute">Institute</div>
-            <div class="tile academic-year">Academic Year</div>
-            <div class="tile students"> <a href="/home/ViewStudData">Students</a></div>
-            <div class="tile visitors">Visitors</div>
-            <div class="tile leave">Leave</div>
-            <div class="tile exam">Exam</div>
-            <div class="tile assignments">Assignments</div>
-            <div class="tile notes">Notes</div>
-            <div class="tile employee">Employee</div>
-            <div class="tile timetable">TimeTable</div>
-            <div class="tile lesson-plan">Lesson Plan</div>
-            <div class="tile courses">Courses</div>
-            <div class="tile batches">Batches</div>
-            <div class="tile class-teacher-allocation">Class Teacher Allocation</div>
-            <div class="tile subject">Subject</div>
-            <div class="tile student-attendance">Student Attendance</div>
-            <div class="tile emp-attendance">Employee Attendance</div>
-            <div class="tile fee">Fee</div>
-            <div class="tile vendor">Vendor</div>
-            <div class="tile circulars">Circulars</div>
-            <div class="tile salary">Salary</div>
-            <div class="tile library">Library</div>
-            <div class="tile certificate">Certificate</div>
-            <div class="tile task-app">TaskApp</div>
-            <div class="tile communication">Communication</div>
-            <div class="tile student-enquiry">Student Enquiry</div>
+            <a href="/home/ViewInstituteData" class="tile institute">Institutes</a>
+            <a href="/home/ViewAcademicYear" class="tile academic-year">Academic Year</a>
+            <a href="/home/ViewStudData" class="tile students">Students</a>
+            <a href="/home/ViewVisitorData" class="tile visitors">Visitors</a>
+            <a href="/home/ViewLeaveData" class="tile leave">Leave</a>
+            <a href="/home/ViewExamData" class="tile exam">Exam</a>
+            <a href="/home/ViewAssignments" class="tile assignments">Assignments</a>
+            <a href="/home/ViewNotes" class="tile notes">Notes</a>
+            <a href="/home/ViewEmployeeData" class="tile employee">Employee</a>
+            <a href="/home/ViewTimetable" class="tile timetable">TimeTable</a>
+            <a href="/home/ViewLessonPlan" class="tile lesson-plan">Lesson Plan</a>
+            <a href="/home/ViewCourses" class="tile courses">Courses</a>
+            <a href="/home/ViewBatches" class="tile batches">Batches</a>
+            <a href="/home/ClassTeacherAllocation" class="tile class-teacher-allocation">Class Teacher Allocation</a>
+            <a href="/home/ViewSubjects" class="tile subject">Subject</a>
+            <a href="/home/StudentAttendance" class="tile student-attendance">Student Attendance</a>
+            <a href="/home/EmployeeAttendance" class="tile emp-attendance">Employee Attendance</a>
+            <a href="/home/ViewFeeData" class="tile fee">Fee</a>
+            <a href="/home/ViewVendors" class="tile vendor">Vendor</a>
+            <a href="/home/ViewCirculars" class="tile circulars">Circulars</a>
+            <a href="/home/ViewSalary" class="tile salary">Salary</a>
+            <a href="/home/ViewLibrary" class="tile library">Library</a>
+            <a href="/home/ViewCertificate" class="tile certificate">Certificate</a>
+            <a href="/home/ViewTaskApp" class="tile task-app">TaskApp</a>
+            <a href="/home/ViewCommunication" class="tile communication">Communication</a>
+            <a href="/home/StudentEnquiry" class="tile student-enquiry">Student Enquiry</a>
+
         </div>
     </div>
 
-    <div class="footer">
-        <span><a href="http://www.satams.com">Powered by</a> SATAMS</span>
-    </div>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+  
 
 
 </body>
-</html>
 
+</html>
