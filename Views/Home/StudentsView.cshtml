@@ -1,58 +1,82 @@
-﻿@model IEnumerable<SMS_Core.Models.Student>
+﻿@model SMS_Core.ViewModel.StudentListViewModel
+
 
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Students List";
 }
 
-<div class="mt-5">
-    <h2>Students List</h2>
 
-    <table class="table table-striped table-bordered">
+<div class="container text-center mt-5">
+    <h2>Students List</h2>
+    <div class="m-2">
+        <a href="/home/AddStudent" class="btn btn-primary">Add New Student</a>
+    </div>
+    <table class="table table-responsive table-bordered table-striped mx-auto">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Grade</th>
+                <th>Admission ID</th>
+                <th>Admission No</th>
+                <th>Course</th>
+                <th>Batch</th>
+                <th>Institution</th>
+                <th>Roll No</th>
+                <th>Admission Type</th>
+                <th>Medium</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.Any())
+            @if (Model != null)
             {
-                @foreach (var student in Model)
+                @foreach (var student in Model.Students)
                 {
                     <tr>
-                        <td>@student.ID</td>
-                        <td>@student.Name</td>
-                        <td>@student.Age</td>
-                        <td>@student.Grade</td>
+                        <td>@student.StudentAdmissionId</td>
+                        <td>@(student.StudentAdmissionNo ?? 0)</td>
+                        <td>@student.StudenntCourse</td>
+                        <td>@student.StudentBatch</td>
+                        <td>@student.StudentInstitution</td>
+                        <td>@student.StudentRollNo</td>
+                        <td>@student.AdmissionType</td>
+                        <td>@student.Medium</td>
                         <td>
-                            <a href="@Url.Action("EditStudent", "Home", new { id = student.ID })"
+                            <a href="@Url.Action("EditStudent", "Home", new { id = student.StudentAdmissionId })"
                                 class="btn btn-warning">Edit</a>
+
                             <form asp-action="DeleteStudent" asp-controller="Home" method="post" style="display:inline;">
-                                <input type="hidden" name="id" value="@student.ID" />
+                                <input type="hidden" name="id" value="@student.StudentAdmissionId" />
                                 <button type="submit" class="btn btn-danger"
                                     onclick="return confirm('Are you sure you want to delete this student?');">
                                     Delete
                                 </button>
                             </form>
                         </td>
-
                     </tr>
                 }
             }
             else
             {
                 <tr>
-                    <td colspan="4" class="text-center">No students found.</td>
+                    <td colspan="9" class="text-center">No students found.</td>
                 </tr>
             }
         </tbody>
     </table>
-</div>
+  <nav class="mb-5 w-100">
+    <div class="d-flex justify-content-center">
+        <ul class="pagination overflow-auto flex-nowrap" style="max-width: 100%; white-space: nowrap;">
+            @for (int i = 1; i <= Math.Ceiling((decimal)Model.TotalStudents / Model.PageSize); i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link"
+                       href="@Url.Action("ViewStudData", new { page = i, pageSize = Model.PageSize })">@i</a>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
 
-<div>
-    <a href="/home/AddStudent" class="btn btn-primary">Add New Student</a>
+
+
 </div>

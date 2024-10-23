@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
-using SMS.Models;
+using SMS_Core.Models;
 
 namespace SMS.ViewModel
 {

@@ -9,8 +9,18 @@ namespace SMS_Core.Models
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Define the primary key for tblStudentAdmission
+            modelBuilder.Entity<tblStudentAdmission>()
+                .HasKey(e => e.StudentAdmissionId);
+
+            // Optional: If needed, configure other properties here
+        }
 
         // Define your DbSets (tables) here
-        public DbSet<Student> Students { get; set; }
+        public DbSet<tblStudentAdmission> tblStudentAdmission { get; set; }
     }
 }

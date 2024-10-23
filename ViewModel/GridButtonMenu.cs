@@ -1,4 +1,4 @@
-﻿namespace SMS.ViewModel
+﻿namespace SMS_Core.ViewModel
 {
     public class GridButtonMenu
     {

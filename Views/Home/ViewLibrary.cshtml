@@ -1,0 +1,53 @@
+﻿@model SMS_Core.Models.Student
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "View Library";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>  <!-- Ensure this exists -->
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="default">
+    <div id="crmContentPanel">
+        <div style="font-size:12px; height:40px; vertical-align:top; margin-left:10px;">
+
+            @if (ViewBag.Desg == "EmployeeTeacher" || ViewBag.Desg == "Administration Staff")
+            {
+                <text>
+                    <img src="~/_imgs/grid/EditRule_16.png" asp-append-version="true" />&nbsp; &nbsp;
+                    @Html.ActionLink("Book Category", "BookCategoryNew", "Home")&nbsp; &nbsp;
+
+                    <img src="~/_imgs/grid/EditRule_16.png" asp-append-version="true" />&nbsp; &nbsp;
+                    @Html.ActionLink("Add Book", "BookNew", "Home")&nbsp; &nbsp;
+
+                    <img src="~/_imgs/grid/EditRule_16.png" asp-append-version="true" />&nbsp;&nbsp;
+                    @Html.ActionLink("Issue Book", "BookIssue", "Home")&nbsp;&nbsp;
+                </text>
+            }
+
+            <img src="~/_imgs/grid/EditRule_16.png" asp-append-version="true" />&nbsp;&nbsp;
+            @Html.ActionLink("View Book", "BookView", "Home")&nbsp;&nbsp;
+
+            <img src="~/_imgs/grid/EditRule_16.png" asp-append-version="true" />&nbsp;&nbsp;
+            @Html.ActionLink("View Issue Book", "BookIssueView", "Home")&nbsp;&nbsp;
+
+            <img src="~/_imgs/grid/EditRule_16.png" asp-append-version="true" />&nbsp;&nbsp;
+            @Html.ActionLink("Return Book View", "BookReturnView", "Home")&nbsp;&nbsp;
+        </div>
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <b>Library</b> 
+                </div>
+                <div class="panel-body">
+                    <img width="850" height="500" src="~/images/library.jpg" asp-append-version="true" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

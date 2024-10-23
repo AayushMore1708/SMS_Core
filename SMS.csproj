@@ -527,6 +527,7 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="LigerShark.WebOptimizer.Sass" Version="3.0.123" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
