@@ -1,7 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 using SMS_Core.Models;
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<SMSDbContext>()
+    .AddDefaultTokenProviders();
 // Add services to the container.
 // Configure Entity Framework Core to use SQL Server with a connection string from appsettings.json
 builder.Services.AddDbContext<SMSDbContext>(options =>

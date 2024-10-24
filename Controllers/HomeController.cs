@@ -47,18 +47,18 @@ namespace SMS.Controllers
             }
         }
 
+
+
+        //All Views : -
         [HttpGet]
-        public IActionResult GridButtonMenu()
-        {
-            // Return the grid view
-            return View("GridButtonMenu");
-        }
+        public IActionResult ViewLibrary() => View("ViewLibrary");
 
         [HttpGet]
-        public IActionResult ViewLibrary()
-        {
-            return View("ViewLibrary");
-        }
+        public IActionResult GridButtonMenu() => View("GridButtonMenu");
+
+
+
+
         [HttpGet]
         public IActionResult ViewFeeData()
         {
