@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SMS_Core.Models.DTDailyUpdate>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DailyClassUpdateViewData</title>
+</head>
+<body>
+    <table cellpadding="4"cellspacing="4" border="0" width="1300px">
+        <tr>
+            <td style="text-align:center;font-size:30px">
+                <b>
+                    UNIVERSAL HIGH SCHOOL
+                </b>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="text-align:center;font-size:20px">
+                <b>
+                    DAILY CLASS UPDTAE
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                CLASS :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                DIV :C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                DAY :Thursday &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                DATE :16-06-2022
+            </td>
+        </tr>
+
+        
+        
+    </table>
+
+    <table cellpadding="5" cellspacing="0" border="1" width="1300">
+        <tr>
+            <td  style="text-align:center;font-size:16px;font-family:Arial">
+                
+                PERIOD
+            </td>
+            <td style="text-align:center;font-size:16px;font-family:Arial">
+               
+                SUBJECT/ACTIVITY
+            </td>
+            <td style="text-align:center;font-size:16px;font-family:Arial">
+                CLASS WORK
+
+            </td>
+            <td style="text-align:center;font-size:16px;font-family:Arial">
+                HOME ASSIGNMENT
+
+            </td>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Period </td>
+                <td>@item.Subject </td>
+
+                <td>@item.ClassWork </td>
+                <td>@item.HomeAssignment</td>
+
+            </tr>
+           
+        }
+    </table>
+
+</body>
+</html>

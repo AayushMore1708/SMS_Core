@@ -1,0 +1,116 @@
+﻿@model SMS_Core.Models.tblConversation
+@{
+    ViewBag.Title = "Communication";
+}
+<script type="text/javascript">
+     $(document).ready(function () {
+         $('#multiUser').change(function () {
+             $('#ConvTo').val($('#multiUser').val());
+         })
+     });
+
+     function Save_confirm() {
+         if ($('#Conv').val() != '') {
+             var r = confirm("Are you sure you want to Save !")
+             if (r == true) {
+                 return true;
+             }
+             else {
+                 return false;
+             }
+         }
+         else {
+             alert('Please Enter Conversation');
+             return false;
+         }
+        }
+</script>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span></span>&nbsp;<span class="panel-title"><strong class="text-info">Conversation</strong></span>
+                </div>
+
+                <div class="panel-body">
+
+                    @using (Html.BeginForm("Conversation", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+
+                        @Html.ValidationSummary()
+
+                        <div class="container">
+
+                            <div class="form-group">
+                                <label for="" class="col-sm-2 control-label">Conversation</label>
+                                <div class="col-sm-4">
+                                    @Html.TextAreaFor(m => m.Conv, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-2 control-label">To</label>
+                                <div class="col-sm-4">
+                                    @Html.ListBox("multiUser", new MultiSelectList(ViewBag.UserN, "UserName", "UserName"), new { @class = "form-control input-sm chosen-select", @style = "height:240px" })
+                                    @Html.HiddenFor(model => model.ConvTo)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">Cource Name</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.ClassName, new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @class = "form-control input-sm chosen-select-deselect" })
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">Batch Name</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.BatchName, new MultiSelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @class = "form-control input-sm chosen-select-deselect" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">Department</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.Department, new SelectList(ViewBag.dp, "Department", "Department"), "", new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="i" class="col-sm-2 control-label">&nbsp;</label>
+                                <div class="col-sm-4">
+                                    <button class="btn btn-sm btn-primary btn-block" onclick="return Save_confirm()" type="submit">Save</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title"><strong class="text-info">List of Conversation</strong></span>
+                </div>
+                <div class="table-responsive">
+                    @* @Html.Action("ConversationView") *@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+
+
+

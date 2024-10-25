@@ -1,0 +1,194 @@
+﻿@model IEnumerable<SMS_Core.Models.qryCollectionSummaryNew>
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Collection Register</title>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+</head>
+<body>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#pdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#tdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+
+        });
+
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
+        function Save_confirm2() {
+            if ($("#pdates").val() != "" && $("#tdates").val() != "") {
+                return true;
+            }
+            else {
+
+                alert("Please specify the date range")
+                return false;
+            }
+        }
+
+
+    </script><br />
+    <div>
+
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;	 Collection Register Summary  </h4>
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("CollectionSummaryView", "Admin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">From Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("pdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">To Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("tdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            <input type="submit" onclick="return Save_confirm2()" value="View Report" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+
+
+    <div id="printableArea" style="margin-left:20px;margin-right:20px">
+        <h4 style="text-align:center">
+            VPM's Vidyamandir <br />
+            Collection Register Summary  <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;Collection Register from @string.Format("{0:dd-MM-yyyy}", ViewBag.pdates)   to  @string.Format("{0:dd-MM-yyyy}", ViewBag.tdates)
+        </h4>
+        <table width="70%" cellspacing="5" cellpadding="5" class="table table-striped table-bordered table-hover" id="dataTables-examplexxxx">
+            <tr>
+                <td align="right"><b>Date</b></td>
+                <td align="right"><b>Cash</b></td>
+                <td align="right"><b>Bank</b></td>
+                <td align="right"><b>Online</b></td>
+                <td align="right"><b>Total</b></td>
+            </tr>
+            @{
+
+                decimal? c = 0.00M;
+                decimal? q = 0.00M;
+                decimal? o = 0.00M;
+                decimal? t = 0.00M;
+                decimal? u = 0.00M;
+            }
+            @foreach (var item in Model)
+            {
+                c += item.Cash;
+                q += item.Cheque;
+                o += item.Online;
+                t = (c + q + o);
+                // u = (item.Cash + item.Cheque + item.Online);
+                u = (item.Cash + item.Cheque + item.Online);
+                <tr>
+
+
+                    <td>@string.Format("{0:dd-MM-yyyy}", item.FeeReceiptDate)</td>
+                    <td align="right">@Html.DisplayFor(model => item.Cash)</td>
+                    <td align="right">@Html.DisplayFor(model => item.Cheque)</td>
+                    <td align="right">@Html.DisplayFor(model => item.Online)</td>
+                    <td align="right">@u</td>
+                </tr>
+
+                //i++;
+            }
+            <tr>
+                <td style="text-align:right"><b>Total</b></td>
+                <td align="right"><b>@c</b></td>
+                <td align="right"><b>@q</b></td>
+                <td align="right"><b>@o</b></td>
+                <td align="right"><b>@t</b></td>
+            </tr>
+        </table>
+    </div>
+    <input type="button" onclick="printDiv('printableArea')" value="Print" />
+    <br />
+    <br />
+    
+    
+    <script src="~/Content/js/jquery.table2excel.js"></script>
+    <script type="text/javascript">
+         
+        $(function() {
+            $("button").click(function () {                
+                    $("td:hidden").addClass("noExl");
+                    var x = $("#dataTables-examplexxxx").clone();
+			        $(x).find("tr td a").replaceWith(function () {
+			            return $.text([this]);
+			        });
+                 
+			        $(x).table2excel({
+                        exclude: ".noExl",
+                        fileext: ".xlsx",
+			            filename: "Collection_Summary"
+				});
+				 });
+			});
+
+    </script> 
+    <button id="btncollection" class="btn btn-success">Export to Excel</button><br /><br />
+
+
+</body>
+</html>
+
+
+
+
+

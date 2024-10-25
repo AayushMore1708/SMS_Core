@@ -1,0 +1,286 @@
+﻿@model IEnumerable<SMS_Core.Models.tblFeePaymentAY25>
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cheque detailed Report Day-wise</title>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+</head>
+<body>
+
+    <script src="/Content/js/jquery.table2excel.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#pdates').change(function () {
+                var SCat = $(this).val();
+
+                $("#tdates").val(SCat);
+
+            });
+
+            var sum2 = 0;
+            var groupColumn = 0;
+            var table = $('#dataTables-example').DataTable({
+                columnDefs: [{ visible: false, targets: [0] }],
+                lengthMenu: [
+                    [-1],
+                    ['All']
+                ],
+                displayLength: -1,
+                "drawCallback": function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).nodes();
+                    var last = null;
+                    var sum = 0;
+                    var sum1 = 0;
+
+                    var groupColumn = 0; //index of column which you are going to group by.
+                    var amtColumn = 2; // index of column which you are going to sum.
+                    api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                        if (last !== group) {
+                            api.rows().data().each(function (item) {
+                                if (item[groupColumn] == group) {
+                                    sum = sum + (+item[amtColumn]);
+                                }
+                            });
+                            last = group;
+
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="3" style="background-color: #e7e7e7;"><b>' + group + '</b></td></tr>'
+
+                            );
+
+                            sum = 0;
+                        }
+
+                    });
+
+                    api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                        if (last !== group) {
+                            api.rows().data().each(function (item) {
+                                if (item[groupColumn] == group) {
+                                    sum1 = sum1 + (+item[amtColumn]);
+                                    i++;
+                                }
+                            });
+                            last = group;
+
+                            $(rows).eq(i - 1).after(
+                                '<tr><td colspan="1" style="text-align:right"><b>Sub Total</b></td><td colspan="1"><b>' + sum1 + '</b></td>  </tr>'
+                            );
+                            sum2 += sum1
+                            sum1 = 0;
+
+                        }
+
+                        else {
+                            if (sum2 == 0) {
+                                api.rows().data().each(function (item) {
+                                    if (item[groupColumn] == group) {
+                                        sum2 = sum2 + (+item[amtColumn]);
+                                    }
+                                });
+                            }
+                        }
+
+                    });
+
+                    $("#ttlamt").html('<b>' + sum2 + '</b>');
+                },
+            });
+
+
+
+            $("#pdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#tdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+
+        });
+
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
+        function Save_confirm2() {
+            if ($("#pdates").val() != "" && $("#tdates").val() != "") {
+                return true;
+            }
+            else {
+
+                alert("Please specify the date range")
+                return false;
+            }
+        }
+
+
+        $(function() {
+                $("button").click(function () {
+                    $("td:hidden").addClass("noExl");
+                    var x = $("#dataTables-example").clone();
+			        $(x).find("tr td a").replaceWith(function () {
+			            return $.text([this]);
+			        });
+
+
+			       // $("#table2excel").table2excel({
+					//exclude: ".noExl",
+			        //filename: "@ViewBag.coden" +"@ViewBag.mnthv"
+			        $(x).table2excel({
+                        exclude: ".noExl",
+                        fileext: ".xlsx",
+                        filename: "Cheque_detailed_Report_Day_wise"
+				});
+				 });
+			});
+
+
+    </script>
+    <div>
+
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;Cheque detailed Report Day-wise</h4>
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("BankChequeCollectionView25", "Admin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">From Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("pdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">To Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("tdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!--
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Mode of Payment </label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("FeeModeofPay", new SelectList(new[] { "", "Cash", "Cheque", "Online" }), new { @class = "form-control input-sm" })<br />
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+                        -->
+
+                    <div class="form-group">
+                        <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            <input type="submit" onclick="return Save_confirm2()" value="View Report" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+
+
+    <div id="printableArea" style="margin-left:20px;margin-right:20px">
+        <h4 style="text-align:center">
+            VPM's Vidyamandir <br />
+            AXIS BANK Branch DAHISAR (WEST) Ac. No. 701010100001489<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;Cheque detailed Report Day-wise from @string.Format("{0:dd-MM-yyyy}", ViewBag.pdates)   to  @string.Format("{0:dd-MM-yyyy}", ViewBag.tdates)
+        </h4>
+        <table cellspacing="5" cellpadding="5" class="table table-striped table-bordered table-hover" id="dataTables-example">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <!--<th>Date</th>-->
+                    <th>
+                        Bank Name
+                    </th>
+                    <th>Amount</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @string.Format("{0:dd-MM-yyyy}", item.FeeReceiptDate)
+                        </td>
+
+                        <td>
+                            @{
+                                var abc = "";
+                                if (item.FeeReceiptDate <= DateTime.Parse("06/08/2023"))
+                                {
+                                    abc = item.FeeRemark.Replace("Thanks for Payment ", "");
+                                    if (abc == "Thanks for Payment")
+                                    {
+                                        abc = item.ChequeNo + " " + item.BankName;
+                                    }
+                                }
+                                else
+                                {
+                                    abc = item.ChequeNo + " " + item.BankName;
+                                }
+                            }
+                            @abc
+                        </td>
+                        <td>@item.FeeTotalAmount</td>
+
+                    </tr>
+                }
+            </tbody>
+            <tr><td colspan="1" style="text-align:right"><b>Total Amount</b></td><td><div id="ttlamt"></div></td></tr>
+        </table>
+    </div>
+    <input type="button" onclick="printDiv('printableArea')" value="Print" /> &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;
+
+    <br />
+    <br />
+    <button class="btn btn-success">Export to Excel</button><br /><br />
+</body>
+</html>
+
+
+
+
+

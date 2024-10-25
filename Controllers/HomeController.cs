@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SMS.Models;
-using SMS.ViewModel;
 using SMS_Core.Models;
 using SMS_Core.ViewModel; // Import the namespace for LoginViewModel
 
-namespace SMS.Controllers
+namespace SMS_Core.Controllers
 {
     public class HomeController : Controller
     {
@@ -56,7 +54,19 @@ namespace SMS.Controllers
         [HttpGet]
         public IActionResult GridButtonMenu() => View("GridButtonMenu");
 
+        [HttpGet]
+        public IActionResult ViewTimeTable()
+        {
+            var timeTableData = _context.tblTimeTableHD.ToList(); // Fetch the data
+            return View("../Admin/TimeTable", timeTableData); // Path to the view file
+        }
 
+
+
+        public IActionResult NotFound()
+        {
+            return View(); // This will return the NotFound.cshtml view
+        }
 
 
         [HttpGet]

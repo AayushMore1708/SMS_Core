@@ -1,0 +1,110 @@
+﻿@model SMS_Core.Models.tblLessonPlanningDT
+
+
+    <script type="text/javascript">
+
+     $(document).ready(function () {
+
+          
+
+
+     });
+
+     function Save_confirm1() {
+         var mri = $('#LessonPlanningId').val()
+         $('#LessonPlanningID1').val(mri);
+         $('#LessonPlanningSubjectdt').val($('#LessonPlanningSubject').val());
+            var r = confirm("Are you sure you want to Save !")
+            if (r == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+     }
+
+     var onSuccess = function (result) {
+         alert("Record Has Been Saved Successfully !!");
+         var mria = $('#LessonPlanningId').val();
+
+         $.ajax({
+             url: '@Url.Action("LessonPlanningNewDTView")',
+             type: 'GET',
+             cache: false,
+             data: { LessonPlanningID1: mria },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+    </script>
+
+    <div class="panel-body">
+      
+            @Html.ValidationSummary()
+
+            <div class="container">
+                @Html.Hidden("LessonPlanningID1")
+
+                <div class="form-group">
+
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                                    <strong class="text-info">
+                                        Lesson Topics
+                                    </strong>
+                                </span>
+                            </div>
+
+                            <div class="table-responsive">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr class="text-info">
+                                            <th class="text-left">Lecture Code</th>
+                                            <th class="text-left">Lecture Topic</th> 
+                                            <th class="text-left"></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                               <td>  
+                                            @Html.HiddenFor(m=>m.LessonPlanningSubjectdt)
+                                            @Html.TextBoxFor(m => m.LessonPlanningLectureCode, null, new {@Style="width:80px", @class = "form-control input-sm" })</td>
+                                               <td>  @Html.TextBoxFor(m => m.LessonPlanningLectureTopic, null, new { @Style = "width:280px", @class = "form-control input-sm" })</td>
+                                            <td> <button class="btn btn-sm btn-primary btn-block" onclick="return Save_confirm1()" type="submit">&nbsp;&nbsp;+&nbsp;&nbsp;</button></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="partialPlaceHolder1" class="col-sm-12">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        
+
+
+    </div>
+
+
+

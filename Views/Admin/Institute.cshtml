@@ -1,0 +1,97 @@
+﻿@model SMS_Core.Models.tblInstitute
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>View Institute </title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //table start
+            // prepare the data
+        });
+
+    </script>
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+            <img src="~/_imgs/grid/EditRule_16.png" />&nbsp;&nbsp; @Html.ActionLink("Edit", "EditInstitute", "Admin")&nbsp;&nbsp;
+        </div>
+         
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Institute Details
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="dataTables-example">
+                            <tr>
+                                <td>Institute Name</td>
+                                <td>@Model.InstituteName</td>
+                                <td rowspan="10">Institute Image</td>
+                            </tr>
+                            <tr>
+                                <td>Institute Address</td>
+                                <td>@Model.InstituteAddress</td>
+                            </tr>
+                            <tr>
+                                <td>Institute City</td>
+                                <td>@Model.InstituteCity</td>
+                            </tr>
+                            <tr>
+                                <td>Institute State</td>
+                                <td>@Model.InstituteState</td>
+                            </tr>
+                            <tr>
+                                <td>Institute Country</td>
+                                <td>@Model.InstituteCountry</td>
+                            </tr>
+                            <tr>
+                                <td>Institute Contact Person</td>
+                                <td>@Model.InstituteAdminContactPerson</td>
+                            </tr>
+                            <tr>
+                                <td>Institute Email</td>
+                                <td>@Model.InstituteEmail</td>
+                            </tr>
+                            <tr>
+                                <td>Institute Contact Phone</td>
+                                <td>@Model.InstitutePhone</td>
+                            </tr>
+
+                            <tr>
+                                <td>Institute Mobile</td>
+                                <td>@Model.InstituteMobile</td>
+                            </tr>
+
+                            <tr>
+                                <td>Institute Medium</td>
+                                <td>@Model.InstituteMedium</td>
+                            </tr>
+
+                            <tr>
+                                <td>Institute Type</td>
+                                <td>@Model.InstituteType</td>
+                            </tr>
+
+                        </table> 
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>

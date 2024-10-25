@@ -1,0 +1,92 @@
+﻿@model IEnumerable<SMS_Core.Models.tblExamMarkSet>
+<script type="text/javascript">
+    $(document).ready(function () {
+      
+    })
+     var onSuccessd = function (result) {
+         alert("Record Has Been Deleted Successfully !!");
+         var enames = $('#ename').val();
+         var cnames = $('#cname').val();
+         var BatchNs = $.trim($('#BatchN').val());
+        
+         $.ajax({
+             url: '@Url.Action("ExamMarkSetNewDTView")',
+             type: 'GET',
+             cache: false,
+             data: { examname: enames, batchname: BatchNs,coursename:cnames  },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+     
+
+</script>
+<style>
+
+    .MyCssClass
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+</style>
+
+<table class="table">
+    <thead class="text-info"> 
+        <tr class="text-info">
+            <th>Subject</th>
+            <th>Day to<br /> Day<br />Observation</th>
+            <th>Oral <br />Works</th>
+            <th>Practical <br />Experiment</th>
+            <th>Activity</th>
+            <th>Project</th>
+            <th>Test/Open<br /> Book</th>
+            <th>Home/Class<br /> Work</th>
+            <th>Others</th>
+            <th><b>Total A</b></th>
+            <th>Theory</th>
+            <th>Oral/<br />Practical</th>
+            <th><b>Total B</b></th>
+            <th>Grand Total<br />(A + B)</th>
+            <th>Exam Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Action</th>
+        </tr> 
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationDaytoDayObservation)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationOralwork)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationPracticalExperiment)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationActivity)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationProject)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationTestOpenBook)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationHomeClasswork)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationOthers)</td>
+            <td>@Html.DisplayFor(modelItem => item.FormulationTotalA)</td>
+            <td>@Html.DisplayFor(modelItem => item.SummativeTheory)</td>
+            <td>@Html.DisplayFor(modelItem => item.SummativeOralPractical)</td>
+            <td>@Html.DisplayFor(modelItem => item.SummativeTotalB)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalMark)</td>
+            <td>@string.Format("{0:dd-MM-yyyy}", item.ExamDate)  </td>
+            <td>@Html.DisplayFor(modelItem => item.ExamStartTime)</td>
+            <td>@Html.DisplayFor(modelItem => item.ExamEndTime)</td>
+            <td>
+                @* @Ajax.ActionLink(" ", "DeleteExamMarkSetDT", new { id = item.ExamMarkID, examname = item.ExamName, coursename = item.CourseName, batchname = item.BatchName }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccessd", Confirm = "Do you want to delete this record?" }, new { @class = "MyCssClass" }) *@
+
+            </td>
+
+        </tr>
+        }
+
+    </tbody>
+</table>

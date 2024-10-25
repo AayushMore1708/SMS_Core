@@ -1,0 +1,543 @@
+﻿@model SMS_Core.Models.tblFeeSubCategory
+@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Add Fee Sub Category</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#fee1').hide();
+            $('#fee2').hide();
+            $('#fee3').hide();
+            $('#fee4').hide();
+            $('#fee5').hide();
+            $('#fee6').hide();
+            $('#fee7').hide();
+
+            $('#mfee1').hide();
+            $('#mfee2').hide();
+            $('#mfee3').hide();
+            $('#mfee4').hide();
+            $('#mfee5').hide();
+            $('#mfee6').hide();
+            $('#mfee7').hide();
+
+            if ($('#FeeCategoryName').val() == "Full Yearly Fees in Single Installment" || $('#FeeCategoryName').val() == "First Half Yearly Fees" || $('#FeeCategoryName').val() == "Second Half Yearly Fees") {
+                $('#fee1').show();
+                $('#fee2').show();
+                $('#fee3').show();
+                $('#fee4').show();
+                $('#fee5').show();
+                $('#fee6').show();
+                $('#fee7').show();
+            }
+            else {
+                $('#fee1').hide();
+                $('#fee2').hide();
+                $('#fee3').hide();
+                $('#fee4').hide();
+                $('#fee5').hide();
+                $('#fee6').hide();
+                $('#fee7').hide();
+            }
+
+            if ($('#FeeCategoryName').val() == "Misc Fee") {
+                $('#mfee1').show();
+                $('#mfee2').show();
+                $('#mfee3').show();
+                $('#mfee4').show();
+                $('#mfee5').show();
+                $('#mfee6').show();
+                $('#mfee7').show();
+            }
+            else {
+                $('#mfee1').hide();
+                $('#mfee2').hide();
+                $('#mfee3').hide();
+                $('#mfee4').hide();
+                $('#mfee5').hide();
+                $('#mfee6').hide();
+                $('#mfee7').hide();
+            }
+             
+            $("#PaymentStartDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#PaymentEndDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $('#FeeCategoryName').change(function () {
+                //alert($('#FeeCategoryName').val());
+                if ($('#FeeCategoryName').val() == "Full Yearly Fees in Single Installment" || $('#FeeCategoryName').val() == "First Half Yearly Fees" || $('#FeeCategoryName').val() == "Second Half Yearly Fees") {
+                    $('#fee1').show();
+                    $('#fee2').show();
+                    $('#fee3').show();
+                    $('#fee4').show();
+                    $('#fee5').show();
+                    $('#fee6').show();
+                    $('#fee7').show();
+                }
+                else {
+                    $('#fee1').hide();
+                    $('#fee2').hide();
+                    $('#fee3').hide();
+                    $('#fee4').hide();
+                    $('#fee5').hide();
+                    $('#fee6').hide();
+                    $('#fee7').hide();
+                }
+            });
+
+            $('#FeeCategoryName').change(function () {
+                //alert($('#FeeCategoryName').val());
+                if ($('#FeeCategoryName').val() == "Misc Fee") {
+                    $('#mfee1').show();
+                    $('#mfee2').show();
+                    $('#mfee3').show();
+                    $('#mfee4').show();
+                    $('#mfee5').show();
+                    $('#mfee6').show();
+                    $('#mfee7').show();
+                }
+                else {
+                    $('#mfee1').hide();
+                    $('#mfee2').hide();
+                    $('#mfee3').hide();
+                    $('#mfee4').hide();
+                    $('#mfee5').hide();
+                    $('#mfee6').hide();
+                    $('#mfee7').hide();
+                }
+            });
+
+
+        });
+   
+
+            $('#TusionFees').change(function () {
+                $('#FeePayable').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()) - Math.round($('#DiscountNew').val()));
+                $('#TotalFees').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()));
+            });
+
+            $('#TermFee1').change(function () {
+                $('#FeePayable').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()) - Math.round($('#DiscountNew').val()));
+                $('#TotalFees').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()));
+            });
+
+            $('#TermFee2').change(function () {
+                $('#FeePayable').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()) - Math.round($('#DiscountNew').val()));
+                $('#TotalFees').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()));
+            });
+
+            $('#MiscFee').change(function () {
+                $('#FeePayable').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()) - Math.round($('#DiscountNew').val()));
+                $('#TotalFees').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()));
+            });
+
+            $('#DiscountNew').change(function () {
+                $('#FeePayable').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()) - Math.round($('#DiscountNew').val()));
+                $('#TotalFees').val(Math.round($('#TusionFees').val()) + Math.round($('#TermFee1').val()) + Math.round($('#TermFee2').val()) + Math.round($('#MiscFee').val()));
+            });
+
+
+
+            $('#FeePayable').change(function () {
+                $('#FeeSubCategoryAmount').val($('#FeePayable').val());
+
+            });
+
+            /*
+            $("#FullInstallmentDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#FirstInstallmentDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#SecondInstallmentDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+            */
+
+
+
+            /*
+            $('#Discount').change(function () {
+                $('#DiscountAmount').val(Math.round($('#FeeSubCategoryAmount').val() * $('#Discount').val() / 100));
+                $('#AmontDiscount').val(Math.round($('#FeeSubCategoryAmount').val() - $('#DiscountAmount').val()));
+
+            });
+
+            $('#FeeSubCategoryAmount').change(function () {
+                $('#DiscountAmount').val(Math.round($('#FeeSubCategoryAmount').val() * $('#Discount').val() / 100));
+                $('#AmontDiscount').val(Math.round($('#FeeSubCategoryAmount').val() - $('#DiscountAmount').val()));
+            });
+
+            $('#FeeSubCategoryAmount').change(function () {
+                $('#DiscountAmount').val(Math.round($('#FeeSubCategoryAmount').val() * $('#Discount').val() / 100));
+            });
+
+*/
+
+
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                if ($('#FeeSubCategoryName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+
+                    }
+                }
+                else {
+                    alert("Sub Category Name should not be blank")
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                if ($('#FeeSubCategoryName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save'))
+                        event.preventDefault();
+                }
+                else {
+                    alert("Sub Category Name should not be blank")
+                    return false;
+                }
+            });
+
+
+         
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        <text>
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE CATEGORY", "FeeCategoryNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE SUB CATEGORY", "FeeSubCategoryNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <!--
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE SUB CATEGORY FINE", "FeeSubCategoryFineNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE WAIVER", "FeeWaiverNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE ALLOCATION", "FeeAllocationNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE PAYMENT", "FeePayment", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE BALANCE", "FeePaymentBalance", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE ADMIN REPORT", "FeePaymentReport", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+        </text>
+        <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp;<a href="#" id="sav" class="btn btn-primary">SAVE & CLOSE</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                -->
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Fee Sub Category Edit</h3>
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-sm-5">
+
+                @using (Html.BeginForm("FeeSubCategoryEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+                {
+                    <div class="panel">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Fee Category</label>
+                                <div class="col-lg-6">
+                                    @Html.DropDownListFor(model => model.FeeCategoryName, new SelectList(ViewBag.cats, "FeeCategoryName", "FeeCategoryName"), new { @class = "form-control input-sm" })
+                                    @Html.HiddenFor(model => model.FeeSubCategoryId)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Class</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.FeeSubCategoryName, new SelectList(ViewBag.crs, "AcadamicCourceName", "AcadamicCourceName"), new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Fee type</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.FeeType, new SelectList(new[] { "Yearly", "Half Yearly", "Quarterly", "Monthly" }), new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Admission type</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.AdmissionType, new SelectList(new[] { "New", "Regular" }), new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Medium</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownListFor(model => model.FeeMedium, new SelectList(new[] { "English", "Marathi" }), new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Amount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FeeSubCategoryAmount, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+
+                            <div id="fee1" class="form-group">
+                                <label class="control-label col-lg-4">Tusion Fees</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.TusionFees, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+                            <div id="fee2" class="form-group">
+                                <label class="control-label col-lg-4">Term Fee1</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.TermFee1, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="fee3" class="form-group">
+                                <label class="control-label col-lg-4">Term Fee2</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.TermFee2, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="fee4" class="form-group">
+                                <label class="control-label col-lg-4">Misc Fee</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MiscFee, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="fee5" class="form-group">
+                                <label class="control-label col-lg-4">Total Fees</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.TotalFees, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="fee6" class="form-group">
+                                <label class="control-label col-lg-4">Discount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.DiscountNew, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="fee7" class="form-group">
+                                <label class="control-label col-lg-4">Fee Payable</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBox("FeePayable", "", new { @class = "form-control input-sm", @ReadOnly = "True", })
+                                </div>
+                            </div>
+
+
+                            <div id="mfee2" class="form-group">
+                                <label class="control-label col-lg-4">I-Card</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MIscICard, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div id="mfee7" class="form-group">
+                                <label class="control-label col-lg-4">Escort-Card</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MiscEscortCard, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="mfee1" class="form-group">
+                                <label class="control-label col-lg-4">Calender</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MiscCalender, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+                            <div id="mfee3" class="form-group">
+                                <label class="control-label col-lg-4">Exam Fees</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MiscExamFees, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="mfee4" class="form-group">
+                                <label class="control-label col-lg-4">VVN</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MiscVVN, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="mfee5" class="form-group">
+                                <label class="control-label col-lg-4">Computer Fees</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MiscComputerFees, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div id="mfee6" class="form-group">
+                                <label class="control-label col-lg-4">Sub Misc Fees</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.MiscMiscFees, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Payment Start Date</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.PaymentStartDate, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Payment End Date</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.PaymentEndDate, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <!--
+                            <hr />
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Single Installment %</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FullInstallmentPerc, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Single Installment Discount Amount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FullInstallmentDiscountAmt, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Single Installment After Discount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FullInstallmentDiscount, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Single Installment Before Date</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FullInstallmentDate, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">First Installment %</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FirstInstallmentPerc, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">First Installment Discount Amount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FirstInstallmentDiscountAmt, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">First Installment After Discount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FirstInstallmentDiscount, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">First Installment Before Date</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.FirstInstallmentDate, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Second Installment %</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.SecondInstallmentPerc, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Second Installment Dsiscount Amount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.SecondinstallmentDiscountAmt, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Second Installment After Discount</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.SecondInstallmentDiscount, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Second Installment Before Date</label>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.SecondInstallmentDate, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+    -->
+
+                            <div class="form-group">
+                                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                                <div class="col-lg-8">
+                                    <input type="submit" id="frmsave" value="Save & Close" class="btn btn-primary" />
+                                    <!--<button class="btn btn-primary"><i class="icon-refresh icon-white"></i></button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-lg-7">
+                <div id="partialPlaceHolder1" class="table-responsive">
+                    @* @Html.Action("FeeSubCategoryView") *@
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

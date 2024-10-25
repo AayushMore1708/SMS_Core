@@ -1,0 +1,84 @@
+﻿@model IEnumerable<SMS_Core.Models.tblAcadamicCource>
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>View Cources </title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+    
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;&nbsp; @Html.ActionLink("NEW", "CourcesNew", "Admin")&nbsp;&nbsp;
+        </div>
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Cources
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                           <thead>
+                               <tr>
+                                   <th>Cource Name</th>
+                                   <th>Cource Description</th>
+                                   <th>Cource Stream</th>
+                                   <th>Cource Code</th>
+                                   <th>Cource Minimum Attendance</th>
+                                   <th>Cource Attendance Type</th>
+                                   <th>Cource Total Working Days</th>
+                                   <th>Cource Syllabus</th>
+                               </tr>
+                            </thead>
+                           <tbody>
+                               @foreach (var item in Model)
+                               {
+                               <tr>
+                                   @if (item.AcadamicCourceName != "")
+                                   {
+                                       <td>@Html.ActionLink(item.AcadamicCourceName, "CourcesEdit", new { id = item.AcadamicCourceId })</td>
+                                   }
+                                   else
+                                   {
+                                       <td>@Html.DisplayFor(modelItem => item.AcadamicCourceName)</td>
+                                   }
+
+                                   <td>@Html.DisplayFor(modelItem => item.AcadamicCourceDescription)</td>
+                                   <td>@Html.DisplayFor(modelItem => item.CourseStream)</td>
+                                   <td>@Html.DisplayFor(modelItem => item.AcadamicCourceCode)</td>
+                                   <td>@Html.DisplayFor(modelItem => item.AcadamicCourceMinAttn)</td>
+                                   <td>@Html.DisplayFor(modelItem => item.AcadamicCourceAttnType)</td>
+                                   <td>@Html.DisplayFor(modelItem => item.AcadamicCourceTotalWorkingDays)</td>
+                                   <td>@Html.DisplayFor(modelItem => item.AcadamicCourceSyllabus)</td>
+                               </tr>
+                               }
+                           </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+
+    </script>
+</body>
+</html>

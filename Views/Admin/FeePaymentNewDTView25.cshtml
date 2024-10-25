@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SMS_Core.Models.tblFeePaymentDTAY25>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#FeeTotalAmount2').val('@ViewBag.ttl');
+        $('#FeeTotalAmount1').val($('#FeeTotalAmount2').val());
+        $('#TotalAmoutPaying1').val($('#FeeTotalAmount2').val());
+
+    })
+     var onSuccessd = function (result) {
+         alert("Record Has Been Deleted Successfully !!");
+
+           var cname = $('#FeeCourseName').val();
+         var bname = $('#FeeBatchName').val();
+         var feeid = $('#FeeStudentName').val();
+
+         $.getJSON("@Url.Content("~/Admin/GetCategoryNew25")", { cname: cname, bname: bname, feeid:feeid }, function (data) {
+                    $('#FeeCategoryName').empty();
+                    $('#FeeCategoryName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeCategoryName').append("<option value=\"" + data[i]["FeeCategoryName"] + "\">" + data[i]["FeeCategoryName"] + "</option>");
+                }
+            });
+
+
+         var FeePaymentId1 = $('#FeePaymentId').val();
+         var FeeID1 = $('#FeeID').val();
+
+         $.ajax({
+             url: '@Url.Action("FeePaymentNewDTView25")',
+             type: 'GET',
+             cache: false,
+             data: { FeePaymentId1: FeePaymentId1, FeeID: FeeID1 },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+</script>
+<style>
+
+    .MyCssClass
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+</style>
+
+<table class="table   table-striped">
+    <thead class="text-info">
+
+        <tr class="text-info">
+            <th class="text-left">Fee Category</th>
+            <th class="text-left">Fee Actual Amount</th>
+            <th class="text-left">Fee Amount</th>
+            <th class="text-left"></th>
+        </tr>
+
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@Html.DisplayFor(modelItem => item.FeeCategoryName)</td>
+                <td>@Html.DisplayFor(modelItem => item.FeeActualAmount)</td>
+                <td>@Html.DisplayFor(modelItem => item.FeeAmountPaid)</td>
+
+                <td>
+                    @* @Ajax.ActionLink(" ", "DeleteFeePaymentDT25", new { id = item.FeePaymentIDDT, FeePaymentId1 = item.FeePaymentID }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccessd", Confirm = "Do you want to delete this record?" }, new { @class = "MyCssClass" }) *@
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>

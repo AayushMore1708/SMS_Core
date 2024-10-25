@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using SMS_Core.Models;
 
-namespace SMS.ViewModel
+namespace SMS_Core.ViewModel
 {
     public class LoginViewModel : PageModel
     {

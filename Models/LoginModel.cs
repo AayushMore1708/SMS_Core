@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace SMS.Models
+namespace SMS_Core.Models
 {
     public class LoginModel
     {

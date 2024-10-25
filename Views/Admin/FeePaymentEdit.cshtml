@@ -1,0 +1,439 @@
+﻿@model SMS_Core.Models.tblFeePayment
+@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Fee Payment New</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#FeeCourseName').val('@ViewBag.sclass');
+            $('#FeeBatchName').val('@ViewBag.sbatch');
+            $('#FeeStudentName').val('@ViewBag.FeeID');
+            
+            $('#FeeID').val('@ViewBag.FeeID')
+
+            $('#FeeSubCategoryName').val('@ViewBag.sclass');
+
+            $('#StudentName').val($("#FeeStudentName option:selected").text());
+           // alert($('#TotalAmoutPaying').val());
+            $('#FeeModeofPay1').val($('#FeeModeofPay').val())
+            $('#FeeRemark1').val($('#FeeRemark').val())
+            $('#FeeReceiptNo1').val($('#FeeReceiptNo').val())
+            $('#FeeReceiptDate1').val($('#FeeReceiptDate').val())
+            $('#FeeTotalAmount1').val($('#FeeTotalAmount').val())
+            //$('#FeeStudentID').val($('#FeeStudentName').val())
+            $('#TotalAmoutPaying1').val($('#TotalAmoutPaying').val())
+            $('#BalanceAmount1').val($('#TotalBalance').val())
+
+            $('#ChequeNo1').val($('#ChequeNo').val())
+            $('#BankName1').val($('#BankName').val())
+
+            $('#FeeFine1').val($('#FeeFine').val())
+            $('#FeeFineDetails1').val($('#FeeFineDetails').val())
+
+            //direct call changes
+
+            $.getJSON("@Url.Content("~/Admin/GetCategory")", { cname: '@ViewBag.sclass', bname: '@ViewBag.sbatch', feeid:'@ViewBag.FeeID' }, function (data) {
+                    $('#FeeCategoryName').empty();
+                    $('#FeeCategoryName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeCategoryName').append("<option value=\"" + data[i]["FeeCategoryName"] + "\">" + data[i]["FeeCategoryName"] + "</option>");
+                }
+            });
+
+            $.ajax({
+             url: '@Url.Action("FeePaymentDashNewNew")',
+             type: 'GET',
+             cache: false,
+             data: { feeid:'@ViewBag.FeeID' },
+             success: function (result) {
+                $('#feeView').append(result);
+             }
+            });
+
+             $.ajax({
+             url: '@Url.Action("FeePaymentDashNew")',
+             type: 'GET',
+             cache: false,
+             data: { feeid:'@ViewBag.FeeID' },
+             success: function (result) {
+                $('#feeView').append(result);
+             }
+         });
+
+
+                //direct call changes end
+
+
+            $('#FeeCourseName').change(function () {
+                var selectedIDcn = $('#FeeCourseName').val();
+                var SelectedIDbn = $.trim($('#FeeBatchName').val());
+            $.getJSON("@Url.Content("~/Admin/GetStudent")", { cname: selectedIDcn,bname: SelectedIDbn }, function (data) {
+                $('#FeeStudentName').empty();
+                $('#FeeStudentName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeStudentName').append("<option value=\"" + data[i]["Feeid"] + "\">" + data[i]["StudentName"] + "</option>");
+                }
+                });
+
+            });
+
+            $('#FeeBatchName').change(function () {
+                var selectedIDcn = $('#FeeCourseName').val();
+                var SelectedIDbn = $.trim($('#FeeBatchName').val());
+                var SelectedIDbnS = $.trim($('#FeeStudentName').val());
+                $.getJSON("@Url.Content("~/Admin/GetStudent")", { cname: selectedIDcn, bname: SelectedIDbn }, function (data) {
+                    $('#FeeStudentName').empty();
+                    $('#FeeStudentName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeStudentName').append("<option value=\"" + data[i]["Feeid"] + "\">" + data[i]["StudentName"] + "</option>");
+                }
+                });
+
+
+                $.getJSON("@Url.Content("~/Admin/GetCategory")", { cname: selectedIDcn, bname: SelectedIDbnS, feeid:'@ViewBag.FeeID' }, function (data) {
+                    $('#FeeCategoryName').empty();
+                    $('#FeeCategoryName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeCategoryName').append("<option value=\"" + data[i]["FeeCategoryName"] + "\">" + data[i]["FeeCategoryName"] + "</option>");
+                }
+                });
+            });
+
+            $('#FeeStudentName').change(function () {
+               // alert($('#FeeStudentName').val());
+
+                var mriaa = $('#FeeStudentName').val();
+
+                var selectedIDcn = $('#FeeCourseName').val();
+                var SelectedIDbn = $.trim($('#FeeBatchName').val());
+
+                var SelectedIDbnS = $.trim($('#FeeStudentName').val());
+
+                $.getJSON("@Url.Content("~/Admin/GetCategory")", { cname: selectedIDcn, bname: SelectedIDbnS }, function (data) {
+                    $('#FeeCategoryName').empty();
+                    $('#FeeCategoryName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeCategoryName').append("<option value=\"" + data[i]["FeeCategoryName"] + "\">" + data[i]["FeeCategoryName"] + "</option>");
+                }
+                });
+                $('#FeeID').val(mriaa)
+               // $('#FeeType').val('');
+                $('#FeeActualAmount').val('');
+                $('#FeeAmountPaid').val('');
+
+
+
+         $.ajax({
+             url: '@Url.Action("FeePaymentDashNewNew")',
+             type: 'GET',
+             cache: false,
+             data: { feeid:mriaa },
+             success: function (result) {
+                 $('#feeView').html(result);
+             }
+         });
+
+            });
+
+            //new changes for online
+            /*
+            $('#FeeModeofPay1').change(function () {
+                if ($('#FeeModeofPay1').val() == 'Online') {
+                    $('#OnlinePayment').css("visibility", "visible");
+                    $('#frmsave').css("visibility", "hidden");
+            }
+            else {
+                    $('#OnlinePayment').css("visibility", "hidden");
+                    $('#frmsave').css("visibility", "visible");
+            }
+
+            });
+            */
+            $('#TotalAmoutPaying1').change(function () {
+                $('#BalanceAmount1').val($('#TotalAmoutPaying1').val() - $('#FeeTotalAmount1').val())
+
+            });
+
+
+            //new changes for online end here
+
+
+            $("#FeeReceiptDate1").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            //$("#FeeReceiptDate1").datepicker("setDate", new Date());
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                $('#FeeModeofPay').val($('#FeeModeofPay1').val())
+                $('#FeeRemark').val($('#FeeRemark1').val())
+                $('#FeeReceiptNo').val($('#FeeReceiptNo1').val())
+                $('#FeeReceiptDate').val($('#FeeReceiptDate1').val())
+                $('#FeeTotalAmount').val($('#FeeTotalAmount1').val())
+                $('#FeeStudentID').val($('#FeeStudentName').val())
+                $('#TotalAmoutPaying').val($('#TotalAmoutPaying1').val())
+                $('#TotalBalance').val($('#BalanceAmount1').val())
+
+                $('#FeeFine').val($('#FeeFine1').val())
+                $('#FeeFineDetails').val($('#FeeFineDetails1').val())
+
+
+                if ($('#FeeTotalAmount1').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+
+                    }
+                }
+                else {
+                    alert("Receipt Amount should not be blank")
+                    return false;
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                $('#FeeModeofPay').val($('#FeeModeofPay1').val())
+                $('#FeeRemark').val($('#FeeRemark1').val())
+                $('#FeeReceiptNo').val($('#FeeReceiptNo1').val())
+                $('#FeeReceiptDate').val($('#FeeReceiptDate1').val())
+                $('#FeeTotalAmount').val($('#FeeTotalAmount1').val())
+                $('#FeeStudentID').val($('#FeeStudentName').val())
+                $('#TotalAmoutPaying').val($('#TotalAmoutPaying1').val())
+                $('#TotalBalance').val($('#BalanceAmount1').val())
+
+                $('#FeeFine').val($('#FeeFine1').val())
+                $('#FeeFineDetails').val($('#FeeFineDetails1').val())
+                $('#ChequeNo').val($('#ChequeNo1').val())
+                $('#BankName').val($('#BankName1').val())
+
+
+                if ($('#FeeTotalAmount1').val() != "" && $('#TotalAmoutPaying1').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                }
+                else {
+                    $('#frm').submit();
+                    //return false;
+                }
+            }
+                else {
+                    alert("Receipt Amount and Actual Amount should not be blank")
+                    return false;
+                }
+            });
+
+            // New changes for online
+            /*
+            $('#OnlinePayment').click(function (event) {
+                $('#FeeModeofPay').val($('#FeeModeofPay1').val())
+                $('#FeeRemark').val($('#FeeRemark1').val())
+                $('#FeeReceiptNo').val($('#FeeReceiptNo1').val())
+                $('#FeeReceiptDate').val($('#FeeReceiptDate1').val())
+                $('#FeeTotalAmount').val($('#FeeTotalAmount1').val())
+                $('#FeeStudentID').val($('#FeeStudentName').val())
+
+
+                if ($('#FeeTotalAmount1').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        //return false;
+                    }
+                }
+                else {
+                    alert("Receipt Amount should not be blank")
+                    return false;
+                }
+            });
+
+*/
+
+            // New changes for online end here
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp;<a href="#" id="sav" class="btn btn-primary">SAVE & CLOSE</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    <h3>&nbsp;&nbsp;Fee Payment New</h3>
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("FeePaymentEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Cource Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.FeeCourseName, new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeePaymentId, new { @class = "form-control input-sm" })
+
+                        @Html.HiddenFor(m => m.FeeModeofPay, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeeRemark, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeeReceiptNo, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeeReceiptDate, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeeTotalAmount, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeeStudentID, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeeFine, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.FeeFineDetails, new { @class = "form-control input-sm" })
+
+                        @Html.HiddenFor(m => m.TotalAmoutPaying, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.TotalBalance, new { @class = "form-control input-sm" })
+
+                        @Html.HiddenFor(m => m.ChequeNo, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.BankName, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(m => m.OnlineStatus, new { @class = "form-control input-sm" })
+                        @Html.Hidden("StudentName", "", new { Value = ViewBag.rpn, @class = "form-control input-sm" })
+                    </div>
+
+                    <div style="position:absolute;right:50px;height:250px;top:10px;overflow:auto" id="feeView" class="col-sm-5">
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Batch Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.FeeBatchName, new SelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Student Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.FeeStudentName, new SelectList(ViewBag.use, "Feeid", "StudentName"), "", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">For Acadamic Year</label>
+                    <div class="col-lg-4">
+                        @ViewBag.ay
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                <div id="partialPlaceHolder">
+                    @* @Html.Action("FeePaymentNewDT") *@
+                </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+                <label class="control-label col-lg-2">Mode of Payment </label>
+                <div class="col-lg-4">
+                    @Html.DropDownList("FeeModeofPay1", new SelectList(new[] { "Cash", "Cheque", "Online" }), new { @class = "form-control input-sm" })<br />
+
+                </div>
+
+                <label class="control-label col-lg-2">Receipt No</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("FeeReceiptNo1", "", new { Value = ViewBag.rpn, @class = "form-control input-sm" })
+                </div>
+            </div>
+
+
+            <br /><br />
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Receipt Date</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("FeeReceiptDate1", "", new { @class = "form-control input-sm" })
+                </div>
+
+                <label class="control-label col-lg-2">Receipt Amount</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("FeeTotalAmount1", "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Actual Amount</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("TotalAmoutPaying1", "", new { @class = "form-control input-sm" })
+                </div>
+                <label class="control-label col-lg-2">Balance</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("BalanceAmount1", "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Fee Fine</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("FeeFine1", "", new { @class = "form-control input-sm" })
+                </div>
+                <label class="control-label col-lg-2">Fine Remarks</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("FeeFineDetails1", "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Cheque No.</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("ChequeNo1", "", new { @class = "form-control input-sm" })
+                </div>
+                <label class="control-label col-lg-2">Bank Name</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("BankName1", "", new { @class = "form-control input-sm" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Remarks</label>
+                <div class="col-lg-10">
+                    @Html.TextBox("FeeRemark1", "Thanks for Payment", new { @class = "form-control input-sm" })
+
+                </div>
+            </div>
+
+
+            <br /><br />  <br /><br />
+            <div class="form-group">
+                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                <div class="col-lg-8">
+                    <input type="button" id="OnlinePayment" style="visibility:hidden" name="OnlinePayment" value="Online Payment" class="btn btn-primary" />
+                    <input type="button" id="frmsave" value="Save & Close" class="btn btn-primary" />
+                    <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/chosen.jquery.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+            '.chosen-select-width': { width: "100%" }
+        }
+                              //for (var selector in config) {
+                              //    $(selector).chosen(config[selector]);
+                             // }
+    </script>
+</body>
+</html>

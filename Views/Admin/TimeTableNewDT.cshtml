@@ -1,0 +1,115 @@
+﻿@model SMS_Core.Models.tblTimeTableDT
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script type="text/javascript"> 
+    $(document).ready(function () { 
+        $('#TimeTableWeekDayFrom').timepicker({
+            timeFormat: 'HH:mm'
+        });
+        $('#TimeTableWeekDayTo').timepicker({
+            timeFormat: 'HH:mm'
+        });
+     });
+
+     function Save_confirm1() {
+         var mri = $('#TimeTableId').val()
+         $('#TimeTableID1').val(mri);
+         $('#TimeTableWeekDay').val($('#WeekDays').val());
+            var r = confirm("Are you sure you want to Save !")
+            if (r == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+     }
+
+     var onSuccess = function (result) {
+         alert("Record Has Been Saved Successfully !!");
+         var mria = $('#TimeTableId').val();
+
+         $.ajax({
+             url: '@Url.Action("TimeTableNewDTView")',
+             type: 'GET',
+             cache: false,
+             data: { TimeTableID1: mria },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+</script>
+
+<div class="panel-body">
+  
+        @Html.ValidationSummary()
+
+        <div class="container">
+            @Html.Hidden("TimeTableID1")
+
+            <div class="form-group">
+
+                <div class="col-sm-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                                <strong class="text-info">
+                                    TimeTable
+                                </strong>
+                            </span>
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="text-info">
+                                        <th class="text-left">Subject</th>
+                                        <th class="text-left">Time From</th>
+                                        <th class="text-left">Time To</th> 
+                                        <th class="text-left">Faculty Name</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @Html.HiddenFor(m => m.TimeTableWeekDay)
+                                            @Html.DropDownListFor(model => model.TimeTableWeekDaySubject, new SelectList(ViewBag.sbu, "SubjectName", "SubjectName"), new { @class = "form-control input-sm chosen-select" })
+                                        </td>
+                                        <td>  @Html.TextBoxFor(m => m.TimeTableWeekDayFrom, null, new { @Style = "width:280px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.TimeTableWeekDayTo, null, new { @Style = "width:280px", @class = "form-control input-sm" })</td>
+                                        <td>@Html.DropDownListFor(model => model.TimeTableWeekDayEmp, new SelectList(ViewBag.tea, "UserName", "UserName"),"", new { @class = "form-control input-sm chosen-select" })</td>
+                                        <td> <button class="btn btn-sm btn-primary btn-block" onclick="return Save_confirm1()" type="submit">&nbsp;&nbsp;+&nbsp;&nbsp;</button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="partialPlaceHolder1" class="col-sm-12">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    
+
+
+</div>
+
+
+

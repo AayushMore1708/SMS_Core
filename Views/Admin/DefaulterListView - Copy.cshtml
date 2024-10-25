@@ -1,0 +1,409 @@
+﻿@model IEnumerable<SMS_Core.Models.qryReport1StudentNewT>
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Teacherwise Fees Collection Register</title>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#pdates').change(function () {
+                var SCat = $(this).val();
+                $("#tdates").val(SCat);
+            });
+
+            $("#pdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#tdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            var sum2 = 0;
+            var groupColumn = 0;
+            var table = $('#dataTables-example').DataTable({
+                columnDefs: [{ visible: false, targets: [0] }],
+                //order: [[groupColumn, 'asc']],
+                displayLength: -1,
+                "drawCallback": function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).nodes();
+                    var last = null;
+                    var sum = 0;
+                    var sum1 = 0;
+
+                    var groupColumn = 0; //index of column which you are going to group by.
+                    var amtColumn = 2; // index of column which you are going to sum.
+                    api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                        if (last !== group) {
+                            api.rows().data().each(function (item) {
+                                if (item[groupColumn] == group) {
+                                    sum = sum + (+item[amtColumn]);
+                                }
+                            });
+                            last = group;
+
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="3" style="background-color: #e7e7e7;"><b>' + group + '</b></td></tr>'
+
+                            );
+
+                            sum = 0;
+                        }
+
+
+
+
+                    });
+
+                    api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                        if (last !== group) {
+                            api.rows().data().each(function (item) {
+                                if (item[groupColumn] == group) {
+                                    sum1 = sum1 + (+item[amtColumn]);
+                                    i++;
+                                }
+                            });
+                            last = group;
+
+                            $(rows).eq(i - 1).after(
+                                '<tr><td colspan="1" style="text-align:right"><b>Sub Total</b></td><td colspan="1"><b>' + sum1 + '</b></td>  </tr>'
+                            );
+
+
+                            sum2 += sum1
+                            sum1 = 0;
+                        }
+                        else {
+                            if (sum2 == 0) {
+                                api.rows().data().each(function (item) {
+                                    if (item[groupColumn] == group) {
+                                        sum2 = sum2 + (+item[amtColumn]);
+                                    }
+                                });
+                            }
+                        }
+
+                    });
+
+                    $("#ttlamt").html('<b>' + sum2 + '</b>');
+                },
+            });
+
+
+
+
+        });
+
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
+        function Save_confirm2() {
+            if ($("#pdates").val() != "" && $("#tdates").val() != "") {
+                return true;
+            }
+            else {
+
+                alert("Please specify the date range")
+                return false;
+            }
+        }
+    </script>
+    <div>
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;Teacherwise Fees Collection Register</h4>
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("DefaulterListView", "Admin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <div class="panel">
+                <div class="panel-body">
+                    <!--
+    <div class="form-group">
+        <label class="control-label col-lg-4">From Date</label>
+        <div class="col-lg-4">
+            @Html.TextBox("pdates", null, new { @Class = "form-control input-sm" })
+        </div>
+        <label class="control-label col-lg-2">&nbsp;</label>
+        <div class="col-lg-4">
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-4">To Date</label>
+        <div class="col-lg-4">
+            @Html.TextBox("tdates", null, new { @Class = "form-control input-sm" })
+        </div>
+        <label class="control-label col-lg-2">&nbsp;</label>
+        <div class="col-lg-4">
+            &nbsp;
+        </div>
+    </div>
+        -->
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Class</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("cource", new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Batch</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("batch", new SelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            <input type="submit" onclick="return Save_confirm2()" value="View Report" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+
+
+    <div id="printableArea" style="margin-left:20px;margin-right:20px">
+        <h4 style="text-align:center">
+            VPM's VIDYA MANDIR <br />
+            &nbsp;&nbsp;<br />
+
+            &nbsp;&nbsp;&nbsp;&nbsp;Teachers Collection Register  &nbsp;          @ViewBag.cource  &nbsp;&nbsp;  @ViewBag.batch
+        </h4>
+        <table cellspacing="5" cellpadding="5" class="table table-striped table-bordered table-hover" id="dataTables-example11">
+            <thead>
+                <tr>
+                    <th>FeeID</th>
+                    <!--<th>Date</th>-->
+                    <th>Receipt No.</th>
+                    <th>Receipt Date</th>
+                    <th>Student Name</th>
+                    <th>Total</th>
+
+                    <th>Bounce<br />Cheque</th>
+                    <th>Full Year</th>
+                    <th>First Half </th>
+                    <th>Second Half</th>
+
+                    <th>Admission Fee</th>
+                    <th>Tution Fees</th>
+
+                    <th>April</th>
+                    <th>May</th>
+                    <th>June</th>
+                    <th>July</th>
+                    <th>August</th>
+                    <th>September</th>
+                    <th>October</th>
+                    <th>November</th>
+                    <th>December</th>
+                    <th>January</th>
+                    <th>Feb</th>
+                    <th>March</th> 
+                    <th>Term I</th>
+                    <th>Term II</th> 
+                    <th>Misc Fee</th> 
+                    <th>Acadamic Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+
+                    decimal? ttl = 0.00M;
+                    decimal? gttl = 0.00M;
+
+                    decimal? TermFee1 = 0.00M;
+                    decimal? TermFee2 = 0.00M;
+                    decimal? AdmissionFee = 0.00M;
+                    decimal? MIscICard = 0.00M;
+                    decimal? MiscFees = 0.00M;
+                    decimal? MiscFeesMarathi = 0.00M;
+                    decimal? MiscCalender = 0.00M;
+                    decimal? MiscExamFees = 0.00M;
+                    decimal? MiscVVN = 0.00M;
+                    decimal? MiscComputerFees = 0.00M;
+
+                    decimal? ttl1 = 0.00M;
+                    decimal? gttl1 = 0.00M;
+
+                    decimal? TermFee11 = 0.00M;
+                    decimal? TermFee21 = 0.00M;
+                    decimal? AdmissionFee1 = 0.00M;
+                    decimal? MIscICard1 = 0.00M;
+                    decimal? MiscFees1 = 0.00M;
+                    decimal? MiscFeesMarathi1 = 0.00M;
+                    decimal? MiscCalender1 = 0.00M;
+                    decimal? MiscExamFees1 = 0.00M;
+                    decimal? MiscVVN1 = 0.00M;
+                    decimal? MiscComputerFees1 = 0.00M;
+
+                    decimal? Bounce = 0.00M;
+
+                    decimal? fullyear = 0.00M;
+                    decimal? firsthalf = 0.00M;
+                    decimal? secondhalf = 0.00M;
+
+                    decimal? Bounce1 = 0.00M;
+
+                    decimal? fullyear1 = 0.00M;
+                    decimal? firsthalf1 = 0.00M;
+                    decimal? secondhalf1 = 0.00M;
+                }
+                @foreach (var item in Model)
+                {
+                    ttl = item.TutionFees;
+                    TermFee1 = item.TermFee1;
+                    TermFee2 = item.TermFee2;
+                    AdmissionFee = item.AdmissionFee;
+                    MIscICard = item.MIscICard;
+                    MiscFees = item.MiscMiscFees;
+                    MiscFeesMarathi = item.MiscFeesMarathi;
+                    MiscCalender = item.MiscCalender;
+                    MiscExamFees = item.MiscExamFees;
+                    MiscVVN = item.MiscVVN;
+                    MiscComputerFees = item.MiscComputerFees;
+
+                    Bounce = item.Bounce ?? 0.00M;
+
+                    fullyear = item.FullYear ?? 0.00M;
+                    firsthalf = item.FirstHalf ?? 0.00M;
+                    secondhalf = item.SecondHalf ?? 0.00M;
+                    gttl = ttl + TermFee1 + TermFee2 + AdmissionFee + MIscICard + MiscFees + MiscFeesMarathi + MiscCalender + MiscExamFees + MiscVVN + MiscComputerFees + Bounce + fullyear + firsthalf + secondhalf;
+
+                <tr>
+                    <td>@item.FeeStudentID</td>
+                    <td style="text-align:right">@item.FeeReceiptNo</td>
+                    <td style="text-align:right">@string.Format("{0:dd-MM-yyyy}", item.FeeReceiptDate)</td>
+                    <td style="text-align:right">@item.FeeStudentName</td>
+                    <td style="text-align:right">@gttl</td>
+                    <td style="text-align:right">@item.Bounce</td>
+                    <td style="text-align:right">@item.FullYear</td>
+                    <td style="text-align:right">@item.FirstHalf</td>
+                    <td style="text-align:right">@item.SecondHalf</td> 
+                    <td style="text-align:right">@item.AdmissionFee</td>
+                    <td style="text-align:right">@item.TutionFees</td> 
+                    <th>@item.Apr</th>
+                    <th>@item.May</th>
+                    <th>@item.Jun</th>
+                    <th>@item.Jul</th>
+                    <th>@item.Aug</th>
+                    <th>@item.Sep</th>
+                    <th>@item.Oct</th>
+                    <th>@item.Nov</th>
+                    <th>@item.Dec</th>
+                    <th>@item.Jan</th>
+                    <th>@item.Feb</th>
+                    <th>@item.Mar</th> 
+
+                    <td style="text-align:right">@item.TermFee1</td>
+                    <td style="text-align:right">@item.TermFee2</td>
+                    
+                    <td style="text-align:right">@item.MiscMiscFees</td> 
+                    <td>Jun 2023 - May 2024</td>
+                </tr>
+                    ttl1 += ttl;
+                    gttl1 += gttl;
+                    TermFee11 += TermFee1;
+                    TermFee21 += TermFee2;
+                    AdmissionFee1 += AdmissionFee;
+                    MIscICard1 += MIscICard;
+                    MiscFees1 += MiscFees;
+                    MiscFeesMarathi1 += MiscFeesMarathi;
+                    MiscCalender1 += MiscCalender;
+                    MiscExamFees1 += MiscExamFees;
+                    MiscVVN1 += MiscVVN;
+                    MiscComputerFees1 += MiscComputerFees;
+                    Bounce1 += Bounce;
+
+
+                    fullyear1 += fullyear;
+                    firsthalf1 += firsthalf;
+                    secondhalf1 += secondhalf;
+                }
+
+                <tr>
+                </tr>
+            </tbody>
+            <tr>
+                <td colspan="4" style="text-align:right"><b>Total Amount</b></td>
+                <td style="text-align:right"><b>@gttl1</b></td>
+                <td style="text-align:right"><b>@Bounce1</b></td>
+                <td style="text-align:right"><b>@fullyear1</b></td>
+                <td style="text-align:right"><b>@firsthalf1</b></td>
+                <td style="text-align:right"><b>@secondhalf1</b></td>
+
+                <td style="text-align:right"><b>@AdmissionFee1</b></td>
+                <td style="text-align:right"><b>@ttl1</b></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td style="text-align:right"><b>@TermFee11</b></td>
+                <td style="text-align:right"><b>@TermFee21</b></td>
+                 
+                <td style="text-align:right"><b>@MiscFees1</b></td>
+               
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+    </div>
+    <input type="button" onclick="printDiv('printableArea')" value="Print" />
+    <br />
+    <br />
+
+</body>
+</html>
+
+
+
+
+

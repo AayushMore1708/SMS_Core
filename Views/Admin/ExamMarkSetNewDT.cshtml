@@ -1,0 +1,326 @@
+﻿@model SMS_Core.Models.tblExamMarkSet
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $('#ExamStartTime').timepicker({
+            timeFormat: 'HH:mm'
+              
+        });
+        $('#ExamEndTime').timepicker({
+            timeFormat: 'HH:mm'
+        });
+
+        //calculation
+        
+        $('#FormulationDaytoDayObservation').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+
+        });
+
+        $('#FormulationOralwork').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $('#FormulationPracticalExperiment').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+
+        });
+
+        $('#FormulationActivity').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $('#FormulationProject').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $('#FormulationTestOpenBook').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $('#FormulationHomeClasswork').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $('#FormulationOthers').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $('#FormulationOthers').change(function () {
+            $('#FormulationTotalA').val(parseInt($('#FormulationDaytoDayObservation').val() * 1) +
+                parseInt($('#FormulationOralwork').val() * 1) +
+                parseInt($('#FormulationPracticalExperiment').val() * 1) +
+                parseInt($('#FormulationActivity').val() * 1) +
+                parseInt($('#FormulationProject').val() * 1) +
+                parseInt($('#FormulationTestOpenBook').val() * 1) +
+                parseInt($('#FormulationHomeClasswork').val() * 1) +
+                parseInt($('#FormulationOthers').val() * 1)
+            );
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+
+        $('#SummativeTheory').change(function () {
+            $('#SummativeTotalB').val(parseInt($('#SummativeOralPractical').val() * 1) +
+                parseInt($('#SummativeTheory').val() * 1));
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $('#SummativeOralPractical').change(function () {
+            $('#SummativeTotalB').val(parseInt($('#SummativeOralPractical').val() * 1) +
+                parseInt($('#SummativeTheory').val() * 1));
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+
+        $('#SummativeOralPractical').change(function () {
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+            $('#TotalMark').val(parseInt($('#SummativeTotalB').val() * 1) +
+                parseInt($('#FormulationTotalA').val() * 1));
+        });
+
+        $("#ExamDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy'
+        });
+
+    });
+
+        //end calculation here  
+        
+
+       
+
+     
+
+     function Save_confirm1() {
+         var mri = $('#ExamMarkID').val()
+         $('#ExamMarkID1').val(mri); 
+
+         $('#BatchName').val($('#BatchN').val());
+
+         $('#ExamName').val($('#ename').val())
+         $('#CourseName').val($('#cname').val())
+
+            var r = confirm("Are you sure you want to Save !")
+            if (r == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+     }
+
+     var onSuccess = function (result) {
+         alert("Record Has Been Saved Successfully !!");
+         var ename = $('#ExamName').val();
+         var cname = $('#CourseName').val();
+         var bname = $('#BatchName').val();
+
+         $.ajax({
+             url: '@Url.Action("ExamMarkSetNewDTView")',
+             type: 'GET',
+             cache: false,
+             data: { examname: ename,coursename:cname,batchname:bname },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+</script>
+
+<style>
+    #mySpan {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+    }
+</style>
+
+<div class="panel-body">
+
+        @Html.ValidationSummary()  
+
+                <div> 
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                                <strong class="text-info">
+                                    Exam Mark Set
+                                </strong>
+                            </span>
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="text-info">
+                                        <th class="text-left"><span id="mySpan">Subject</span></th>
+                                        <th class="text-left"><span id="mySpan">Day to Day Observation</span></th>
+                                        <th class="text-left"><span id="mySpan">Oral Works</span></th>
+                                        <th class="text-left"><span id="mySpan">Practical Experiment</span></th>
+                                        <th class="text-left"><span id="mySpan">Activity</span></th>
+                                        <th class="text-left"><span id="mySpan">Project</span></th>
+                                        <th class="text-left"><span id="mySpan">Test/Open Book</span></th>
+                                        <th class="text-left"><span id="mySpan">Home/Class Work</span></th>
+                                        <th class="text-left"><span id="mySpan">Others</span></th>
+                                        <th class="text-left"><span id="mySpan"><b>Total A</b></span></th>
+                                        <th class="text-left"><span id="mySpan">Theory</span></th>
+                                        <th class="text-left"><span id="mySpan">Oral/Practical</span></th>
+                                        <th class="text-left"><span id="mySpan"><b>Total B</b></span></th>  
+                                        <th class="text-left"><span id="mySpan">Grand Total(A + B)</span></th>
+                                        <th class="text-left"><span id="mySpan">Exam Date</span></th>
+                                        <th class="text-left"><span id="mySpan">Start Time</span></th>
+                                        <th class="text-left"><span id="mySpan">End Time</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td >
+                                            @Html.HiddenFor(m => m.ExamName)
+                                            @Html.HiddenFor(m => m.CourseName)
+                                            @Html.HiddenFor(m => m.BatchName)
+                                            @Html.DropDownListFor(model => model.Subject, new SelectList(ViewBag.sbu, "SubjectName", "SubjectName"), new {@style="width:150px", @class = "form-control input-sm chosen-select " })
+                                        </td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationDaytoDayObservation, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationOralwork, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationPracticalExperiment, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationActivity, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationProject, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationTestOpenBook, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationHomeClasswork, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                          <td>  @Html.TextBoxFor(m => m.FormulationOthers, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.FormulationTotalA, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                             <td>  @Html.TextBoxFor(m => m.SummativeTheory, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.SummativeOralPractical, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.SummativeTotalB, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+
+
+                                        <td>  @Html.TextBoxFor(m => m.TotalMark, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+
+                                        <td>  @Html.TextBoxFor(m => m.ExamDate, null, new { @Style = "width:90px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.ExamStartTime, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+                                        <td>  @Html.TextBoxFor(m => m.ExamEndTime, null, new { @Style = "width:60px", @class = "form-control input-sm" })</td>
+
+                                        <td> <button class="btn btn-sm btn-primary btn-block" onclick="return Save_confirm1()" type="submit">&nbsp;&nbsp;+&nbsp;&nbsp;</button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="partialPlaceHolder1" class="col-sm-12">
+
+                        </div>
+                    </div>
+                </div>
+            
+ 
+    
+
+
+</div>
+
+
+

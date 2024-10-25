@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace SMS.Views.Home
+namespace SMS_Core.Views.Home
 {
     public class GridButtonMenu : PageModel
     {

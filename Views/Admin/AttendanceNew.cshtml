@@ -1,0 +1,201 @@
+﻿@{
+    // Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Attendance </title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#AttendanceDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $('#AttendanceTimeIn').timepicker({
+                timeFormat: 'HH:mm'
+            });
+
+            $('#cname').change(function () {
+                var selectedIDcn = $('#cname').val();
+                var SelectedIDbn = $.trim($('#BatchN').val());
+
+                 $.getJSON("@Url.Content("~/Admin/GetSubject")", { cname: selectedIDcn,bname: SelectedIDbn }, function (data) {
+                     $('#sbname').empty();
+                     $('#sbname').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#sbname').append("<option value=\"" + data[i]["Subject"] + "\">" + data[i]["Subject"] + "</option>");
+                }
+                });
+
+
+            });
+            //qryExamMarkSet need for subject multiple
+            $('#BatchN').change(function () {
+                var selectedIDcn = $('#cname').val();
+                var SelectedIDbn = $.trim($('#BatchN').val());
+
+                $.getJSON("@Url.Content("~/Admin/GetSubject")", { cname: selectedIDcn,bname: SelectedIDbn }, function (data) {
+                    $('#sbname').empty();
+                    $('#sbname').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#sbname').append("<option value=\"" + data[i]["Subject"] + "\">" + data[i]["Subject"] + "</option>");
+                }
+                });
+
+            });
+
+            $('#sbname').change(function () {
+                var cname = $('#cname').val();
+                var bname = $('#BatchN').val();
+                var sub = $('#sbname').val();
+                var attdate = $('#AttendanceDate').val();
+                var atttime = $('#AttendanceTimeIn').val();
+
+         $.ajax({
+             url: '@Url.Action("AttendanceNewDT")',
+             type: 'GET',
+             cache: false,
+             data: { coursename: cname, batchname: bname, subject: sub, AttendanceDate: attdate, AttendanceTime: atttime },
+             success: function (result) {
+                 $('#partialPlaceHolder').html(result);
+             }
+                });
+
+            });
+
+            // $('#footer').hide();
+
+
+            $('#frmsave').click(function (event) {
+               // $('#AttendanceDateX').val($('#AttendanceDate').val())
+                //$('#AttendanceTimeInX').val($('#AttendanceTimeIn').val())
+
+
+                if ($('#AttendanceDateX').val() != "" && $('#AttendanceTimeInX').val() != "" && $('#cname').val() != "" && $('#BatchN').val() != "" && $('#sbname').val() != "" ) {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                }
+                else {
+                    $('#frm').submit();
+                    return false;
+                }
+            }
+                else {
+                    alert("Kindly enter all the details ")
+                    return false;
+                }
+            });
+
+        });
+
+        var onSuccess = function (result) {
+         alert("Record Has Been Saved Successfully !!");
+          var cname = $('#cname').val();
+                var bname = $('#BatchN').val();
+                var sub = $('#sbname').val();
+                var attdate = $('#AttendanceDate').val();
+                var atttime = $('#AttendanceTimeIn').val();
+
+         $.ajax({
+             url: '@Url.Action("AttendanceNewDT")',
+             type: 'GET',
+             cache: false,
+             data: { coursename: cname, batchname: bname, subject: sub, AttendanceDate: attdate, AttendanceTime: atttime },
+             success: function (result) {
+                 $('#partialPlaceHolder').html(result);
+             }
+                });
+      }
+
+        var onFailure = function (result) {
+            //alert("fail");
+            $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+        }
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("View Attendance", "AttendanceViewDetails", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Attendance</h3>
+
+    <div class="panel">
+        <div class="panel-body">
+         
+            
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Attendance Date</label>
+                    <div class="col-lg-2">
+                        @Html.TextBox("AttendanceDate", DateTime.Now.ToString("dd-MMM-yyyy"), new { @Style = "width:150px", @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-1">Time</label>
+                    <div class="col-lg-1">
+                        @Html.TextBox("AttendanceTimeIn", "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Cource Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownList("cname", new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @class = "form-control input-sm chosen-select-deselect" })
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Batch Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownList("BatchN", new MultiSelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @class = "form-control input-sm chosen-select-deselect" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Subject</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownList("sbname", new SelectList(ViewBag.sbu, "SubjectName", "SubjectName"), "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="form-group">
+                    <div id="partialPlaceHolder" class="col-sm-6">
+
+                    </div>
+                </div>
+
+
+
+            
+
+            <div class="form-group">
+                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                <div class="col-lg-8">
+                    <input type="submit" id="frmsave" value="Save" class="btn btn-primary" />
+                    <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <script src="~/Content/js/chosen.jquery.js" type="text/javascript"></script>
+
+
+</body>
+</html>

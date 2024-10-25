@@ -1,0 +1,159 @@
+﻿@model IEnumerable<SMS_Core.Models.tblFeeSubCategory>
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<script type="text/javascript">
+   
+     var onSuccessd = function (result) {
+         alert("Record Has Been Deleted Successfully !!");         
+
+         $.ajax({
+             url: '@Url.Action("FeeSubCategoryView")',
+             type: 'GET',
+             cache: false,
+             //data: { FeePaymentId1: FeePaymentId1 },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Fee List</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+       .MyCssClass
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel"> 
+        
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Fee Sub Category List
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Fee Category</th>
+                                    <th>Fee Sub Category</th>
+                                    <th>Fee Type</th>
+                                    <th>Admission </th>
+                                    <th>Medium</th>
+                                    <th>Amount</th>
+                                    <!--<th>Payment Start Date</th>
+    <th>Payment End Date</th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.FeeCategoryName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FeeSubCategoryName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FeeType)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AdmissionType)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FeeMedium)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.FeeSubCategoryAmount)</td>
+                                    <!-- <td>@Html.DisplayFor(modelItem => item.PaymentStartDate)</td>
+    <td>@Html.DisplayFor(modelItem => item.PaymentEndDate)</td>
+       -->
+
+                                    <td>
+                                        @Html.ActionLink(" ", "FeeSubCategoryEdit", new { id = item.FeeSubCategoryId }, new { @class = "MyCssClassE" })
+                                        @* @Ajax.ActionLink(" ", "DeleteFeeSubCategory", new { id = item.FeeSubCategoryId }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccessd", Confirm = "Do you want to delete this record?" }, new { @class = "MyCssClass" }) *@
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+      
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+           // $('#dataTables-example').dataTable();
+
+            /*
+            $('#dataTables-example thead tr').clone(true).appendTo('#dataTables-example thead');
+            $('#dataTables-example thead tr:eq(1) th').each(function (i) {
+                if (i != 4) {
+                    var title = $(this).text(); 
+                    $(this).html('<input type="text"  />');
+
+                    $('input', this).on('keyup change', function () {
+                        if (table.column(i).search() !== this.value) {
+                            table
+                                // var searchTerm = this.value.toLowerCase(),
+                                //   regex = '\b' + searchTerm + '\b';
+                                // table.rows().search(regex, true, false).draw();
+
+                                .column(i)
+                                .search('\\b' + this.value + '\\b', true, false)
+                                .draw();
+                        }
+                    });
+                }
+
+            });
+            */
+
+            var table = $('#dataTables-example').DataTable(
+                {
+                    orderCellsTop: true,
+                    fixedHeader: true,
+
+                    "aaSorting": [],
+
+                     "iDisplayLength": -1,
+
+                    searchDelay: 0
+                });
+
+
+
+
+        });
+
+    </script>
+</body>
+</html>

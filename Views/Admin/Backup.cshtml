@@ -1,0 +1,52 @@
+﻿
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Backup and Restore DataBase</title>
+    <script type="text/javascript">
+
+  var onsuccess = function (result) {
+            alert("Backup has been taken successfully");
+
+        }
+
+        var onfailure = function (result) {
+            alert("There is an error while taking backup, Please try later or close browser and open again");
+        }
+
+    </script>
+
+</head>
+
+<body>
+   
+        <div>
+            <table cellpadding="10" cellspacing="10" style="border: solid 10px red; background-color: Skyblue;"
+                   width="90%" align="center">
+                <tr>
+                    <td style="height: 35px; background-color: Yellow; font-weight: bold; font-size: 16pt;
+                    font-family: Times New Roman; color: Red" align="center">
+                        Backup SQL Server DataBase
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+
+                        <button>Take a Backup</button>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+
+    
+    <br />
+    <br />
+</body>
+</html>  

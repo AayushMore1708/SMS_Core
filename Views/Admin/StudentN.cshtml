@@ -1,0 +1,205 @@
+﻿@model IEnumerable<SMS_Core.Models.qryStudentAdmission>
+@{
+    /**/
+
+    ViewBag.Title = "Student List";
+     Layout = null;
+}
+
+
+<div id="partialPlaceHolder12" class="col-sm-12">
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+        @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+        {
+            <text>
+                <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;&nbsp; @Html.ActionLink("NEW", "RegisterStudent", "Account")&nbsp;&nbsp;&nbsp;&nbsp;
+            </text>
+
+            <text>
+            </text>
+        }
+        Select Acadamic Year :  @Html.DropDownList("acadamicyear", new SelectList(ViewBag.ayear, "AcadamicYear", "AcadamicYear", ViewBag.ayr), "All", new { @style = "width:250", @class = "input-sm" })
+        @ViewBag.Desg
+    </div>
+    <div class="panel-heading">
+        <h4>
+            Student List
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table style="width:100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead class="text-info">
+                    <tr class="text-info">
+                        <th class="text-left">Action</th>
+                        <th class="text-left">
+                            Student Name
+                        </th>
+                        <th class="text-left">
+                            Login Name
+                        </th>
+                        <th class="text-left">
+                            Student Admission No
+                        </th>
+                        <th class="text-left">
+                            Student Admission Date
+                        </th>
+                        <th class="text-left">
+                            Course
+                        </th>
+                        <th class="text-left">
+                            Batch
+                        </th>
+                        <th class="text-left">
+                            Student Roll No
+                        </th>
+                        <th class="text-left">
+                            Student DOB
+                        </th>
+                        <th class="text-left">
+                            Student Parent Name
+                        </th>
+                        <th class="text-left">
+                            Student Parent Mobile
+                        </th>
+                        <th class="text-left">
+                            Student Parent Email
+                        </th>
+                        <th class="text-left">
+                            Student Photo
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="btn-group">
+                                    <button style="background-color:darkorange" data-toggle="dropdown" class="btn dropdown-toggle">
+                                        Details <span class="caret"></span>
+                                    </button>
+                                    @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+                                    {
+                                        <text>
+                                            <ul class="dropdown-menu">
+                                                <li>@Html.ActionLink("Details", "EditRegisterStudent", "Account", new { id = item.AspNetUserID, ida = item.StudentAdmissionId }, new { studentid = item.AspNetUserID, })</li>
+                                                <li>@Html.ActionLink("Upgrade", "UpgradeRegisterStudent", "Account", new { id = item.AspNetUserID }, new { studentid = item.AspNetUserID })</li>
+
+                                            </ul>
+                                        </text>
+                                    }
+
+
+                                </div>
+                            </td>
+
+                            <td>
+                                <b>  @Html.DisplayFor(modelItem => item.StudentFirstName)&nbsp;@Html.DisplayFor(modelItem => item.StudentMiddleName)&nbsp;@Html.DisplayFor(modelItem => item.StudentLastName) </b>&nbsp;
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.UserName)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentAdmissionNo)&nbsp;
+                            </td>
+                            <td>
+                                @string.Format("{0:dd-MM-yyyy}", item.StudentAdmissionDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudenntCourse)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentBatch)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentRollNo)&nbsp;
+                            </td>
+                            <td>
+                                @string.Format("{0:dd-MM-yyyy}", item.StudentDOB)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentParentName)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentParentMobile)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentParentEmail)&nbsp;
+                            </td>
+                            <td>
+                                <img src="~/Content/Upload/@item.StudentPhoto" width="100" height="100" />
+                                @Html.DisplayFor(modelItem => item.StudentPhoto)&nbsp;
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!--
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Student Details <div style="font-weight:800" id="abc"></div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="#Home" data-toggle="tab"><b>Student Details </b></a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="Home">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        -->
+
+    </div>
+</div>
+<br />
+
+<script>
+    $(document).ready(function () {
+        $('#acadamicyear').change(function () {
+
+             $.ajax({
+             url: '@Url.Action("StudentN")',
+             type: 'GET',
+             cache: false,
+                 data: { acadamicyear: $('#acadamicyear option:selected').text() },
+             success: function (result) {
+                 $('#partialPlaceHolder12').html(result);
+                 $('#footer').show();
+             }
+         });
+        });
+
+    });
+</script>
+
+<script src="~/Content/js/jquery.dataTables.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable();
+    });
+
+</script>
+
+
+

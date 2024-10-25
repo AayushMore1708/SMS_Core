@@ -1,0 +1,355 @@
+﻿@model IEnumerable<SMS_Core.Models.qryStudentAdmission>
+@{
+    /**/
+
+    ViewBag.Title = "Student List";
+    // Layout = null;
+}
+<script src="/Content/js/jquery.table2excel.js"></script>
+<div id="partialPlaceHolder1" class="col-sm-12">
+    <div style="font-size:18px;height:40px;vertical-align:top;margin-left:10px;">
+        <br />
+
+        @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+        {
+            <text>
+                <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;&nbsp; @Html.ActionLink("NEW", "RegisterStudent", "Account", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("For Export to Excel ", "StudentExcel", "Admin", "", new { target = "new" })
+            </text>
+
+
+            <text>
+                &nbsp;&nbsp;&nbsp; @Html.ActionLink("Fees Category", "FeeSubCategoryNew", "Admin", "", new { target = "new" })
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </text>
+            <text>
+                @Html.ActionLink("Fees Payment", "FeePayment", "Admin", "", new { target = "new" })
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </text>
+            <text>
+                &nbsp;&nbsp;
+                @Html.ActionLink("Student", "Student", "Admin", "", new { target = "new" })
+            </text>
+        }
+
+    </div>
+    <div class="panel-heading">
+        <h4>
+           Left Student List for Acadimic Year Jun 2023 - May 2024
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table style="width:100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead class="text-info">
+                    <tr class="text-info">
+                        <th class="noExl">Action</th>
+                        <th class="text-left">
+                            Std & Div
+                        </th>
+                        <th class="text-left">
+                            Admission Type
+                        </th>
+                        <th class="text-left">
+                            Medium
+                        </th>
+                        <th class="text-left">
+                            FeeID/UserID
+                        </th>
+
+                        <th class="text-left">
+                            Student Name
+                        </th>
+                        <th class="text-left">
+                            Father(First Guardian) Name
+                        </th>
+                        <th class="text-left">
+                            Email
+                        </th>
+                        <th class="text-left">
+                            Mobile
+                        </th>
+
+                        <th class="text-left">
+                            Mother(Second Guardian) Name
+                        </th>
+                        <th class="text-left">
+                            Email
+                        </th>
+                        <th class="text-left">
+                            Mobile
+                        </th>
+
+
+
+                        <th class="text-left">
+                            Date of Birth
+                        </th>
+
+
+
+                        <th class="noExl">
+                            LC No
+                        </th>
+                        <th class="noExl">
+                            Institute Name
+                        </th>
+                        <!--
+                                            <th class="noExl">
+                                                UserName
+                                            </th>
+
+                        <th class="noExl">
+                            Student Photo
+                        </th>
+                        <th class="noExl">
+                            Aadhar Card
+                        </th>
+                        <th class="noExl">
+                            Admission Form
+                        </th>
+                        <th class="noExl">
+                            Birth or Leaving Certificate
+                        </th>
+                        <th class="noExl">
+                            Caste Certificate
+                        </th>
+                            -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="noExl">
+                                <div class="btn-group noExl">
+                                    <button style="background-color:darkorange" data-toggle="dropdown" class="btn dropdown-toggle">
+                                        Details <span class="caret"></span>
+                                    </button>
+                                    @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+                                    {
+                                        <text>
+                                            <ul class="dropdown-menu">
+                                                <li>@Html.ActionLink("General Register Details", "EditRegisterStudent", "Account", new { studentid = item.AspNetUserID, id = item.AspNetUserID, ida = item.StudentAdmissionId }, new { target = "new" })</li>
+                                                <li>@Html.ActionLink("Fee Payment", "FeePaymentNew", "Admin", new { studentid = item.AspNetUserID, sclass = item.StudenntCourse, sbatch = item.StudentBatch, Feeid = item.Feeid }, new { target = "new" })</li>
+                                                <!-- <li>@Html.ActionLink("Student Ledger", "StudentLedger", "Admin", new { studentid = item.AspNetUserID, sclass = item.StudenntCourse, sbatch = item.StudentBatch, feeid = item.Feeid }, new { target = "new" })</li>
+
+                                                    <li>@Html.ActionLink("Upgrade", "UpgradeRegisterStudent", "Account", new { id = item.AspNetUserID }, new { studentid = item.AspNetUserID })</li>
+                                                    <li>@Html.ActionLink("LC View", "ViewGeneralPdf", "Account", new { id = item.AspNetUserID, ida = item.StudentAdmissionId, inst = item.StudentInstitution }, new { target = "new" })</li>
+                                                    <li>@Html.ActionLink("ICard", "IcardPrint", "Home", "", new { target = "new" })</li>
+                                                    <li>@Html.ActionLink("Bonafide Certificate", "ViewGeneralBoPdf", "Account", new { id = item.AspNetUserID }, new { target = "new" })</li>
+                                                -->
+                                            </ul>
+                                        </text>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudenntCourse) @Html.DisplayFor(modelItem => item.StudentBatch)
+                            </td>
+                            <td>
+                                <b> @Html.DisplayFor(modelItem => item.AdmissionType) </b>&nbsp;
+                            </td>
+
+                            <td>
+                                <b> @Html.DisplayFor(modelItem => item.Medium) </b>&nbsp;
+                            </td>
+
+
+                            <td>
+                                <b> @Html.DisplayFor(modelItem => item.Feeid) </b>&nbsp;
+                            </td>
+
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentName)&nbsp;
+
+                                @if (item.GRType != null)
+                                {
+                                    <text>(</text> @Html.DisplayFor(modelItem => item.GRType);<text>)</text>
+
+
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentFatherName)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstGuardianEmail)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentFatherMobile)&nbsp;
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentMotherName)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SecondGuardianEmail)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentMotherMobile)&nbsp;
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ImportDate)&nbsp;
+                            </td>
+
+
+
+                            <td class="noExl">
+                                @Html.DisplayFor(modelItem => item.StudentLCNo)&nbsp;
+                            </td>
+                            <td class="noExl">
+                                @Html.DisplayFor(modelItem => item.StudentInstitution)&nbsp;
+                            </td>
+                            <!--
+                                                <td class="noExl">
+                                                    @Html.DisplayFor(modelItem => item.UserName)&nbsp;
+                                                </td>
+
+
+                            <td class="noExl">
+                                <img src="~/Content/Upload/@item.StudentPhoto" width="100" height="100" /><br />
+                                <a href="~/Content/Upload/@item.StudentPhoto" target="_blank">@item.StudentPhoto</a>
+                            </td>
+
+                            <td class="noExl">
+                                <img src="~/Content/Upload/AadharCard/@item.AdharCardPhoto" width="100" height="100" /><br />
+                                <a href="~/Content/Upload/AadharCard/@item.AdharCardPhoto" target="_blank">@item.AdharCardPhoto</a>
+                            </td>
+
+                            <td class="noExl">
+                                <img src="~/Content/Upload/Admission/@item.AdmissionFormPhoto" width="100" height="100" />
+                                <a href="~/Content/Upload/Admission/@item.AdmissionFormPhoto" target="_blank">@item.AdmissionFormPhoto</a>
+                            </td>
+
+                            <td class="noExl">
+                                <img src="~/Content/Upload/BirthLeaving/@item.BirthLeavingCertificatePhoto" width="100" height="100" />
+                                <a href="~/Content/Upload/BirthLeaving/@item.BirthLeavingCertificatePhoto" target="_blank">@item.BirthLeavingCertificatePhoto</a>
+
+                            </td>
+
+                            <td class="noExl">
+                                <img src="~/Content/Upload/CasteCertificate/@item.CasteCertificatePhoto" width="100" height="100" />
+                                <a href="~/Content/Upload/CasteCertificate/@item.CasteCertificatePhoto" target="_blank">@item.CasteCertificatePhoto</a>
+                            </td>
+                                -->
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!--
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Student Details <div style="font-weight:800" id="abc"></div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="#Home" data-toggle="tab"><b>Student Details </b></a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="Home">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        -->
+
+    </div>
+    <br />
+
+</div>
+<br />
+
+
+
+<script>
+
+			$(function() {
+                $("buttonxx").click(function () {
+                    $("td:hidden").addClass("noExl");
+                    var x = $("#dataTables-example").clone();
+			        $(x).find("tr td a").replaceWith(function () {
+			            return $.text([this]);
+			        });
+
+
+			       // $("#table2excel").table2excel({
+					//exclude: ".noExl",
+			        //filename: "@ViewBag.coden" +"@ViewBag.mnthv"
+			        $(x).table2excel({
+                        exclude: ".noExl",
+                        fileext: ".xlsx",
+			            filename: "StudentExportedFromSystem"
+				});
+				 });
+			});
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#dataTables-example thead tr').clone(true).appendTo('#dataTables-example thead');
+        $('#dataTables-example thead tr:eq(1) th').each(function (i) {
+            if (i > 0) {
+                var title = $(this).text();
+
+                $(this).html('<input type="text"  />');
+
+                $('input', this).on('keyup change', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table
+                            // var searchTerm = this.value.toLowerCase(),
+                            //   regex = '\b' + searchTerm + '\b';
+                            // table.rows().search(regex, true, false).draw();
+
+                            .column(i)
+                            .search('\\b' + this.value + '\\b', true, false)
+                            .draw();
+                    }
+                });
+            }
+
+        });
+
+        var table = $('#dataTables-example').DataTable(
+            {
+                orderCellsTop: true,
+                fixedHeader: true,
+
+                "aaSorting": [],
+
+               // "iDisplayLength": -1,
+
+                searchDelay: 0
+            });
+
+
+    });
+
+</script>
+<script src="~/Content/js/jquery.dataTables.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.js"></script>
+
+

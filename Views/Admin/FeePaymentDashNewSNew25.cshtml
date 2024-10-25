@@ -1,0 +1,91 @@
+﻿@model IEnumerable<SMS_Core.Models.qryFeePaymentAY25>
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Fee Details</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th><b>Fee Paid @ViewBag.un</b></th>
+                        <th><b>Fee Balance</b></th>
+                        <th><b>Total Fee</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.feeP</td>
+                        <td>@ViewBag.feeB</td>
+                        <td>@ViewBag.feeT</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Fee Category   </th>
+                        <th>Fee Amount</th>
+
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var it in Model)
+                    {
+
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => it.FeeCategoryName)</td>
+                            <td>@Html.DisplayFor(modelItem => it.FeeActualAmount)</td>
+                            <td>
+
+                                Paid
+                                <!--&nbsp;@@Html.DisplayFor(modelItem => item.OnlineRefId)-->
+                            </td>
+                        </tr>
+
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</body>
+</html>

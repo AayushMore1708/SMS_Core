@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SMS_Core.Models.tblLessonPlanning>
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>View Lesson Planning</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("NEW", "LessonPlanningNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Lesson Planning
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Cource Name</th>
+                                    <th>Batch Name</th>
+                                    <th>Subject</th>
+                                    <th>Lecture Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                <tr>
+                                    @if (item.LessonPlanningCourseName != "")
+                                    {
+                                        <td>@Html.ActionLink(item.LessonPlanningCourseName, "LessonPlanningEdit", new { id = item.LessonPlanningId, LessonPlanningID1 = item.LessonPlanningId })</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Html.DisplayFor(modelItem => item.LessonPlanningCourseName)</td>
+                                    }
+                                    <td>@Html.DisplayFor(modelItem => item.LessonPlanningBatchName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LessonPlanningSubject)</td>
+                                    <td>
+                                        <table class="table   table-striped">
+                                            @foreach (var lpd in item.tblLessonPlanningDTs)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelItem => lpd.LessonPlanningLectureCode)</td>
+                                                    <td>@Html.DisplayFor(modelItem => lpd.LessonPlanningLectureTopic)</td> 
+                                                </tr>
+
+                                            }
+                                        </table>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+
+    </script>
+</body>
+</html>

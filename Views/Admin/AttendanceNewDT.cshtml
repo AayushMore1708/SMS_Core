@@ -1,0 +1,129 @@
+﻿@model IEnumerable<SMS_Core.Models.qryStudentAdmission>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.testd').change(function () {
+
+            var str = $(this).attr('name');
+            var desc = str.substr(str.length - 1, 1);
+
+            if ($(this).prop("checked")) {
+                $('#AttendanceStatusXS' + desc).val('Present');
+            } else {
+                $('#AttendanceStatusXS' + desc).val('Absent');
+            }
+
+            //alert($('#AttendanceStatusXS' + desc).val());
+
+            $('#AttendanceDateX' + desc).val($('#AttendanceDate').val());
+            $('#AttendanceTimeInX' + desc).val($('#AttendanceTimeIn').val());
+        });
+
+
+    });
+
+    
+
+</script>
+@{ 
+    var attn = ViewBag.att; 
+}
+<style>  
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+     
+</style>
+
+<div class="panel-body">
+
+    <div class="panel panel-default">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="text-info">
+                        <th class="text-left">Status</th>
+                        <th class="text-left">Name</th>
+                        <th class="text-left">Remarks</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                @if (attn.Count == 0)
+                {
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.Hidden("CourceNameX", @Model.ElementAt(i).StudenntCourse)
+                                    @Html.Hidden("BatchNameX", @Model.ElementAt(i).StudentBatch)
+                                    @Html.Hidden("StudentIDX", @Model.ElementAt(i).AspNetUserID)
+                                    @Html.Hidden("StudentUserNameX", @Model.ElementAt(i).UserName)
+                                    @Html.Hidden("StudentRollNumberX", @Model.ElementAt(i).StudentRollNo)
+                                    @Html.Hidden("StudentNameX", @Model.ElementAt(i).Name)
+                                    @Html.Hidden("SPhoto", @Model.ElementAt(i).StudentPhoto)
+                                    @Html.Hidden("AttendanceDateX" + i.ToString())
+                                    @Html.Hidden("AttendanceTimeInX" + i.ToString())
+                                    @Html.Hidden("AttendanceStatusXS" + i.ToString())
+
+                                    @Html.CheckBox("AttendanceStatusX" + i.ToString(), new { @class = "form-control input-sm testd" })
+                                </td>
+                                <td>
+                                    @Model.ElementAt(i).StudentName <br /><br />
+                                    <img src="~/Content/Upload/@Model.ElementAt(i).StudentPhoto" style="width:70px;height:70px" />
+                                </td>
+                                <td>@Html.TextBox("AttendanceRemarkX" + i.ToString(), "", new { @class = "form-control input-sm" })</td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                }
+                else
+                {
+                    <tbody>
+                        @for (int i = 0; i < attn.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <b> @ViewBag.att[i].AttendanceStatus </b>
+                                </td>
+                                <td>
+                                    @ViewBag.att[i].StudentRollNumber&nbsp;&nbsp;&nbsp; @ViewBag.att[i].StudentName<br /><br />
+                                    <img src="~/Content/Upload/@ViewBag.att[i].StudentPhoto" style="width:70px;height:70px" />
+                                </td>
+                                <td>
+                                    @ViewBag.att[i].AttendanceRemark
+                                </td>
+                                <td>
+                                    @* @Ajax.ActionLink(" ", "AttendanceNewDTEdit", new { id = @ViewBag.att[i].AttendanceStudentID }, new AjaxOptions {  UpdateTargetId = "partialPlaceHolder" }, new { @class = "MyCssClassE" }) *@
+                                    @* Go To AttendanceNewDTEdit *@
+
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+
+                }
+
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+

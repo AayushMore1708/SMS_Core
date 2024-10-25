@@ -1,0 +1,268 @@
+﻿@model SMS_Core.Models.tblFeePaymentDT
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#FeeCategoryName').val($('#FeeCategory').val());
+
+        $('#FeeSubCategoryName').val($('#FeeCourseName').val());
+
+        //$('#PaymentMonths').val('0');
+
+        var SCat = $('#FeeCourseName').val();
+        var Cat = $('#FeeCategoryName').val();
+        var myObject = { category: Cat, subcategory: SCat };
+        /* Request the partial view with .get request. */
+        $.getJSON('/Admin/GetFee/', myObject, function (data) {
+            $('#FeeActualAmount').val(data);
+            $('#FeeAmountPaid').val(data);
+        });
+
+        $.getJSON('/Admin/GetFeeT/', myObject, function (data) {
+            $('#FeeType').val(data);
+        });
+
+        if ($('#FeeCategoryName').val() == "Full Yearly Fees in Single Installment(All)" || $('#FeeCategoryName').val() == "First Half Yearly Fees(All)" || $('#FeeCategoryName').val() == "Second Half Yearly Fees(All)") {
+                $.ajax({
+                    url: '@Url.Action("FeePaymentDashFull")',
+                    type: 'GET',
+                    cache: false,
+                    data: { catg: Cat, crs: SCat },
+                    success: function (result) {
+                        $('#feedtl').html(result);
+                    }
+                });
+            }
+            else {
+                $('#feedtl').html("");
+            }
+
+
+        $('#FeeCategoryName').change(function () {
+            //$('#PaymentMonths').val('0');
+            var SCat = $('#FeeCourseName').val();
+            var Cat = $('#FeeCategoryName').val();
+            var feed = $('#FeePaymentId1').val();
+            var myObject = { category: Cat, subcategory: SCat};
+            var myObjectf = { category: Cat, subcategory: SCat, Feeid: feed };
+             /* Request the partial view with .get request. */
+             $.getJSON('/Admin/GetFee/', myObject, function (data) {
+                 $('#FeeActualAmount').val(data);
+                 $('#FeeAmountPaid').val(data);
+             });
+
+            $.getJSON('/Admin/GetFeeT/', myObject, function (data) {
+                $('#FeeType').val(data);
+            });
+
+            $.getJSON('/Admin/GetFeeDbl/', myObjectf, function (data) {
+                if (data == $('#FeeCategoryName').val()) {
+                    alert(data + ' is already selected, Please select another')
+                    $('#FeeActualAmount').val('');
+                    $('#FeeAmountPaid').val('');
+                    $('#FeeType').val('');
+                    $('#FeeCategoryName').val('');
+                }
+            });
+
+             if ($('#FeeCategoryName').val() == "Full Yearly Fees in Single Installment(All)" || $('#FeeCategoryName').val() == "First Half Yearly Fees(All)" || $('#FeeCategoryName').val() == "Second Half Yearly Fees(All)") {
+                $.ajax({
+                    url: '@Url.Action("FeePaymentDashFull")',
+                    type: 'GET',
+                    cache: false,
+                    data: { catg: Cat, crs: SCat },
+                    success: function (result) {
+                        $('#feedtl').html(result);
+                    }
+                });
+            }
+            else {
+                $('#feedtl').html("");
+            }
+
+         });
+
+
+     /*
+        $('#FeePaymentMethod').change(function () {
+            if ($('#FeePaymentMethod').val() != "") {
+                if ($('#FeePaymentMethod').val() == "Single Installment") {
+                    $('#DiscountPerc').val('3')
+                }
+                else {
+                    $('#DiscountPerc').val('1.5')
+                }
+            }
+        });
+
+
+        $('#PaymentMonths').change(function () {
+            $('#PaymentMonthsAmt').val(Math.round($('#FeeActualAmount').val() * $('#PaymentMonths').val()));
+            $('#FeeDiscount').val(Math.round($('#PaymentMonthsAmt').val() * $('#DiscountPerc').val() / 100));
+            $('#FeeAmountPaid').val(Math.round($('#PaymentMonthsAmt').val() - $('#FeeDiscount').val()));
+        });
+
+        $('#DiscountPerc').change(function () {
+            $('#FeeDiscount').val(Math.round($('#PaymentMonthsAmt').val() * $('#DiscountPerc').val() / 100));
+            $('#FeeAmountPaid').val(Math.round($('#PaymentMonthsAmt').val() - $('#FeeDiscount').val()));
+        });
+        */
+
+        });
+
+
+     function Save_confirm1() {
+         var mri = $('#FeePaymentId').val()
+         if ($('#FeeAmountPaid').val() != "") {
+             $('#FeePaymentId1').val(mri);
+             // $('#LessonPlanningSubjectdt').val($('#LessonPlanningSubject').val());
+             var r = confirm("Are you sure you want to Save !")
+             if (r == true) {
+                 return true;
+             }
+             else {
+                 return false;
+             }
+         }
+         else {
+
+             alert("Please enter Fee Amount Paying");
+             return false;
+         }
+     }
+
+     var onSuccess = function (result) {
+        // alert("Record Has Been Saved Successfully !!");
+         var mria = $('#FeePaymentId').val();
+
+         $.ajax({
+             url: '@Url.Action("FeePaymentNewDTStdView")',
+             type: 'GET',
+             cache: false,
+             data: { FeePaymentId1: mria },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+
+         $('#FeeCategoryName').val('')
+        // $('#FeeSubCategoryName').val('')
+         $('#FeeType').val('')
+         $('#multMonths').val('')
+         $('#multMonths').trigger("chosen:updated");
+         $('#Months').val('')
+         $('#Years').val('')
+         $('#FeeActualAmount').val('')
+         $('#FeeFine').val('')
+         $('#FeeDiscount').val('')
+         $('#FeeAmountPaid').val('')
+
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+
+
+
+</script>
+
+<div id="partial" class="panel-body">
+   
+        @Html.ValidationSummary()
+
+
+        @Html.Hidden("FeePaymentId1")
+        @Html.Hidden("FeeTotalAmount2")
+
+        <div class="form-group">
+
+            <div class="col-sm-12">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                            <strong class="text-info">
+                                Fee Details (Click on + to add)
+                            </strong>
+                        </span>
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="text-info">
+                                    <th class="text-left">Fee Category</th>
+
+                                    <th class="text-left">Fee Type</th>
+                                    <!--
+                                    <th class="text-left">Fee Actual Amount</th>
+
+    <th class="text-left">Fee Payment Method</th>
+    <th class="text-left">Discount %</th>
+    <th class="text-left">Fee Discount</th>
+        -->
+                                    <th class="text-left">Fee Amount</th>
+
+                                    <th class="text-left"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DropDownListFor(model => model.FeeCategoryName, new SelectList(ViewBag.cat, "FeeCategoryName", "FeeCategoryName"), "", new { @class = "form-control input-sm" })
+                                        @Html.HiddenFor(model => model.FeeSubCategoryName, new { @class = "form-control input-sm" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(model => model.FeeType, new { @ReadOnly = "True", @class = "form-control input-sm" })
+                                    </td>
+                                    <!--
+                                    <td>@Html.TextBoxFor(model => model.FeeActualAmount, new { @ReadOnly = "True", @class = "form-control input-sm" })</td>
+
+
+    <td> @Html.DropDownListFor(model => model.FeePaymentMethod, new SelectList(new[] { "Single Installment", "First Installment", "Second Installment" }), "", new { @class = "form-control input-sm" })</td>
+
+     <td>  @Html.TextBoxFor(model => model.DiscountPerc, "0", new { @class = "form-control input-sm" })</td>
+    <td>  @Html.TextBoxFor(model => model.FeeDiscount, "", new { @class = "form-control input-sm" })</td>
+    -->
+
+                                <td>
+                                    @Html.TextBoxFor(model => model.FeeAmountPaid, "", new { @ReadOnly = "True", @class = "form-control input-sm" })
+
+                                    <table id="feedtl">
+                                    </table>
+                                </td>
+
+                                    <td> <button id="abcd" class="btn btn-sm btn-primary btn-block" onclick="return Save_confirm1()" type="submit">&nbsp;&nbsp;+&nbsp;&nbsp;</button></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="partialPlaceHolder1" class="col-sm-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    
+
+
+</div>
+
+
+

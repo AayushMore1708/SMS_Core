@@ -1,0 +1,118 @@
+﻿@model IEnumerable<SMS_Core.Models.EmployeeAttN>
+@{
+    ViewBag.Title = "AttendanceTable";
+    <!--Get number of days of current month-->
+    var DaysInmonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+    <!--Create a CurrentName field-->
+    var CurrentName = "";
+}
+
+<h3>Employee Attendance Report for the month of @ViewBag.mnt</h3>
+
+<div class="panel">
+    <div class="panel-body">
+        @using (Html.BeginForm("AttendanceEmpViewDetails", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+        {
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Month</label>
+                <div class="col-lg-2">
+                    @Html.DropDownList("mnt", new List<SelectListItem>
+    {
+               new SelectListItem() {Value = "0", Text="Please Select Month"},
+                        new SelectListItem() {Value = "1", Text="January"},
+                        new SelectListItem() {Value = "2", Text="February"},
+                        new SelectListItem() {Value = "3", Text="March"},
+                        new SelectListItem() {Value = "4", Text="April"},
+                        new SelectListItem() {Value = "5", Text="May"},
+                        new SelectListItem() {Value = "6", Text="June"},
+                        new SelectListItem() {Value = "7", Text="July"},
+                        new SelectListItem() {Value = "8", Text="August"},
+                        new SelectListItem() {Value = "9", Text="September"},
+                        new SelectListItem() {Value = "10", Text="October"},
+                        new SelectListItem() {Value = "11", Text="November"},
+                        new SelectListItem() {Value = "12", Text="December"}
+
+
+
+    }, new { @class = "form-control input-sm" })
+                </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                <div class="col-lg-8">
+                    <input type="submit" id="frmsave" value="View" class="btn btn-primary" />
+
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+
+
+<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <!--Loop all the days of month and print it-->
+            @for (var numb = 1; numb <= DaysInmonth; numb++)
+            {
+                <th>@numb</th>
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        <!--Loop model-->
+        @foreach (var emp in Model)
+        {
+            //if Name is repeated, skip
+            if (CurrentName != emp.EmployeeName)
+            {
+                // Set Name
+                CurrentName = emp.EmployeeName;
+                <tr>
+                    <!--print employee name one time only at the start of row-->
+                    <td>@emp.EmployeeName</td>
+
+                    <!--loop all days of month-->
+                    @for (var numb = 1; numb <= DaysInmonth; numb++)
+                    {
+                        <td>
+                            @{
+                                <!--print only that date time value which is equal to current date(as it will match column header) and current employee name, else print empty-->
+                                var GetThatDayValue = Model.Where(a => a.AttendanceDate.Value.Day == numb && a.EmployeeName == emp.EmployeeName).OrderBy(x => x.AttendanceTimeIn).ToList();
+
+                                //start
+                                foreach (var item in GetThatDayValue)
+                                {
+
+                                    var DD = item != null ? item.AttendanceTimeIn + '-' + item.AttendanceTimeOut : "";
+                                    <text> @DD   </text><br />
+                                }
+
+                                //end
+
+                            }
+                        </td>
+                    }
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<script src="~/Content/js/jquery.dataTables.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+
+</script>

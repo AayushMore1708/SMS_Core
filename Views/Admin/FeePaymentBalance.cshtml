@@ -1,0 +1,123 @@
+﻿ 
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>View Fee Payment</title>
+    <style>
+        html, body {
+            height: 100%;
+        } 
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassP
+{
+  background:url(@Url.Content("~/Content/ico/Print.jpg")) no-repeat;display:block; height:24px; width:24px;
+}
+
+    </style>
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div class="panel-body">
+            <div class="col-lg-12">
+                
+                <div class="form-group">
+                    @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Select Acadamic Year</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("acadamicyear", new SelectList(ViewBag.ayear, "AcadamicYear", "AcadamicYear", ViewBag.ayr), new { @style = "width:250", @class = "input-sm" })<br />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Select Course</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("cname", new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @style = "width:250", @class = "input-sm" })<br />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-2"> Select Batch</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("bname", new SelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @style = "width:250", @class = "input-sm" })<br />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-2"> &nbsp;</label>
+                            <div class="col-lg-4">
+                                <input type="submit" id="frmsave" value="Balance Payment" class="btn btn-primary" />
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+                
+                <br /><br />
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Fee Payment Balance
+                    </div>
+                    <div class="panel-body" id="panelbalance">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src="~/Content/js/jquery.dataTables.js"></script>
+        <script src="~/Content/js/dataTables.bootstrap.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $('#frmsave').click(function (event) {
+                 
+                   // $('#frm').submit();
+                     var cname = $('#cname').val();
+                 var bname = $('#bname').val();
+                 var acadamicyear = $('#acadamicyear').val();
+
+         $.ajax({
+             url: '@Url.Action("FeePaymentBalanceV")',
+             type: 'GET',
+             cache: false,
+             data: { cname: cname, bname: bname, acadamicyear: acadamicyear},
+             success: function (result) {
+                 $('#panelbalance').html(result);
+             }
+                });
+                        return false;
+                 
+            });
+             
+
+            $('#dataTables-example').dataTable();
+        });
+
+        </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SMS.Models;
+using SMS_Core.Models;
 
 namespace SMS_Core.Models
 {
@@ -22,5 +22,6 @@ namespace SMS_Core.Models
 
         // Define your DbSets (tables) here
         public DbSet<tblStudentAdmission> tblStudentAdmission { get; set; }
+        public DbSet<tblTimeTableHD> tblTimeTableHD { get; set; }
     }
 }

@@ -11,9 +11,12 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class tblTimeTableDT
     {
+        [Key]
         public int TimeTableDTId { get; set; }
         public Nullable<int> TimeTableId { get; set; }
         public string TimeTableWeekDay { get; set; }
@@ -23,7 +26,7 @@ namespace SMS_Core.Models
         public string TimeTableWeekDayEmp { get; set; }
         public string RoomNo { get; set; }
         public string AcadamicYear { get; set; }
-    
+
         public virtual tblTimeTableHD tblTimeTableHD { get; set; }
     }
 }

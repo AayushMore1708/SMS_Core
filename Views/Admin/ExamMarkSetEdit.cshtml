@@ -1,0 +1,147 @@
+﻿
+@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Exam Mark Set Edit</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () { 
+            var ename = '@ViewBag.examname'
+            var cname = '@ViewBag.coursename'
+            var bnames = '@ViewBag.batchname'
+
+         $.ajax({
+             url: '@Url.Action("ExamMarkSetNewDTView")',
+             type: 'GET',
+             cache: false,
+             data: { examname: ename,coursename:cname,batchname:bnames },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                if ($('#ename').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+
+                    }
+                }
+                else {
+                    alert("Examname should not be blank")
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                if ($('#ename').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                }
+                else {
+                    $('#frm').submit();
+                    return false;
+                }
+            }
+                else {
+                    alert("Examname should not be blank")
+                    return false;
+                }
+            });
+
+
+            $('#ename').val('@ViewBag.examname').trigger("chosen:updated");
+            $('#cname').val('@ViewBag.coursename').trigger("chosen:updated");
+            $('#BatchN').val('@ViewBag.batchname').trigger("chosen:updated");
+
+        });
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+        {
+            <text>
+                <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("EXAM TERM", "ExamTermNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("EXAM NAME", "ExamNameNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("EXAM GRADE POINT", "GradePointNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("SET EXAM MARKS", "ExamMarkSet", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            </text>
+        }
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("STUDENT MARKS", "StudentMark", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp;<a href="#" id="sav" class="btn btn-primary">SAVE & CLOSE</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Exam Mark Set Edit</h3>
+
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Exam Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownList("ename", new SelectList(ViewBag.et, "ExamId", "ExamDesc"), "", new { @class = "form-control input-sm chosen-select" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Cource Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownList("cname", new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @class = "form-control input-sm chosen-select" })
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Batch Name</label>
+                    <div class="col-lg-4">
+                        @Html.ListBox("BatchN", new MultiSelectList(ViewBag.bat, "BatchName", "BatchName"), new { @class = "form-control input-sm chosen-select" })
+                    </div>
+                </div>
+            }
+            <br />
+            <div class="form-group">
+                <div id="partialPlaceHolder">
+                    @* @Html.Action("ExamMarkSetNewDT") *@
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <script src="~/Content/js/chosen.jquery.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+            '.chosen-select-width': { width: "100%" }
+        }
+                                      //for (var selector in config) {
+                                      //    $(selector).chosen(config[selector]);
+                                     // }
+    </script>
+</body>
+</html>

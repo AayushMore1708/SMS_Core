@@ -1,0 +1,226 @@
+﻿@model SMS_Core.Models.tblFeePaymentDTAY25
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var mria = $('#FeePaymentId').val(); 
+        var FeeID1 = $('#FeeID').val();
+         $.ajax({
+             url: '@Url.Action("FeePaymentNewDTView25")',
+             type: 'GET',
+             cache: false,
+             data: { FeePaymentId1: mria, FeeID: FeeID1 },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+
+
+
+        $('#FeeCategoryName').change(function () { 
+            var SCat = $('#FeeCourseName').val();
+            var Cat = $('#FeeCategoryName').val();
+            var admtp = $('#AdmissionType').val();
+            var med = $('#Medium').val();
+            var feed = $('#FeeID').val();
+            var myObject = { category: Cat, subcategory: SCat, admissionyype: admtp, medium: med};
+           
+            $.getJSON('/Admin/GetFee25/', myObject, function (data) {
+                $('#FeeActualAmount').val(data);
+                $('#FeeAmountPaid').val(data);
+            });
+
+
+
+            if ($('#FeeCategoryName').val() == "Full Yearly Fees in Single Installment" || $('#FeeCategoryName').val() == "First Half Yearly Fees" || $('#FeeCategoryName').val() == "Second Half Yearly Fees") {
+                $.ajax({
+                    url: '@Url.Action("FeePaymentDashFull")',
+                    type: 'GET',
+                    cache: false,
+                    data: { catg: Cat, crs: SCat, admissionyype: admtp, medium: med },
+                    success: function (result) {
+                        $('#feedtl').html(result);
+                    }
+                });
+            }
+            else {
+                $('#feedtl').html("");
+            }
+        });
+
+        });
+
+
+     function Save_confirm1() {
+         var mri = $('#FeePaymentId').val()
+         if ($('#FeeAmountPaid').val() != "" && $('#FeeCategoryName').val() != "" && $('#FeeStudentName').val() != "" ) {
+             $('#FeePaymentId1').val(mri);
+            // alert($('#FeeStudentName').val());
+            // var r = confirm("Are you sure you want to Save !")
+            // if (r == true) {
+             //    return true;
+            // }
+            // else {
+            //     return false;
+             //}
+         }
+         else {
+             alert("Please enter Fee Amount Paying or Fee Category or Student name");
+             return false;
+         }
+     }
+
+     var onSuccess = function (result) {
+        // alert("Record Has Been Saved Successfully !!");
+
+         var cname = $('#FeeCourseName').val();
+         var bname = $('#FeeBatchName').val();
+         var feeid = $('#FeeStudentName').val();
+
+         $.getJSON("@Url.Content("~/Admin/GetCategoryNew25")", { cname: cname, bname: bname, feeid:feeid }, function (data) {
+                    $('#FeeCategoryName').empty();
+                    $('#FeeCategoryName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeCategoryName').append("<option value=\"" + data[i]["FeeCategoryName"] + "\">" + data[i]["FeeCategoryName"] + "</option>");
+                }
+            });
+
+
+
+
+         var mria = $('#FeePaymentId').val();
+         var FeeID1 = $('#FeeID').val();
+         $.ajax({
+             url: '@Url.Action("FeePaymentNewDTView25")',
+             type: 'GET',
+             cache: false,
+             data: { FeePaymentId1: mria, FeeID: FeeID1 },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+
+         $('#FeeCategoryName').val('')
+         //$('#FeeSubCategoryName').val('')
+        // $('#FeeType').val('')
+        // $('#multMonths').val('')
+         //$('#multMonths').trigger("chosen:updated");
+       //  $('#Months').val('')
+       //  $('#Years').val('')
+         $('#FeeActualAmount').val('')
+        // $('#FeeFine').val('')
+         //$('#FeeDiscount').val('')
+         $('#FeeAmountPaid').val('')
+
+         $('#FeeDiscount').val('');
+         $('#DiscountPerc').val('');
+
+
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+</script>
+
+<div class="panel-body">
+    
+        @Html.ValidationSummary()
+
+        @Html.Hidden("FeePaymentId1")
+        @Html.Hidden("FeeTotalAmount2")
+
+        @Html.Hidden("AdmissionType")
+        @Html.Hidden("Medium")
+
+
+
+        <div class="form-group">
+
+            <div class="col-sm-12">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                            <strong class="text-info">
+                                Fee Details (Click on + to add)
+                            </strong>
+                        </span>
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="text-info">
+                                    <th class="text-left">Fee Category</th>
+                                    <th class="text-left">Fee Actual Amount</th>
+                                    <!--
+
+                                                                <th class="text-left">Fee Type</th>
+
+                                    <th class="text-left">Fee Payment Method</th>
+
+                                        -->
+
+                                    <th class="text-left">
+                                        Fee Amount &nbsp;
+                                    </th>
+
+                                    <th class="text-left"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DropDownListFor(model => model.FeeCategoryName, new SelectList(ViewBag.cata, "FeeCategoryName", "FeeCategoryName"), "", new { @class = "form-control input-sm" })
+                                        @Html.HiddenFor(model => model.FeeSubCategoryName, new { @class = "form-control input-sm" })
+                                        @Html.HiddenFor(model => model.FeeID, new { @class = "form-control input-sm" })
+                                    </td>
+
+
+                                    <td>@Html.TextBoxFor(model => model.FeeActualAmount, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                                    <!--
+                                    <td>
+                                                                            @Html.TextBoxFor(model => model.FeeType, new { @class = "form-control input-sm" })
+                                                                        </td>
+                                            <td> @Html.DropDownListFor(model => model.FeePaymentMethod, new SelectList(new[] { "Single Installment", "First Installment", "Second Installment" }), "", new { @class = "form-control input-sm" })</td>
+
+
+                                            -->
+                                    <td>
+                                        @Html.TextBoxFor(model => model.FeeAmountPaid, new { @Readonly = true, @class = "form-control input-sm" })
+                                        <table id="feedtl">
+                                        </table>
+
+                                    </td>
+
+                                    <td> <button id="abcd" class="btn btn-sm btn-primary btn-block" onclick="return Save_confirm1()" type="submit">&nbsp;&nbsp;+&nbsp;&nbsp;</button></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="partialPlaceHolder1" class="col-sm-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    
+
+
+</div>
+
+
+

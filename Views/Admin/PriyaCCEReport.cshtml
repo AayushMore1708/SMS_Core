@@ -1,0 +1,371 @@
+﻿@model IEnumerable<SMS_Core.Models.qryExamMarkObtained>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PriyaCCEReport</title>
+    <style>
+        #mySpan {
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <table border="0" width="1400">
+        <tr>
+            <td colspan="2" style="text-align:center;font-size:30px">
+                <b> POORNA PRAJNA EDUCATION CENTRE</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <b> Bharucha Road, near Dahisar station, Dahisar (east), Mumbai 4000068.</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <b>CONTINUOUS COMPREHENSIVE EVALUATION ( @ViewBag.ayr)</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <b> @ViewBag.ed </b>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Student Name : @ViewBag.nm
+            </td>
+
+            <td>
+                Roll No. : @ViewBag.rol
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table border="1" width="1440">
+                    <tr>
+                        <td colspan="3" style="text-align:center">STD. & DIV. :-  @ViewBag.cname  &nbsp; @ViewBag.bname</td>
+                        <td style="text-align:center" colspan="9">Formative Evaluation </td>
+                        <td style="text-align:center" colspan="3">Summative Evaluation</td>
+                        <td rowspan="2"><span id="mySpan">Grand Total (A + B)</span></td>
+                        <td rowspan="2"><span id="mySpan">Grade</span></td>
+                        <td rowspan="2"><span id="mySpan">Remarks</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align:center">DETAILS</td>
+
+                        <td><span id="mySpan">Day to Day Observation</span></td>
+                        <td><span id="mySpan">Oral Work</span></td>
+                        <td><span id="mySpan">Practical / Experiment</span></td>
+                        <td><span id="mySpan">Activity</span></td>
+                        <td><span id="mySpan">Project</span></td>
+                        <td><span id="mySpan">Test/Open book</span></td>
+                        <td><span id="mySpan">Home/Class work</span></td>
+                        <td><span id="mySpan">Others</span></td>
+                        <td><span id="mySpan">Total (A)</span></td>
+                        <td><span id="mySpan">Theory</span></td>
+                        <td><span id="mySpan">Oral/Practical</span></td>
+                        <td><span id="mySpan">Total (B)</span></td>
+                    </tr>
+
+                    @foreach (var sem in ViewBag.sm)
+                    {
+                        int i = 1;
+                        if (sem.cnt>0)
+                        {
+                             
+
+                        <tr>
+                            <td style="width:10px">NO</td>
+                            <td colspan="2">SUBJECT</td>
+                            <td colspan="15">@sem.TermName</td>
+                            @{
+
+                            }
+                        </tr>
+                                }
+
+                        foreach (var item in Model)
+                        {
+                            if (item.TermName == sem.TermName)
+                            {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.SubjectName</td>
+                                <td>
+                                    <table border="1">
+                                        <tr>
+                                            <td>
+                                                MARKS OBTAINED
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>MAXIMUM MARKS</td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationDaytoDayObservationObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationDaytoDayObservation</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+                                <td>
+
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationOralworkObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationOralwork</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationPracticalExperimentObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationPracticalExperiment</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationActivityObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationActivity</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationProjectObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationProject</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationTestOpenBookObtained </td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationTestOpenBook</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationHomeClassworkObtained </td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationHomeClasswork</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationOthersObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationOthers</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.FormationTotalAObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.FormationTotalA</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.SummativeTheoryObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.SummativeTheory</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.SummativeOralPracticalObtained </td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.SummativeOralPractical</td>
+
+                                        </tr>
+                                    </table>
+
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>@item.SummativeTotalBObtained</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@item.SummativeTotalB</td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                @{
+                                    var ftao = item.FormationTotalAObtained;
+                                    var stbo = item.SummativeTotalBObtained;
+                                    var ttab = (ftao + stbo);
+
+                                    @ttab
+
+                                                }
+
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @{
+                                    var fta = item.FormationTotalA;
+                                    var stb = item.SummativeTotalB;
+                                    var ttap = (fta + stb);
+                                    @ttap
+
+                                                }
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
+
+                                </td>
+                                <td>
+                                    <table>
+
+                                        <tr>
+                                            <td>
+
+                                                @{
+                                    var gb = "";
+                                    var gbd = "";
+                                }
+                                @foreach (var gde in ViewBag.gd)
+                                                {
+                                    if (ttab <= gde.FromRange && ttab >= gde.ToRange)
+                                    {
+                                        gb = @gde.Grade;
+                                        gbd = gde.Description;
+                                    }
+                                }
+
+                                @gb
+
+                            </td>
+
+
+
+                        </tr>
+
+                    </table>
+
+
+                </td>
+
+                <td>
+
+                    <table>
+
+
+                        <tr>
+
+                            <td>  @gbd </td>
+
+
+                        </tr>
+
+                    </table>
+
+
+                </td>
+
+
+
+
+
+
+
+            </tr>
+
+                                                i++;
+                            }
+                        }
+                    }
+                    </table>
+            </td> 
+        </tr>
+                      </table>
+</body>
+</html>

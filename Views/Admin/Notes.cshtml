@@ -1,0 +1,152 @@
+﻿@model IEnumerable<SMS_Core.Models.tblAssignmentNote>
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Notes</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Notes&nbsp;&nbsp;&nbsp;  <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New", "NotesNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Title Note</th>
+                                    <th>Notes Description</th>
+                                    <th>Notes File</th>
+                                    <th>Notes Video</th>
+                                    <th>Cource Name</th>
+                                    <th>Batch Name</th>
+                                    <th>Subject</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.AssignTitleNotes)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.AssignDescriptionNotes)</td>
+
+                                        <td><a href="/Content/Upload/@item.NotesUpload" target="_blank">View Notes</a></td>
+                                        <td>
+                                            @Html.ActionLink("Youtube Link", "Youtube", "Home", new { name = item.YoutubeLink }, new { studentid = item.YoutubeLink,  target = "myModal", @class = "btn btn-primary btn-sm" })
+
+                                            
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.CourseName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.BatchName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+                                        <td>
+                                            @Html.ActionLink(" ", "NotesEdit", new { id = item.AssignmentNotesId, CourseName = item.CourseName, BatchName = item.BatchName }, new { @class = "MyCssClassE" })
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                         <div style="font-weight:800" id="abc"></div>
+                                    </div>
+                                    <div class="panel-body">
+                                        
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="Home">
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var studentid;
+            var frametarget;
+            $('.btn-sm').click(function () {
+                frametarget = $(this).attr('href');
+                var targetmodal = $(this).attr('target');
+                studentid = $(this).attr('studentid');
+                $('#abc').html(studentid);
+
+                if (targetmodal == undefined) {
+                    targetmodal = '#myModal';
+                } else {
+                    targetmodal = '#' + targetmodal;
+                }
+
+                $(targetmodal).on('show', function () {
+                    $('iframe').attr("src", frametarget);
+                    $('#Home').load(frametarget);
+
+                });
+                $(targetmodal).modal({ show: true });
+                return false;
+
+            });
+
+
+            $('#dataTables-example').dataTable();
+        });
+
+        
+
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+﻿@model IEnumerable<SMS_Core.Models.tblFeeSubCategory>
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Fee Details</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <!--
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/rowreorder/1.3.2/css/rowReorder.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css" rel="stylesheet" />-->
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td colspan="3">
+                        @if (ViewBag.feeb24 > 1000.00M)
+                        {
+                            <h3 style="color:red">Last Year Balance Fee &nbsp;<b>@ViewBag.feeB24</b></h3>
+                            <h5>Kindly login to Last Year Jun 2023 - May 2024 and pay the Last Year Balance Fee first or Contact School </h5>
+                        }
+                    </td>
+
+                </tr>
+                <thead>
+                    <tr>
+                        <th style="text-align:center" colspan="3">You are paying fee for<br /> @ViewBag.name <br />&nbsp;(FeeID : &nbsp;@ViewBag.feeid)&nbsp;</th>
+                    </tr>
+                    <tr>
+                        <th><b>Fee Paid</b></th>
+                        <th><b>Fee Balance</b></th>
+                        <th><b>Total Fee</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.feePs</td>
+                        <td>@ViewBag.feeB</td>
+                        <td>@ViewBag.feeTs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered table-hover" id="dataTables-examplex">
+                <thead>
+                    <tr>
+                        <td colspan="3"><h5 style="text-align:center">Select Multiple Fees and Click <br /><text style="color:red">Pay Now</text> button at bottom </h5></td>
+                    </tr>
+                    <tr>
+                        <th>Fee Category (@ViewBag.crc)</th>
+                        <th>Fees</th>
+                        <!-- <th>Payment <br />Start Date</th>
+                         <th>Payment <br /> End Date</th>-->
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+
+                        <tr
+
+                             @if (ViewBag.feeb24 > 1000.00M)
+                             {
+                                 <text>style="display:none;"</text>
+                             }
+
+
+                            >
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FeeCategoryName)<br />Till&nbsp;
+
+                                @if (item.PaymentEndDate >= DateTime.Parse("31-03-2024"))
+                                {
+                                    <text>31-03-2024</text>
+                                }
+                                else
+                                {
+                                    string.Format("{0:dd-MM-yyyy}", item.PaymentEndDate);
+                                }
+
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.FeeSubCategoryAmount)</td>
+                            <!-- <td>  @string.Format("{0:dd-MM-yyyy}", item.PaymentStartDate) </td>
+                            <td>  @string.Format("{0:dd-MM-yyyy}", item.PaymentEndDate) </td>-->
+                            <td>
+                                @{
+                                    var gb = "";
+                                    var ida = 0;
+                                    var categ = "";
+                                }
+
+                                @foreach (var sem in ViewBag.smc)
+                                {
+                                    if (item.FeeCategoryName == sem.FeeCategoryName)
+                                    {
+                                        gb = "Paid";
+                                        ida = sem.FeePaymentID;
+
+
+                                    }
+                                    else
+                                    {
+                                        categ = categ + sem.FeeCategoryName + ",";
+                                    }
+
+                                }
+
+                                @if (gb == "")
+                                {
+                                    /*
+                                    if (item.FeeCategoryName == "Tution Fees -July" && categ.Contains("Tution Fees -June"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+                                    if (item.FeeCategoryName == "Tution Fees -August" && categ.Contains("Tution Fees -July"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -September" && categ.Contains("Tution Fees -August"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -October" && categ.Contains("Tution Fees -September"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -November" && categ.Contains("Tution Fees -October"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -December" && categ.Contains("Tution Fees -November"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -January" && categ.Contains("Tution Fees -December"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -February" && categ.Contains("Tution Fees -January"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -March" && categ.Contains("Tution Fees -February"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -April" && categ.Contains("Tution Fees -March"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Tution Fees -May" && categ.Contains("Tution Fees -April"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Term Fee 2" && categ.Contains("Term Fee 1"))
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+
+                                    if (item.FeeCategoryName == "Misc Fee")
+                                    {
+                                        @Html.ActionLink("Pay Now", "FeePaymentNewStd", "Admin", new { id = item.FeeSubCategoryId }, null)
+                                    }
+*/
+
+                                    if (item.PaymentEndDate >= DateTime.Today)
+                                    {
+
+                                        <input type="checkbox" id="@item.FeeSubCategoryId" name="CategoryIds" value="@item.FeeCategoryName+@item.FeeSubCategoryId+@item.FeeSubCategoryAmount" />
+                                    }
+                                }
+                                else
+                                {
+                                    if (Context.Session.GetString("AY") == "Jun 2023 - May 2024")
+                                    {
+                                        @Html.ActionLink("Receipt", "FeeReceiptPrintS", "Admin", new { style = "color:green;", id = ida }, null)
+
+                                    }
+
+                                    if (Context.Session.GetString("AY") == "Jun 2024 - May 2025")
+                                    {
+                                        @Html.ActionLink("Receipt", "FeeReceiptPrintS25", "Admin", new { style = "color:green;", id = ida }, null)
+
+                                    }
+
+                                }
+                            </td>
+                        </tr>
+
+                    }
+
+                    @if (Context.Session.GetString("AY") == "Jun 2023 - May 2024")
+                    {
+
+
+                        using (Html.BeginForm("FeePaymentNewStdM", "Admin", FormMethod.Get))
+                        {
+                            <tr>
+                                <td style="text-align:center">
+                                    <button id="btnpg" class="btn btn-primary" onclick="return confirm('Are you sure to proceed to pay for @ViewBag.name &nbsp;with GRNO&nbsp;@ViewBag.feeid  ?');" type="submit">Pay Now </button>&nbsp;
+                                </td>
+                                <td><lable id="ttlQl"></lable></td>
+                                <td><lable id="ttlQ"></lable>@Html.Hidden("idx")</td>
+                            </tr>
+
+                        }
+                    }
+
+                    @if (Context.Session.GetString("AY") == "Jun 2024 - May 2025")
+                    {
+
+
+                        using (Html.BeginForm("FeePaymentNewStdM25", "Admin", FormMethod.Get))
+                        {
+                            <tr>
+                                <td style="text-align:center">
+                                    <button id="btnpg" class="btn btn-primary" onclick="return confirm('Are you sure to proceed to pay for @ViewBag.name &nbsp;with GRNO&nbsp;@ViewBag.feeid  ?');" type="submit">Pay Now </button>&nbsp;
+                                </td>
+                                <td><lable id="ttlQl"></lable></td>
+                                <td><lable id="ttlQ"></lable>@Html.Hidden("idx")</td>
+                            </tr>
+
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable(
+            {
+                "bLengthChange": false,
+                searching: false, paging: false, info: false,
+                "aaSorting": [],
+                "ordering": false,
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                responsive: true
+            }
+        );
+    });
+
+</script>
+
+
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.js"></script>
+<!--
+<script src="https://cdn.datatables.net/rowreorder/1.3.2/js/dataTables.rowReorder.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+
+    -->
+
+<script type="text/javascript">
+    if (performance.navigation.type == 2) {
+        alert("By going back you need to re-check all the details")
+        location.reload(true);
+        //alert($('#ttlQ').val());
+    }
+    $(document).ready(function () {
+
+        var list = [];
+
+        var removeItem;
+        var removeItemm;
+        var amt = [];
+        var sum = 0;
+
+        $("#btnpg").hide();
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var checkboxesArray = Array.from(checkboxes);
+
+        let lastCheckedIndex = -1;
+
+        checkboxes.forEach(function (checkbox, index) {
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
+                    
+                    if ((index !== lastCheckedIndex + 1) && (index !==1)  ) {
+                        // Uncheck the current checkbox if it's not in ascending order
+                        this.checked = false;
+                        alert("Please Select Fees in Listed order OR refresh the page to start again !");
+                    } else {
+                        // Update lastCheckedIndex to the current checkbox index
+                        lastCheckedIndex = index;
+                        
+                        str = $(this).val();
+                        res = str.split("+");
+                        list.push(res[1]);
+                        amt.push(res[2]);
+
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //*alert(sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                }
+                else
+                {
+                    // Allow deselecting the last selected checkbox
+                    if (index === lastCheckedIndex) {
+                        // Find the previous checkbox that is checked
+                        let previousCheckedIndex = index -0;
+                        while (previousCheckedIndex >= 0 && !checkboxes[previousCheckedIndex].checked) {
+                            previousCheckedIndex--;
+                        }
+                        // Only allow deselecting if it's the last selected checkbox
+                        if (previousCheckedIndex === lastCheckedIndex - 1) {
+                            lastCheckedIndex = previousCheckedIndex;
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        } else {
+                            this.checked = true; // Prevent deselecting
+                            alert("Please Deselect Fees from below Listed order OR refresh the page to start again !");
+                        }
+                    } else {
+                        this.checked = true; // Prevent deselecting
+                        alert("Please Deselect Fees from below Listed order OR refresh the page to start again !");
+                    }
+                }
+
+
+            var str;
+            var res;
+            var id;
+            var ischecked = $(this).is(':checked');
+            if (ischecked) {
+                // alert('Clicked bottom "Pay Now" button to proceed for payment ');
+               
+                //$('#btnpg').focus();
+            }
+
+
+            if (!ischecked) {
+                //alert('UnChecked ' + $(this).val());
+                
+               //* alert(sum);
+                //$('#btnpg').focus();
+            } 
+        });
+        });
+
+        $("#btnpg").click(function () {
+            if ($('#idx').val() == "") {
+                alert("Please select atleast one option to continue....")
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+
+    });
+
+
+
+</script>

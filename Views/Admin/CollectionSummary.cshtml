@@ -1,0 +1,111 @@
+﻿@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#pdates").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy'
+        });
+
+        $("#tdates").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd-M-yy'
+        });
+
+
+    });
+
+    function Save_confirm2() {
+        if ($("#pdates").val() != "" && $("#tdates").val() != "") {
+            return true;
+        }
+        else {
+            alert("Please specify the date range")
+            return false;
+        }
+    }
+
+
+</script>
+<div>
+   
+    <h4>&nbsp;&nbsp;&nbsp;&nbsp;	 Collection Register Summary  </h4>
+</div>
+
+<div class="panel-body">
+
+    @using (Html.BeginForm("CollectionSummaryView", "Admin", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true)
+        <div class="panel">
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label class="control-label col-lg-4">From Date</label>
+                    <div class="col-lg-4">
+                        @Html.TextBox("pdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-4">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-4">To Date</label>
+                    <div class="col-lg-4">
+                        @Html.TextBox("tdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-4">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-4">
+                        <input type="submit" onclick="return Save_confirm2()" value="View Report" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <div class="form-group">
+        <div id="partialPlaceHolder1ds" class="col-sm-12">
+
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    /*
+    var config = {
+        '.chosen-select': { search_contains: true },
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+       // '.chosen-select-width': { width: "100%" }
+
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+    */
+
+</script>
+
+
+
+
+

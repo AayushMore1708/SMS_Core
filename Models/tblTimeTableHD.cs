@@ -11,7 +11,9 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class tblTimeTableHD
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +21,8 @@ namespace SMS_Core.Models
         {
             this.tblTimeTableDTs = new HashSet<tblTimeTableDT>();
         }
-    
+        
+        [Key]
         public int TimeTableId { get; set; }
         public string TTCourseName { get; set; }
         public Nullable<int> TTCourseId { get; set; }
@@ -28,7 +31,7 @@ namespace SMS_Core.Models
         public string TimeTableName { get; set; }
         public string TimeTableStatus { get; set; }
         public string AcadamicYear { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTimeTableDT> tblTimeTableDTs { get; set; }
     }

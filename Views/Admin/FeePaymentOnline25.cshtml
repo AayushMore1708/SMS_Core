@@ -1,0 +1,254 @@
+﻿@model IEnumerable<SMS_Core.Models.tblFeePaymentAY25>
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Online Transaction </title>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#pdates').change(function () {
+                var SCat = $(this).val();
+                $("#tdates").val(SCat);
+            });
+
+            $("#pdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#tdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+        });
+
+        function printDiv(divName) {
+           // alert('Test');
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+
+    <div>
+        <br />
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;Online Transaction </h4>
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("FeePaymentOnline25", "Admin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">From Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("pdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">To Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("tdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            <input type="submit" onclick="return Save_confirm2()" value="View Report" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+
+    <div class="col-lg-12">
+        <div id="printableArea" style="margin-left:20px;margin-right:20px">
+            <h4 style="text-align:center">
+                VPM's Vidyamandir <br />
+                Online Transaction &nbsp;Register from
+                @{
+                    var dt = DateTime.Today;
+                    var dt1 = DateTime.Today;
+                    if (ViewBag.pdates != null)
+                    {
+                        dt = ViewBag.pdates;
+                    }
+
+                    if (ViewBag.tdates != null)
+                    {
+                        dt1 = ViewBag.tdates;
+                    }
+                }
+
+                @ViewBag.pdates   to  @ViewBag.tdates
+            </h4>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table width="100%" class="table table-bordered" id="dataTables-example11">
+                        <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Batch Name</th>
+                                <th>FeeID</th>
+                                <th>Student Name</th>
+                                <th>Fee Receipt Amount</th>
+                                <th>Amount Paid</th>
+                                <th>Receipt No</th>
+                                <th>Receipt Date</th>
+                                <th>Mode of Payment</th>
+                                <th>Remark</th>
+                                <th style="width:30%">Payment Details</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var a = "";
+                                if (item.FeeCancel == "Cancelled")
+                                {
+                                    a = "Red";
+                                }
+                                else
+                                {
+                                    a = "";
+                                }
+
+                                <tr style="background-color:@a">
+                                    <td>@Html.DisplayFor(modelItem => item.FeeCourseName)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.FeeBatchName)</td>
+
+
+                                    <td>@Html.DisplayFor(modelItem => item.FeeStudentID)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.FeeStudentName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.FeeTotalAmount)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TotalAmoutPaying)</td>
+                                    <td>
+
+                                        @string.Format("{0:0000}", item.FeeReceiptNo)
+                                    </td>
+                                    <td>
+
+                                        @string.Format("{0:dd-MM-yyyy}", item.FeeReceiptDate)
+                                    </td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.FeeModeofPay)</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FeeRemark)<br />
+                                        @if (item.FeeModeofPay == "Cheque")
+                                        {
+                                            <text>Cheque No :</text>@Html.DisplayFor(modelItem => item.ChequeNo) <text>&nbsp;<br />Bank Name : </text>@Html.DisplayFor(modelItem => item.BankName)
+                                        }
+                                    </td>
+                                    <td>
+
+                                        @foreach (var lpd in item.tblFeePaymentDTAY25)
+                                        {
+
+                                            @Html.DisplayFor(modelItem => lpd.FeeCategoryName) <text>&nbsp;&nbsp;</text>
+                                            @Html.DisplayFor(modelItem => lpd.FeeAmountPaid)
+
+                                        }
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script src="/Content/js/jquery.table2excel.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example1').dataTable(
+                {
+                    "iDisplayLength": -1,
+                    "aaSorting": []
+                }
+            );
+
+
+        });
+
+        /*unction printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }*/
+
+        $(function() {
+            $("button").click(function () {
+
+                    $("td:hidden").addClass("noExl");
+                    var x = $("#dataTables-example11").clone();
+			        $(x).find("tr td a").replaceWith(function () {
+			            return $.text([this]);
+			        });
+
+
+			       // $("#table2excel").table2excel({
+					//exclude: ".noExl",
+			        //filename: "@ViewBag.coden" +"@ViewBag.mnthv"
+			        $(x).table2excel({
+                        exclude: ".noExl",
+                        fileext: ".xlsx",
+			            filename: "Online_Transaction"
+				});
+				 });
+			});
+
+    </script>
+
+    <input type="button" onclick="printDiv('printableArea')" value="Print" /> &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;
+    <button class="btn btn-success">Export to Excel</button><br /><br />
+    <br />
+    <br />
+</body>
+</html>

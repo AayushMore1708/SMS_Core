@@ -1,0 +1,160 @@
+﻿@model IEnumerable<SMS_Core.Models.tblExamMarkObtained>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Priya's SMS GreenSheet</title>
+    <style>
+        #mySpan {
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <table border="0" width="1400">
+        <tr>
+            <td style="text-align:center;font-size:30px">
+                <b> POORNA PRAJNA EDUCATION CENTRE</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;font-size:18px">
+                <b> Bharucha Road, near Dahisar station, Dahisar (east), Mumbai 4000068.</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;font-size:18px">
+                <b> SUBJECT TEACHER'S RECORD</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Class :<b>@ViewBag.crn-@ViewBag.bat</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Subject <b>@ViewBag.Sub</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject Teacher :- <b>@ViewBag.tname </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Year : <b>@ViewBag.ayr</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center"><b> @ViewBag.ed </b></td>
+        </tr>
+    </table>
+
+    <table border="1" width="1440">
+        <tr>
+            <td rowspan="2"><span id="mySpan">Sr. No.</span></td>
+            <td rowspan="2"><span id="mySpan">Roll No.</span></td>
+            <td rowspan="2">Name of the Student </td>
+            <td style="text-align:center" colspan="9">Formative Evaluation </td>
+            <td style="text-align:center" colspan="3">Summative Evaluation</td>
+            <td rowspan="2"><span id="mySpan">Grand Total (A + B)</span></td>
+            <td rowspan="2"><span id="mySpan">Grade</span></td>
+            <td rowspan="2"><span id="mySpan">Remarks</span></td>
+        </tr>
+        <tr>
+            <td><span id="mySpan">Day to Day Observation</span></td>
+            <td><span id="mySpan">Oral Work</span></td>
+            <td><span id="mySpan">Practical / Experiment</span></td>
+            <td><span id="mySpan">Activity</span></td>
+            <td><span id="mySpan">Project</span></td>
+            <td><span id="mySpan">Test/Open book</span></td>
+            <td><span id="mySpan">Home/Class work</span></td>
+            <td><span id="mySpan">Others</span></td>
+            <td><span id="mySpan">Total (A)</span></td>
+            <td><span id="mySpan">Theory</span></td>
+            <td><span id="mySpan">Oral/Practical</span></td>
+            <td><span id="mySpan">Total (B)</span></td>
+        </tr>
+
+        <tr>
+            <td colspan="3">Max. Marks ===> </td>
+            <td>@ViewBag.day</td>
+            <td>@ViewBag.oral</td>
+            <td>@ViewBag.fpe</td>
+            <td>@ViewBag.fa</td>
+            <td>@ViewBag.fp</td>
+            <td>@ViewBag.ftob</td>
+            <td>@ViewBag.fhc</td>
+            <td>@ViewBag.fo</td>
+            <td>@ViewBag.fta</td>
+            <td>@ViewBag.st</td>
+            <td>@ViewBag.sop</td>
+            <td>@ViewBag.stb</td>
+            <td>
+                @{
+                    int a = ViewBag.fta;
+                    int b = ViewBag.stb;
+
+                    @(a+b)
+                }
+
+            </td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>@Html.DisplayFor(modelItem => item.StudentName)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationDaytoDayObservationObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationOralworkObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationPracticalExperiment)</td>
+                <td>@Html.DisplayFor(modelitem => item.FormationActivityObtained)</td>
+                <td>@Html.DisplayFor(modelitem => item.FormationProjectObtained)</td>
+                <td>@Html.DisplayFor(modelitem => item.FormationTestOpenBookObtained)</td>
+                <td>@Html.DisplayFor(modelitem => item.FormationHomeClassworkObtained)</td>
+                <td>@Html.DisplayFor(modelitem => item.FormationOthersObtained)</td>
+                <td>@Html.DisplayFor(modelitem => item.FormationTotalAObtained)</td>
+
+                <td>@Html.DisplayFor(modelitem => item.SummativeTheoryObtained)</td>
+                <td>@Html.DisplayFor(modelitem => item.SummativeOralPracticalObtained)</td>
+                <td>@Html.DisplayFor(modelitem => item.SummativeTotalBObtained)</td>
+                <td>
+                    @{
+                        var fta = item.FormationTotalAObtained;
+                        var stb = item.SummativeTotalBObtained;
+                        var ttab = (fta + stb);
+                    }
+
+                    @(fta + stb)
+                    
+                </td>
+                <td>
+                    @{
+                            var gb = "";
+                            var gbd = "";
+                    }
+                        @foreach (var gde in ViewBag.gd)
+                        {
+                            if (ttab <= gde.FromRange && ttab >= gde.ToRange)
+                            {
+                                gb = @gde.Grade;    
+                                gbd = gde.Description;
+                            }
+                        }
+                    @gb
+        </td>
+
+    <td>
+
+        @gbd
+    </td>
+
+
+
+    </tr>
+        }
+
+    </table>
+
+    <br />
+    <br />
+
+
+</body>
+</html>
+
+

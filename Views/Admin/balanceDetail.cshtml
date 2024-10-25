@@ -1,0 +1,105 @@
+﻿@model SMS_Core.Models.PrimEngFee
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Fee Details</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>NameofStudent</th>
+                        <th>Standard2021</th>
+                        <th>Division2021</th>
+                        <th>FeesOutstanding20192020</th>
+                        <th>FEESRECEIVABLEFOR202021</th>
+                        <th>NewAdmissionFees202021</th>
+                        <th>FEESRECEIVEDONFEECOUNTER202021</th>
+                        <th>FEESRECEIVEDONMANUALRECEIPTS202021</th>
+                        <th>DISCOUNTSASPERSUPREMECOURTORDER202021</th>
+                        <th>EXCESSPAID202021</th>
+                        <th>EARLYPAIDDISCOUNTSTAKEN202021</th>
+                        <th>ExcessFeesRefundRecd202021</th>
+                        <th>FEESWAIVEDOFFRTESTAFFWARDS202021</th>
+                        <th>BALANCE202021</th>
+
+                        <th>Standard2122</th>
+                        <th>FEESRECEIVABLEFOR212022</th>
+                        <th>NewAdmissionFees212022</th>
+                        <th>FEESRECEIVEDONFEECOUNTER212022</th>
+                        <th>FEESRECEIVEDONMANUALRECEIPTS212022</th>
+                        <th>DISCOUNTSASPERSUPREMECOURTORDER212022</th>
+                        <th>EXCESSPAID212022</th>
+                        <th>FEESWAIVEDOFFRTESTAFFWARDS212022</th>
+                        <th>BALANCE202122</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>@Model.NameofStudent</th>
+                        @* <th>@Model.Standard2021</th>
+                        <th>@Model.Division2021</th>
+                        <th>@Model.FeesOutstanding20192020</th>
+                        <th>@Model.FEESRECEIVABLEFOR202021</th>
+                        <th>@Model.NewAdmissionFees202021</th>
+                        <th>@Model.FEESRECEIVEDONFEECOUNTER202021</th>
+                        <th>@Model.FEESRECEIVEDONMANUALRECEIPTS202021</th>
+                        <th>@Model.DISCOUNTSASPERSUPREMECOURTORDER202021</th>
+                        <th>@Model.EXCESSPAID202021</th>
+                        <th>@Model.EARLYPAIDDISCOUNTSTAKEN202021</th>
+                        <th>@Model.ExcessFeesRefundRecd202021</th>
+                        <th>@Model.FEESWAIVEDOFFRTESTAFFWARDS202021</th>
+                        <th>@Model.BALANCE202021</th>
+                        <th>@Model.Standard2122</th>
+                        <th>@Model.FEESRECEIVABLEFOR212022</th>
+                        <th>@Model.NewAdmissionFees212022</th>
+                        <th>@Model.FEESRECEIVEDONFEECOUNTER212022</th>
+                        <th>@Model.FEESRECEIVEDONMANUALRECEIPTS212022</th>
+                        <th>@Model.DISCOUNTSASPERSUPREMECOURTORDER212022</th>
+                        <th>@Model.EXCESSPAID212022</th>
+                        <th>@Model.FEESWAIVEDOFFRTESTAFFWARDS212022</th>
+                        <th>@Model.BALANCE202122</th> *@
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+
+</body>
+</html>

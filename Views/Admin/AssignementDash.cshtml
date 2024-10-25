@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SMS_Core.Models.tblAssignment>
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Assignements</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+     
+                
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" >
+                            <thead>
+                                <tr>
+                                    <th>Assignement Title</th>
+                                    <th>Assignement Description</th> 
+                                    <th>Subject</th>
+                                    <th>Date of Submission</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.AssignTitle)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AssignDescription)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+                                    <td>  @string.Format("{0:dd-MM-yyyy}", item.DateofSubmission)  </td>
+                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+             
+     
+</body>
+</html>

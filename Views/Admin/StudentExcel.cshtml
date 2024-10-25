@@ -1,0 +1,194 @@
+﻿@model IEnumerable<SMS_Core.Models.qryStudentAdmission>
+@{
+    /**/
+
+    ViewBag.Title = "Student List";
+    // Layout = null;
+}
+<script src="/Content/js/jquery.table2excel.js"></script>
+<div id="partialPlaceHolder1" class="col-sm-12">
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+        @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+        {
+            <text>
+                <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;&nbsp; @Html.ActionLink("NEW", "RegisterStudent", "Account", "", new { target = "new" })
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink("For Export to Excel ", "StudentExcel", "Admin")
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Student All", "Student", "Admin")
+            </text>
+
+            <text>
+
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;@Html.ActionLink("Student Fees", "StudentFees", "Admin")
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            </text>
+        }
+
+    </div>
+    <div class="panel-heading">
+        <h4>
+            Student List for Acadimic Year Jun 2022 - Apr 2023
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table style="width:100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead class="text-info">
+                    <tr class="text-info"> 
+                        <th class="text-left">
+                            Std & Div
+                        </th>
+                        <th class="text-left">
+                            Fee ID
+                        </th> 
+                        <th class="text-left">
+                            Student Name
+                        </th>
+                        <th class="text-left">
+                            Father(First Guardian) Name
+                        </th>
+                        <th class="text-left">
+                            Email
+                        </th>
+                        <th class="text-left">
+                            Mobile
+                        </th> 
+                        <th class="text-left">
+                            Mother(Second Guardian) Name
+                        </th>
+                        <th class="text-left">
+                            Email
+                        </th>
+                        <th class="text-left">
+                            Mobile
+                        </th> 
+                        <th class="text-left">
+                            Date of Birth
+                        </th> 
+                         
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudenntCourse) @Html.DisplayFor(modelItem => item.StudentBatch)
+                            </td>
+                            <td>
+                                <b> @Html.DisplayFor(modelItem => item.Feeid) </b>&nbsp;
+                            </td> 
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentName)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentFatherName)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstGuardianEmail)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentFatherMobile)&nbsp;
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentMotherName)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SecondGuardianEmail)&nbsp;
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StudentMotherMobile)&nbsp;
+                            </td>
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ImportDate)&nbsp;
+                            </td>
+                              
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+
+    </div>
+    <br />
+    &nbsp;&nbsp;&nbsp; <button class="btn btn-success">Export to Excel</button><br /><br />
+</div>
+<br />
+
+
+
+<script>
+
+			$(function() {
+                $("button").click(function () {
+                    $("td:hidden").addClass("noExl");
+                    var x = $("#dataTables-example").clone();
+			        $(x).find("tr td a").replaceWith(function () {
+			            return $.text([this]);
+			        });
+
+
+			       // $("#table2excel").table2excel({
+					//exclude: ".noExl",
+			        //filename: "@ViewBag.coden" +"@ViewBag.mnthv"
+			        $(x).table2excel({
+                        exclude: ".noExl",
+                        fileext: ".xlsx",
+			            filename: "StudentExportedFromSystem"
+				});
+				 });
+			});
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#dataTables-example thead tr').clone(true).appendTo('#dataTables-example thead');
+        $('#dataTables-example thead tr:eq(1) th').each(function (i) {
+            
+                var title = $(this).text();
+
+                $(this).html('<input type="text"  />');
+
+                $('input', this).on('keyup change', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table
+                            // var searchTerm = this.value.toLowerCase(),
+                            //   regex = '\b' + searchTerm + '\b';
+                            // table.rows().search(regex, true, false).draw();
+
+                            .column(i)
+                            .search('\\b' + this.value + '\\b', true, false)
+                            .draw();
+                    }
+                });
+           
+        });
+
+        var table = $('#dataTables-example').DataTable(
+            {
+                orderCellsTop: true,
+                fixedHeader: true,
+
+                "aaSorting": [],
+
+                "iDisplayLength": -1,
+
+                searchDelay: 0
+            });
+
+
+    });
+
+</script>
+<script src="~/Content/js/jquery.dataTables.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.js"></script>
+
+

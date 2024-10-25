@@ -1,0 +1,933 @@
+﻿@model IEnumerable<SMS_Core.Models.qryReport1StudentNewT25>
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Defaulter List New ***(beta)</title>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#pdates').change(function () {
+                var SCat = $(this).val();
+                $("#tdates").val(SCat);
+            });
+
+            $("#pdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#tdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            var sum2 = 0;
+            var groupColumn = 0;
+            var table = $('#dataTables-example').DataTable({
+                columnDefs: [{ visible: false, targets: [0] }],
+                //order: [[groupColumn, 'asc']],
+                displayLength: -1,
+                "drawCallback": function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).nodes();
+                    var last = null;
+                    var sum = 0;
+                    var sum1 = 0;
+
+                    var groupColumn = 0; //index of column which you are going to group by.
+                    var amtColumn = 2; // index of column which you are going to sum.
+                    api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                        if (last !== group) {
+                            api.rows().data().each(function (item) {
+                                if (item[groupColumn] == group) {
+                                    sum = sum + (+item[amtColumn]);
+                                }
+                            });
+                            last = group;
+
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="3" style="background-color: #e7e7e7;"><b>' + group + '</b></td></tr>'
+
+                            );
+
+                            sum = 0;
+                        }
+
+
+
+
+                    });
+
+                    api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
+                        if (last !== group) {
+                            api.rows().data().each(function (item) {
+                                if (item[groupColumn] == group) {
+                                    sum1 = sum1 + (+item[amtColumn]);
+                                    i++;
+                                }
+                            });
+                            last = group;
+
+                            $(rows).eq(i - 1).after(
+                                '<tr><td colspan="1" style="text-align:right"><b>Sub Total</b></td><td colspan="1"><b>' + sum1 + '</b></td>  </tr>'
+                            );
+
+
+                            sum2 += sum1
+                            sum1 = 0;
+                        }
+                        else {
+                            if (sum2 == 0) {
+                                api.rows().data().each(function (item) {
+                                    if (item[groupColumn] == group) {
+                                        sum2 = sum2 + (+item[amtColumn]);
+                                    }
+                                });
+                            }
+                        }
+
+                    });
+
+                    $("#ttlamt").html('<b>' + sum2 + '</b>');
+                },
+            });
+
+
+
+
+        });
+
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
+        function Save_confirm2() {
+
+        }
+    </script>
+    <div>
+        @{
+            var mname = "";
+            switch (ViewBag.mnt)
+            {
+                case 1:
+                    mname = "January";
+                    break;
+                case 2:
+                    mname = "February";
+                    break;
+                case 3:
+                    mname = "March";
+                    break;
+                case 4:
+                    mname = "April";
+                    break;
+                case 5:
+                    mname = "May";
+                    break;
+                case 6:
+                    mname = "June";
+                    break;
+                case 7:
+                    mname = "July";
+                    break;
+                case 8:
+                    mname = "August";
+                    break;
+                case 9:
+                    mname = "September";
+                    break;
+                case 10:
+                    mname = "October";
+                    break;
+                case 11:
+                    mname = "November";
+                    break;
+                case 12:
+                    mname = "December";
+                    break;
+                default:
+                    // code block
+                    break;
+            }
+
+        }
+
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;Defaulter List New ***(beta)  for the month of @mname and  @ViewBag.ayr,  Dated :  @ViewBag.tdates</h4>
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("DefaulterListViewV125", "Admin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <div class="panel">
+                <div class="panel-body">
+                    <!--
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">As on Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("pdates", null, new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>  -->
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">To Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("tdates", null, new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Class</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("cource", new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Batch</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("batch", new SelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Medium</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("Medium", new SelectList(new[] { "English", "Marathi" }), new { @class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">For Marathi Select Jr.kg/Sr. kg from bottom</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!--
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-4">Admission Type</label>
+                                            <div class="col-lg-4">
+                                                @Html.DropDownList("AdmissionType", new SelectList(new[] { "Regular", "New" }), new { @class = "form-control input-sm" })
+                                            </div>
+                                            <label class="control-label col-lg-2">&nbsp;</label>
+                                            <div class="col-lg-4">
+                                                &nbsp;
+                                            </div>
+                                        </div>
+                    -->
+
+                    <div class="form-group">
+                        <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            <input type="submit" onclick="return Save_confirm2()" value="View Report" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+
+
+    <div id="printableArea" style="margin-left:20px;margin-right:20px">
+        <h4 style="text-align:center">
+            VPM's VIDYA MANDIR <br />
+
+            &nbsp;&nbsp;<br />
+
+            &nbsp;&nbsp;&nbsp;&nbsp;Defaulter List New ***(beta)  for @ViewBag.medium Medium for the month of @mname and  @ViewBag.ayr <br />  &nbsp; for Class : @ViewBag.cource  &nbsp;&nbsp;Batch :   @ViewBag.batch &nbsp;&nbsp;@ViewBag.medium &nbsp;&nbsp;@ViewBag.admissiontype &nbsp;Dated : @ViewBag.tdates
+
+
+
+
+        </h4>
+        <table cellspacing="5" cellpadding="5" class="table table-striped table-bordered table-hover" id="dataTables-example11">
+            <thead>
+                <tr>
+                    <th>Sr. No</th>
+                    <th>FeeID</th>
+                    <th>Student Name</th>
+                    <th>Admission Date</th>
+                    <th>Admission Type</th>
+                    <th>Medium</th>
+                    <th>Total Fee</th>
+                    <th>Fees Receivable</th>
+                    <th>Fees Received</th>
+                    <th>Arrears</th>
+                    <th>Advance</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @{
+                    int i = 1;
+
+                    decimal? ttl = 0.00M;
+                    decimal? gttl = 0.00M;
+
+                    decimal? TermFee1 = 0.00M;
+                    decimal? TermFee2 = 0.00M;
+                    decimal? AdmissionFee = 0.00M;
+                    decimal? MiscFees = 0.00M;
+                    decimal? fullyear = 0.00M;
+                    decimal? firsthalf = 0.00M;
+                    decimal? secondhalf = 0.00M;
+
+                    decimal adv = 0.00M;
+                    decimal advp = 0.00M;
+
+                    decimal arr = 0.00M;
+                    decimal arrp = 0.00M;
+
+                    decimal? FeeRB = 0.00M;
+                    decimal? FeeRD = 0.00M;
+
+                    decimal Arrears = 0.00M;
+                    decimal Advance = 0.00M;
+
+
+                }
+                @foreach (var item in Model)
+                {
+                    ttl = item.TutionFees ?? 0.00M;
+                    TermFee1 = item.TermFee1 ?? 0.00M;
+                    TermFee2 = item.TermFee2 ?? 0.00M;
+                    AdmissionFee = item.AdmissionFee ?? 0.00M;
+                    MiscFees = item.MiscFees ?? 0.00M;
+                    fullyear = item.FullYear ?? 0.00M;
+                    firsthalf = item.FirstHalf ?? 0.00M;
+                    secondhalf = item.SecondHalf ?? 0.00M;
+                    gttl = ttl + TermFee1 + TermFee2 + AdmissionFee + MiscFees + fullyear + firsthalf + secondhalf;
+                    // if (item.DateOfLeavingSchool != null)
+                    {
+                        int mnt = 0;
+                        int mnta = 0;
+
+                        if (item.DateOfLeavingSchool != null)
+                        {
+                            mnt = item.DateOfLeavingSchool.Value.Month;
+                        }
+
+                        if (item.DateofAdmissionImport != null)
+                        {
+                            mnta = item.DateofAdmissionImport.Value.Month;
+                        }
+
+                        var a = "";
+                        if (item.AdmissionType == "Left")
+                        {
+                            a = "Red";
+                        }
+                        else
+                        {
+                            a = "";
+                        }
+
+                        <tr style="background-color:@a">
+
+                            <td>@i</td>
+                            <td>@item.Feeid &nbsp;</td>
+                            <td>
+                                @item.FullName &nbsp;@item.GRType
+                            </td>
+                            <td> @item.DateofAdmissionImport</td>
+                            <td>@item.AdmissionType &nbsp;@item.DateOfLeavingSchool</td>
+                            <td>@item.Medium</td>
+
+                            <td>
+                                @if (mnta > 9)
+                                {
+                                    @gttl
+
+                                }// added this new without else before 10-4-2024
+                                else
+                                {
+                                    if (item.AdmissionType == "Regular")
+                                    {
+                                        if (item.GRType == null)
+                                        {
+                                            if (item.Medium == "English")
+                                            {
+                                                @ViewBag.feeTRET;
+                                            }
+                                            else
+                                            {
+                                                @ViewBag.feeTRMT;
+                                            }
+                                        }
+                                    }
+                                    if (item.AdmissionType == "New")
+                                    {
+                                      
+                                        if (item.GRType == null)
+                                        {
+
+                                            if (item.Medium == "Marathi")
+                                            {
+                                                @ViewBag.feeTNMT;
+                                            }
+                                            else
+                                            {
+                                                @ViewBag.feeTNET;
+                                            }
+                                        }
+                                    }
+
+                                    if (item.GRType == "STAFF")
+                                    {
+                                        @ViewBag.feeSTR
+
+                                    }
+                                    if (item.GRType == "RTE")
+                                    {
+                                        <text>0</text>
+                                        //FeeRB =0;
+                                    }
+
+                                }
+
+                            </td>
+
+                            <td style="text-align:right">
+                               
+                                @if (mnta > 9)
+                                {
+                                    @gttl
+
+                                }
+                                else
+                                {
+                                    if (item.AdmissionType == "Regular")
+                                    {
+                                        if (item.GRType == null)
+                                        {
+                                            if (item.Medium == "English")
+                                            {
+                                                @ViewBag.feeTR
+                                                FeeRB += ViewBag.feeTR;
+                                            }
+                                            else
+                                            {
+                                                @ViewBag.feeTRM
+                                                FeeRB += ViewBag.feeTRM;
+                                            }
+                                        }
+
+                                        if (item.GRType == "STAFF")
+                                        {
+                                            @ViewBag.feeSTR <br />
+                                            FeeRB += ViewBag.feeSTR;
+                                        }
+                                        if (item.GRType == "RTE")
+                                        {
+                                            <text>0</text>
+                                            //FeeRB =0;
+                                        }
+                                    }
+
+
+                                    if (item.AdmissionType == "New")
+                                    {
+                                        if (item.GRType == null)
+                                        {
+                                            if (item.Medium == "English")
+                                            {
+                                                @ViewBag.feeTN
+                                                FeeRB += ViewBag.feeTN;
+                                            }
+                                            else
+                                            {
+                                                @ViewBag.feeTNM
+                                                FeeRB += ViewBag.feeTN;
+                                            }
+                                        }
+                                        if (item.GRType == "STAFF")
+                                        {
+                                            @ViewBag.feeSTN <br />
+                                            FeeRB += ViewBag.feeSTN;
+                                        }
+                                        if (item.GRType == "RTE")
+                                        {
+                                            <text>0</text><br />
+                                            //FeeRB =0;
+                                        }
+                                    }
+
+                                    if (item.AdmissionType == "Left")
+                                    {
+
+                                        if (item.GRType == null)
+                                        {
+                                            if (item.Medium == "English")
+                                            {
+                                                if (mnt == 0)
+                                                {
+                                                    <text>0</text>
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += 0;
+                                                }
+                                                if (mnt == 6)
+                                                {
+
+                                                    @ViewBag.monthN6
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthN6;
+                                                }
+
+                                                if (mnt == 7)
+                                                {
+
+                                                    @ViewBag.monthN7
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthN7;
+                                                }
+
+                                                if (mnt == 8)
+                                                {
+                                                    @ViewBag.monthN8
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthN8;
+                                                }
+
+                                                if (mnt == 9)
+                                                {
+                                                    @ViewBag.monthN9
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthN9;
+                                                }
+
+
+                                            }
+                                            else
+                                            {
+                                                if (mnt == 0)
+                                                {
+                                                    <text>0</text>
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += 0;
+                                                }
+
+                                                if (mnt == 6)
+                                                {
+                                                    @ViewBag.monthM6
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthM6;
+                                                }
+                                                if (mnt == 7)
+                                                {
+                                                    @ViewBag.monthM7
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthM7;
+                                                }
+                                                if (mnt == 8)
+                                                {
+                                                    @ViewBag.monthM8
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthM8;
+                                                }
+
+                                                if (mnt == 9)
+                                                {
+                                                    @ViewBag.monthM9
+                                                    //@ViewBag.feeTN
+                                                    FeeRB += ViewBag.monthM9;
+                                                }
+
+
+                                            }
+                                        }
+
+                                    }
+
+
+                                }
+
+                            </td>
+                            <td style="text-align:right">
+                                @gttl
+                                @{
+                                    FeeRD += gttl;
+                                }
+
+                            </td>
+                            <td style="text-align:right;color:red;font-size:larger">
+                                @if (mnta > 9)
+                                {
+
+                                }
+                                else
+                                {
+                                    if (item.AdmissionType == "Regular")
+                                    {
+                                        /* old upto 08092023
+                                        if (item.GRType == null)
+                                        {
+                                            adv = (ViewBag.feeTR - gttl);
+                                        }
+                                        below change script*/
+                                        if (item.GRType == null)
+                                        {
+                                            if (item.Medium == "English")
+                                            {
+                                                adv = (ViewBag.feeTR - gttl);
+                                            }
+                                            else
+                                            {
+                                                adv = (ViewBag.feeTRM - gttl);
+                                            }
+                                        }
+
+
+                                        if (item.GRType == "STAFF")
+                                        {
+                                            adv = (ViewBag.feeSTR - gttl);
+                                        }
+                                        if (item.GRType == "RTE")
+                                        {
+                                            adv = 0;
+                                        }
+
+
+                                        if (adv > 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                            Arrears += adv;
+                                        }
+                                    }
+                                    if (item.AdmissionType == "New")
+                                    {
+                                        /*change on 08092023 if (item.GRType == null)
+                                        {
+                                            adv = (ViewBag.feeTN - gttl);
+                                        }*/
+
+                                        if (item.Medium == "English")
+                                        {
+                                            adv = (ViewBag.feeTN - gttl);
+                                        }
+                                        else
+                                        {
+                                            adv = (ViewBag.feeTNM - gttl);
+                                        }
+
+                                        if (item.GRType == "STAFF")
+                                        {
+
+                                            adv = (ViewBag.feeSTN - gttl);
+                                        }
+                                        if (item.GRType == "RTE")
+                                        {
+                                            adv = 0;
+                                        }
+
+                                        //adv = (ViewBag.feeTN - gttl);
+
+
+
+                                        if (adv > 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                            Arrears += adv;
+                                        }
+                                    }
+
+                                    if (item.AdmissionType == "Left")
+                                    {
+                                        if (mnt == 0)
+                                        {
+                                            <text>0</text>
+                                            //@ViewBag.feeTN
+                                            FeeRB += 0;
+                                        }
+
+                                        if (mnt == 6)
+                                        {
+                                            adv = (ViewBag.monthM6 - gttl);
+                                            if (adv > 0)
+                                            {
+                                                advp = decimal.Negate(adv);
+                                                @advp
+                                                Arrears += adv;
+                                            }
+                                        }
+                                        if (mnt == 7)
+                                        {
+                                            adv = (ViewBag.monthM7 - gttl);
+                                            if (adv > 0)
+                                            {
+                                                advp = decimal.Negate(adv);
+                                                @advp
+                                                Arrears += adv;
+                                            }
+                                        }
+                                        if (mnt == 8)
+                                        {
+                                            adv = (ViewBag.monthM8 - gttl);
+                                            if (adv > 0)
+                                            {
+                                                advp = decimal.Negate(adv);
+                                                @advp
+                                                Arrears += adv;
+                                            }
+                                        }
+
+                                        if (mnt == 9)
+                                        {
+                                            adv = (ViewBag.monthM9 - gttl);
+                                            if (adv > 0)
+                                            {
+                                                advp = decimal.Negate(adv);
+                                                @advp
+                                                Arrears += adv;
+                                            }
+                                        }
+
+
+                                    }
+                                }
+
+                            </td>
+                            <td style="text-align:right;color:darkgreen;font-size:larger">
+                                @if (mnta > 9)
+                                {
+
+                                }
+                                else
+                                {
+                                    if (item.AdmissionType == "Regular")
+                                    {
+                                        //commented on 08092023 adv = (ViewBag.feeTR - gttl);
+
+                                        if (item.GRType == null)
+                                        {
+                                            if (item.Medium == "English")
+                                            {
+                                                adv = (ViewBag.feeTR - gttl);
+                                            }
+                                            else
+                                            {
+                                                adv = (ViewBag.feeTRM - gttl);
+                                            }
+                                        }
+
+
+
+                                        if (adv < 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                            Advance += advp;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //commented on 08092023 adv = (ViewBag.feeTN - gttl);
+
+                                        if (item.GRType == null)
+                                        {
+                                            if (item.Medium == "English")
+                                            {
+                                                adv = (ViewBag.feeTN - gttl);
+                                            }
+                                            else
+                                            {
+                                                adv = (ViewBag.feeTNM - gttl);
+                                            }
+                                        }
+
+
+
+                                        if (adv < 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                            Advance += advp;
+                                        }
+
+                                    }
+
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                    i++;
+                }
+
+
+
+
+                @if (ViewBag.pdates != null)
+                {
+                    foreach (var itm in ViewBag.mds1)
+                    {
+                        ttl = itm.TutionFees ?? 0.00M;
+                        TermFee1 = itm.TermFee1 ?? 0.00M;
+                        TermFee2 = itm.TermFee2 ?? 0.00M;
+                        AdmissionFee = itm.AdmissionFee ?? 0.00M;
+                        MiscFees = itm.MiscFees ?? 0.00M;
+                        fullyear = itm.FullYear ?? 0.00M;
+                        firsthalf = itm.FirstHalf ?? 0.00M;
+                        secondhalf = itm.SecondHalf ?? 0.00M;
+                        gttl = ttl + TermFee1 + TermFee2 + AdmissionFee + MiscFees + fullyear + firsthalf + secondhalf;
+
+                        if (@itm.FeeReceiptDate != "")
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@itm.Feeid &nbsp;</td>
+                                <td>@itm.StudentName</td>
+                                <td style="text-align:right">
+                                    @if (itm.AdmissionType == "Regular")
+                                    {
+                                        @ViewBag.feeTR
+                                    }
+                                    else
+                                    {
+                                        @ViewBag.feeTN
+                                    }
+                                </td>
+                                <td style="text-align:right">@gttl</td>
+                                <td style="text-align:right;color:red;font-size:larger">
+                                    @if (itm.AdmissionType == "Regular")
+                                    {
+                                        adv = (ViewBag.feeTR - gttl);
+                                        if (adv > 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                        }
+                                    }
+                                    else
+                                    {
+                                        adv = (ViewBag.feeTN - gttl);
+                                        if (adv > 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                        }
+
+                                    }
+
+                                </td>
+                                <td style="text-align:right;color:darkgreen;font-size:larger">
+                                    @if (itm.AdmissionType == "Regular")
+                                    {
+                                        adv = (ViewBag.feeTR - gttl);
+                                        if (adv < 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                        }
+                                    }
+                                    else
+                                    {
+                                        adv = (ViewBag.feeTN - gttl);
+                                        if (adv < 0)
+                                        {
+                                            advp = decimal.Negate(adv);
+                                            @advp
+                                        }
+
+                                    }
+
+
+                                </td>
+
+                            </tr>
+                        }
+                        i++;
+                    }
+                }
+                <tr>
+                </tr>
+            </tbody>
+            <tr>
+                <td colspan="7" style="text-align:right"><b></b></td>
+                <td style="text-align: right; font-size: larger">&nbsp;<b>@FeeRB</b></td>
+                <td style="text-align: right; font-size: larger ">&nbsp;<b>@FeeRD</b></td>
+                <td style="text-align: right; font-size: larger">
+                    &nbsp;<b>
+
+                        @decimal.Negate(Arrears)
+
+                    </b>
+                </td>
+                <td style="text-align: right; font-size: larger">&nbsp;<b>@Advance</b></td>
+            </tr>
+        </table>
+    </div>
+    <input type="button" onclick="printDiv('printableArea')" value="Print" />
+    <br />
+    <br />
+    <script src="~/Content/js/jquery.table2excel.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $("button").click(function () {
+                $("td:hidden").addClass("noExl");
+                var x = $("#dataTables-example11").clone();
+                $(x).find("tr td a").replaceWith(function () {
+                    return $.text([this]);
+                });
+
+                $(x).table2excel({
+                    exclude: ".noExl",
+                    fileext: ".xlsx",
+                    filename: "Defaulter_List_New_(beta)"
+                });
+            });
+        });
+
+    </script>
+    <button id="btncollection" class="btn btn-success">Export to Excel</button><br /><br />
+
+</body>
+</html>
+
+
+
+
+

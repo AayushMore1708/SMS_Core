@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SMS_Core.Models.tblExamMarkObtained>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    })
+     var onSuccessd = function (result) {
+         alert("Record Has Been Deleted Successfully !!");
+         var enames = $('#ename').val();
+         var cnames = $('#cname').val();
+         var BatchNs = $.trim($('#BatchN').val());
+         var studentid = $('#StudentID').val();
+        // var studentusername = $('#StudentUserName').val();
+        // var studentrollnumber = $('#StudentRollNumber').val();
+         $.ajax({
+             url: '@Url.Action("ExamMarkObtainedNewDTView")',
+             type: 'GET',
+             cache: false,
+             data: { examname: enames, batchname: BatchNs, coursename: cnames, studentID:studentid  },
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+</script>
+<style>
+
+    .MyCssClass
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+</style>
+
+<table class="table   table-striped">
+     
+     <thead>
+         <tr class="text-info">
+                                         <th class="text-left"><span id="mySpan">Subject</span></th>
+                                         <th class="text-left"><span id="mySpan">Day to Day Observation</span></th>
+                                         <th class="text-left"><span id="mySpan">Oral Works</span></th>
+                                         <th class="text-left"><span id="mySpan">Practical Experiment</span></th>
+                                         <th class="text-left"><span id="mySpan">Activity</span></th>
+                                         <th class="text-left"><span id="mySpan">Project</span></th>
+                                         <th class="text-left"><span id="mySpan">Test/Open Book</span></th>
+                                         <th class="text-left"><span id="mySpan">Home/Class Work</span></th>
+                                         <th class="text-left"><span id="mySpan">Others</span></th>
+                                         <th class="text-left"><span id="mySpan"><b>Total A</b></span></th>
+                                         <th class="text-left"><span id="mySpan">Theory</span></th>
+                                         <th class="text-left"><span id="mySpan">Oral/Practical</span></th>
+                                         <th class="text-left"><span id="mySpan"><b>Total B</b></span></th>
+                                         <th class="text-left"><span id="mySpan">Grand Total(A + B)</span></th> 
+                                     </tr>
+     </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.SubjectName)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationDaytoDayObservationObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationOralworkObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationPracticalExperimentObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationActivityObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationProjectObtained)</td> 
+                <td>@Html.DisplayFor(modelItem => item.FormationTestOpenBookObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationHomeClassworkObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.FormationOthersObtained)</td>  
+                <td>@Html.DisplayFor(modelItem => item.FormationTotalAObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.SummativeTheoryObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.SummativeOralPracticalObtained)</td> 
+                <td>@Html.DisplayFor(modelItem => item.SummativeTotalBObtained)</td>
+                <td>@Html.DisplayFor(modelItem => item.SubjectMarksTotal)</td>
+
+                <td>
+                    @* @Ajax.ActionLink(" ", "DeleteExamMarkObtainedDT", new { id = item.MarkObtainedID, examname = item.ExamName, coursename = item.CourseName, batchname = item.BatchName, studentID = item.StudentID }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccessd", Confirm = "Do you want to delete this record?" }, new { @class = "MyCssClass" }) *@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,1411 @@
+﻿@model IEnumerable<SMS_Core.Models.tblFeeSubCategory>
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Fee Details</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <!--
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/rowreorder/1.3.2/css/rowReorder.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css" rel="stylesheet" />-->
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="text-align:center" colspan="3">You are paying fee for<br /> @ViewBag.name <br />&nbsp;(FeeID : &nbsp;@ViewBag.feeid)&nbsp;</th>
+                    </tr>
+                    <tr>
+                        <th><b>Fee Paid</b></th>
+                        <th><b>Fee Balance</b></th>
+                        <th><b>Total Fee</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.feePs</td>
+                        <td>@ViewBag.feeB</td>
+                        <td>@ViewBag.feeTs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered table-hover" id="dataTables-examplex">
+                <thead>
+                    <tr> 
+                        <td colspan="3"><h5 style="text-align:center">Select Multiple Fees and Click <br /><text style="color:red">Pay Now</text> button at bottom </h5></td>
+                    </tr>
+                    <tr>                        
+                        <th>Fee Category (@ViewBag.crc)</th>
+                        <th>Fees</th>
+                        <!-- <th>Payment <br />Start Date</th>
+                         <th>Payment <br /> End Date</th>-->
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ 
+                        var categ = "";
+                    }
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FeeCategoryName)<br />Till&nbsp;
+
+
+                                @string.Format("{0:dd-MM-yyyy}", item.PaymentEndDate)
+
+
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.FeeSubCategoryAmount)</td>
+                            <!-- <td>  @string.Format("{0:dd-MM-yyyy}", item.PaymentStartDate) </td>
+            <td>  @string.Format("{0:dd-MM-yyyy}", item.PaymentEndDate) </td>-->
+                        <td>
+                            @{
+                                var gb = "";
+                                var ida = 0;
+
+                            }
+
+                            @foreach (var sem in ViewBag.smc)
+                            {
+                                if (item.FeeCategoryName == sem.FeeCategoryName)
+                                {
+                                    gb = "Paid";
+                                    ida = sem.FeePaymentID;
+                                }
+                                else
+                                {
+                                    categ += sem.FeeCategoryName + ",";
+                                }
+
+                            }
+
+
+                            @if (gb == "")
+                            {
+
+                                if (item.PaymentEndDate >= DateTime.Today)
+                                {
+
+                                    <input type="checkbox" id="@item.FeeSubCategoryId" name="CategoryIds" value="@item.FeeCategoryName+@item.FeeSubCategoryId+@item.FeeSubCategoryAmount" />
+                                    categ = categ + item.FeeCategoryName + ",";
+
+                                    <script>
+                        $(document).ready(function () {
+
+                                   // alert('@categ');
+                                    $("#idxn").val('@categ');
+                                })
+                                    </script>
+
+                                }
+                            }
+                            else
+                            {
+                                if (Context.Session.GetString("AY") == "Jun 2023 - May 2024")
+                                {
+                                    @Html.ActionLink("Receipt", "FeeReceiptPrintS", "Admin", new { style = "color:green;", id = ida }, null)
+
+                                }
+
+                                if (Context.Session.GetString("AY") == "Jun 2024 - May 2025")
+                                {
+                                    @Html.ActionLink("Receipt", "FeeReceiptPrintS25", "Admin", new { style = "color:green;", id = ida }, null)
+
+                                }
+                            }
+                        </td>
+                        </tr>
+
+                                    }
+                   
+                    @if (Context.Session.GetString("AY") == "Jun 2023 - May 2024")
+                    {
+
+
+                        using (Html.BeginForm("FeePaymentNewStdM", "Admin", FormMethod.Get))
+                        {
+                            <tr>
+                                <td style="text-align:center">
+                                    <button id="btnpg" class="btn btn-primary" onclick="return confirm('Are you sure to proceed to pay for @ViewBag.name &nbsp;with GRNO&nbsp;@ViewBag.feeid  ?');" type="submit">Pay Now </button>&nbsp;
+                                </td>
+                                <td><lable id="ttlQl"></lable></td>
+                                <td>
+                                    <lable id="ttlQ"></lable>   @Html.Hidden("idx")  @Html.TextBox("idxn")  @Html.TextBox("idxl")
+
+                                </td>
+                            </tr>
+
+                        }
+                    }
+
+                    @if (Context.Session.GetString("AY") == "Jun 2024 - May 2025")
+                    {
+
+
+                        using (Html.BeginForm("FeePaymentNewStdM25", "Admin", FormMethod.Get))
+                        {
+                            <tr>
+                                <td style="text-align:center">
+                                    <button id="btnpg" class="btn btn-primary" onclick="return confirm('Are you sure to proceed to pay for @ViewBag.name &nbsp;with GRNO&nbsp;@ViewBag.feeid  ?');" type="submit">Pay Now </button>&nbsp;
+                                </td>
+                                <td><lable id="ttlQl"></lable></td>
+                                <td>
+                                    <lable id="ttlQ"></lable>
+
+                                    @Html.TextBox("idx")  @Html.TextBox("idxn") @Html.TextBox("idxl")
+                                </td>
+                            </tr> 
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable(
+            {
+                "bLengthChange": false,
+                searching: false, paging: false, info: false,
+                "aaSorting": [],
+                "ordering": false,
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                responsive: true
+            }
+        );
+    });
+
+</script>
+
+
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.js"></script>
+<!--
+<script src="https://cdn.datatables.net/rowreorder/1.3.2/js/dataTables.rowReorder.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+
+    -->
+
+<script type="text/javascript">
+    if (performance.navigation.type == 2) {
+        alert("By going back you need to re-check all the details")
+        location.reload(true);
+        //alert($('#ttlQ').val());
+    }
+    $(document).ready(function () {
+
+        var list = [];
+        var nm = [];
+        var mnt = [];
+
+        var removeItem;
+        var removeItemm;
+        var removeItemmm;
+        var amt = [];
+        var sum = 0;
+
+        $("#btnpg").hide();
+
+      //  var matches = document.querySelectorAll('input[type="checkbox"]:not(:checked)');
+      //  alert(matches);
+        var idxnn = $("#idxn").val();
+        var idxll = '';
+
+        $("input:checkbox").change(function () {
+
+            var str;
+            var res;
+            var id;
+            var ischecked = $(this).is(':checked');
+            if (ischecked) {
+                // alert('Clicked bottom "Pay Now" button to proceed for payment ');
+                str = $(this).val(); 
+                res = str.split("+");
+                list.push(res[1]);
+                amt.push(res[2]);
+               
+                idxll = $('#idxl').val()
+
+                if (res[0] == 'Admission Fee') {
+                    nm.push(res[0]);
+                    $('#idxl').val(nm)
+                    $('#idx').val(list)
+                    sum = 0;
+                    for (var i = 0; i < amt.length; i++) {
+                        sum = parseFloat(sum) + parseFloat(amt[i]);
+                    }
+                    $('#ttlQl').html('Paying')
+                    $('#ttlQ').html('<b>' + sum + '</b>')
+                    //* alert('You have selected amount ' + sum);
+                    if (sum != 0) {
+                        $("#btnpg").show();
+                    }
+                    else {
+                        $("#btnpg").hide();
+                    }
+                }
+
+
+                if (res[0] == 'Misc Fee') {
+                    if (idxnn.indexOf('Admission Fee') >= 0 && idxll.indexOf('Admission Fee') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Admission Fee not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+
+                    }
+                }
+
+                if (res[0] == 'Term Fee 1') {
+                    if (idxnn.indexOf('Misc Fee') >= 0 && idxll.indexOf('Misc Fee') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Misc Fee not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            alert(strs);
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -June') {
+                    if (idxnn.indexOf('Term Fee 1') >= 0 && idxll.indexOf('Term Fee 1') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Term Fee 1 not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -July') {
+                    if (idxnn.indexOf('Tuition Fees -June') >= 0 && idxll.indexOf('Tuition Fees -June') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees -June not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+
+                if (res[0] == 'Tuition Fees -August') {
+                    if (idxnn.indexOf('Tuition Fees -July') >= 0 && idxll.indexOf('Tuition Fees -July') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees -July not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -September') {
+                    if (idxnn.indexOf('Tuition Fees -August') >= 0 && idxll.indexOf('Tuition Fees -August') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees -August not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -October') {
+                    if (idxnn.indexOf('Tuition Fees -September') >= 0 && idxll.indexOf('Tuition Fees -September') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees -September not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -November') {
+                    if (idxnn.indexOf('Tuition Fees -October') >= 0 && idxll.indexOf('Tuition Fees -October') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees -October not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Term Fee 2') {
+                    if (idxnn.indexOf('Tuition Fees -November') >= 0 && idxll.indexOf('Tuition Fees -November') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees -November not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -December') {
+                    if (idxnn.indexOf('Term Fee 2') >= 0 && idxll.indexOf('Term Fee 2') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Term Fee 2 not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+
+                if (res[0] == 'Tuition Fees -January') {
+                    if (idxnn.indexOf('Tuition Fees -December') >= 0 && idxll.indexOf('Tuition Fees -December') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees - December not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+
+                if (res[0] == 'Tuition Fees -February') {
+                    if (idxnn.indexOf('Tuition Fees -January') >= 0 && idxll.indexOf('Tuition Fees -January') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees - January not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -March') {
+                    if (idxnn.indexOf('Tuition Fees -February') >= 0 && idxll.indexOf('Tuition Fees -February') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees - February not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+
+                if (res[0] == 'Tuition Fees -April') {
+                    if (idxnn.indexOf('Tuition Fees -March') >= 0 && idxll.indexOf('Tuition Fees -March') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees - March not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+                if (res[0] == 'Tuition Fees -May') {
+                    if (idxnn.indexOf('Tuition Fees -April') >= 0 && idxll.indexOf('Tuition Fees -April') >= 0) {
+                        nm.push(res[0]);
+                        $('#idxl').val(nm)
+                        $('#idx').val(list)
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html('<b>' + sum + '</b>')
+                        //* alert('You have selected amount ' + sum);
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                    else {
+                        {
+                            alert('Tuition Fees - April not selected, Kindly select before this');
+                            $(this).prop("checked", false);
+                            strs = $(this).val();
+                            ress = strs.split("+");
+                            removeItem = ress[1];
+                            removeItemm = ress[2];
+                            removeItemmm = ress[0];
+                            var i = $.inArray(removeItem, list)
+                            if (i >= 0) {
+                                list.splice(i, 1);
+                            }
+
+                            var j = $.inArray(removeItemm, amt)
+                            if (j >= 0) {
+                                amt.splice(j, 1);
+                            }
+                            // alert(amt);
+                            $('#idx').val(list)
+
+                            var k = $.inArray(removeItemmm, nm)
+                            if (k >= 0) {
+                                nm.splice(k, 1);
+                            }
+                            $('#idxl').val(list)
+
+                            sum = 0;
+                            for (var i = 0; i < amt.length; i++) {
+                                sum = parseFloat(sum) + parseFloat(amt[i]);
+                            }
+                            $('#ttlQl').html('Paying')
+                            $('#ttlQ').html(' <b>' + sum + '</b>')
+                            if (sum != 0) {
+                                $("#btnpg").show();
+                            }
+                            else {
+                                $("#btnpg").hide();
+                            }
+                        }
+                    }
+                }
+
+}
+
+           
+
+
+/*
+                $('#idx').val(list)
+                sum = 0;
+                for (var i = 0; i < amt.length; i++) {
+                    sum = parseFloat(sum) + parseFloat(amt[i]);
+                }
+                $('#ttlQl').html('Paying')
+                $('#ttlQ').html('<b>' + sum + '</b>')
+               //* alert('You have selected amount ' + sum);
+                if (sum!=0) {
+                    $("#btnpg").show();
+                }
+                else {
+                    $("#btnpg").hide();
+                }
+                */
+                //$('#btnpg').focus();
+           
+
+            if (!ischecked) {
+                
+                //alert('UnChecked ' + $(this).val());
+                strs = $(this).val();
+                ress = strs.split("+");
+                removeItem = ress[1];
+                removeItemm = ress[2];
+                removeItemmm = ress[0];
+                alert(removeItemmm);
+                idxll = $('#idxl').val()
+                if (removeItemmm == 'Admission Fee' && idxll.indexOf('Misc Fee') >= 0) {
+                    alert('You cannot remove this');
+                    $(this).prop("checked", true);
+                    nm.push(res[0]);
+                    $('#idxl').val(nm)
+                    $('#idx').val(list)
+                    sum = 0;
+                    for (var i = 0; i < amt.length; i++) {
+                        sum = parseFloat(sum) + parseFloat(amt[i]);
+                    }
+                    $('#ttlQl').html('Paying')
+                    $('#ttlQ').html('<b>' + sum + '</b>')
+                    //* alert('You have selected amount ' + sum);
+                    if (sum != 0) {
+                        $("#btnpg").show();
+                    }
+                    else {
+                        $("#btnpg").hide();
+                    }
+                }
+                else
+                {
+                    {
+                        var i = $.inArray(removeItem, list)
+                        if (i >= 0) {
+                            list.splice(i, 1);
+                        }
+
+                        var j = $.inArray(removeItemm, amt)
+                        if (j >= 0) {
+                            amt.splice(j, 1);
+                        }
+                        // alert(amt);
+                        $('#idx').val(list)
+
+                        var k = $.inArray(removeItemmm, nm)
+                        if (k >= 0) {
+                            nm.splice(k, 1);
+                        }
+                        $('#idxl').val(nm)
+
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html(' <b>' + sum + '</b>')
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                }
+
+                //alert('UnChecked ' + $(this).val());
+                strs = $(this).val();
+                ress = strs.split("+");
+                removeItem = ress[1];
+                removeItemm = ress[2];
+                removeItemmm = ress[0];
+                alert(removeItemmm);
+                idxll = $('#idxl').val()
+                if (removeItemmm == 'Misc Fee' && idxll.indexOf('Term Fee 1') >= 0) {
+                    alert('You cannot remove this');
+                    $(this).prop("checked", true);
+                    nm.push(res[0]);
+                    $('#idxl').val(nm)
+                    $('#idx').val(list)
+                    sum = 0;
+                    for (var i = 0; i < amt.length; i++) {
+                        sum = parseFloat(sum) + parseFloat(amt[i]);
+                    }
+                    $('#ttlQl').html('Paying')
+                    $('#ttlQ').html('<b>' + sum + '</b>')
+                    //* alert('You have selected amount ' + sum);
+                    if (sum != 0) {
+                        $("#btnpg").show();
+                    }
+                    else {
+                        $("#btnpg").hide();
+                    }
+                }
+                else {
+                    {
+                        var i = $.inArray(removeItem, list)
+                        if (i >= 0) {
+                            list.splice(i, 1);
+                        }
+
+                        var j = $.inArray(removeItemm, amt)
+                        if (j >= 0) {
+                            amt.splice(j, 1);
+                        }
+                        // alert(amt);
+                        $('#idx').val(list)
+
+                        var k = $.inArray(removeItemmm, nm)
+                        if (k >= 0) {
+                            nm.splice(k, 1);
+                        }
+                        $('#idxl').val(nm)
+
+                        sum = 0;
+                        for (var i = 0; i < amt.length; i++) {
+                            sum = parseFloat(sum) + parseFloat(amt[i]);
+                        }
+                        $('#ttlQl').html('Paying')
+                        $('#ttlQ').html(' <b>' + sum + '</b>')
+                        if (sum != 0) {
+                            $("#btnpg").show();
+                        }
+                        else {
+                            $("#btnpg").hide();
+                        }
+                    }
+                }
+
+
+
+                 
+
+
+
+               //* alert('You have unselected amount ' + sum);
+                //$('#btnpg').focus();
+            }
+
+            
+        });
+
+
+        $("#btnpg").click(function () {
+            if ($('#idx').val() == "") {
+                alert("Please select atleast one option to continue....")
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+
+    });
+
+
+
+</script>

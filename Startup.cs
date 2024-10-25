@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SMS_Core.Models;
 
-namespace SMS
+namespace SMS_Core
 {
     public class Startup
     {
@@ -24,6 +24,13 @@ namespace SMS
             services.AddDbContext<SMSDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +46,10 @@ namespace SMS
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithReExecute("/Home/NotFound");
+
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();

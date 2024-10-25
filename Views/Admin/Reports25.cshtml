@@ -1,0 +1,131 @@
+﻿
+@{
+    // Layout = null;
+     @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>List of Reports </title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Reports
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-examplexx">
+                            <thead>
+                                <tr>
+                                    <th>List of Reports for Context.Session.GetString("AY")</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+
+                                        &nbsp;@Html.ActionLink("Collection Register Summary", "CollectionSummary25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Collection Register Section-wise Summary", "DailyCollectionSummary25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Collection Register Day-wise", "FeeCollection25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Cheque detailed Report Day-wise", "BankChequeCollection25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>
+                                        <!-- &nbsp;@Html.ActionLink("Defaulter List", "DefaulterList", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                        &nbsp;@Html.ActionLink("Defaulter List New ***(beta)", "DefaulterListV125", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Summarised Fee Collection Register Section-wise", "SumFeeCollectionReg25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>7</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Monthwise Summerised Fees Collection Register", "SumFeeCollectionMonth25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>8</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Teachers Collection Register", "TeachersFeeCollection25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Teacher's Collection Report Summary", "TeachersFeeCollectionstd25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>10</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Online Transaction", "FeePaymentOnline25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>11</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Student Ledger", "StudentLedger25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Daily Fee Collection", "DailyFeeCollection25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>13</td>
+                                    <td>
+                                        &nbsp;@Html.ActionLink("Cancelled Receipts", "FeePaymentCancelled25", "Admin", "", new { target = "new" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

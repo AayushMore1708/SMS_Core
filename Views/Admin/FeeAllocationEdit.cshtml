@@ -1,0 +1,188 @@
+﻿@model SMS_Core.Models.tblFeeAllocation
+@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Edit Fee Allocation</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () { 
+
+            $('#FeeSubCategoryName').change(function () {
+
+                var SCat = $(this).val();
+
+                var Cat = $('#FeeCategoryName').val();
+                var myObject = { category: Cat, subcategory: SCat };
+                 /* Request the partial view with .get request. */
+                $.getJSON('/Admin/GetFee/', myObject, function (data) {
+                    $('#FeeAmount').val(data);
+                 });
+             });
+
+
+            var str = $('#FeeForBatch').val()
+            var temp = new Array();
+            // this will return an array with strings "1", "2", etc.
+            temp = str.split(",");
+
+            // for (a in temp) {
+            $("#multSubjects").val(temp).trigger("chosen:updated");
+            //alert(temp);
+
+            // }
+            
+
+            $('#multSubjects').change(function () {
+                $('#FeeForBatch').val($('#multSubjects').val());
+            })
+
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                if ($('#FeeCategoryName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+
+                    }
+                }
+                else {
+                    alert("Fee Category should not be blank")
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                if ($('#FeeCategoryName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save'))
+                        event.preventDefault();
+                }
+                else {
+                    alert("Fee Category should not be blank")
+                    return false;
+                }
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        <text>
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE CATEGORY", "FeeCategoryNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE SUB CATEGORY", "FeeSubCategoryNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE SUB CATEGORY FINE", "FeeSubCategoryFineNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE WAIVER", "FeeWaiverNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE ALLOCATION", "FeeAllocationNew", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE PAYMENT", "FeePayment", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE BALANCE", "FeePaymentBalance", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("FEE ADMIN REPORT", "FeePaymentReport", "Admin")&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+        </text>
+        <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp;<a href="#" id="sav" class="btn btn-primary">SAVE & CLOSE</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    </div>
+
+    <h3>&nbsp;&nbsp;Fee Allocation Edit</h3>
+
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-sm-5">
+                @using (Html.BeginForm("FeeAllocationEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+                {
+
+                    <div class="panel">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Fee Category</label>
+                                <div class="col-lg-6">
+                                    @Html.DropDownListFor(model => model.FeeCategoryName, new SelectList(ViewBag.cat, "CategoryMedium", "CategoryMedium"), "", new { @class = "form-control input-sm" })
+                               @Html.HiddenFor(model=>model.FeeAllocationId)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Fee Sub Category</label>
+                                <div class="col-lg-6">
+                                    @Html.DropDownListFor(model => model.FeeSubCategoryName, new SelectList(ViewBag.scat, "FeeSubCategoryName", "FeeSubCategoryName"), "", new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Fee Amount</label>
+                                <div class="col-lg-6">
+                                    @Html.TextBoxFor(model => model.FeeAmount, new { @ReadOnly = "True", @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Cource Name</label>
+                                <div class="col-lg-6">
+                                    @Html.DropDownListFor(model => model.FeeForCourse, new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-4">Batch Name</label>
+                                <div class="col-lg-6">
+                                    @Html.ListBox("multSubjects", new MultiSelectList(ViewBag.bat, "BatchName", "BatchName"), new { @class = "form-control input-sm chosen-select" })
+                                    @Html.HiddenFor(model => model.FeeForBatch)
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                                <div class="col-lg-8">
+                                    <input type="submit" id="frmsave" value="Update & Close" class="btn btn-primary" />
+                                    <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+            <div class="col-lg-6">
+                <div class="table-responsive">
+                    @* @Html.Action("FeeAllocationView") *@
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/js/chosen.jquery.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+                '.chosen-select-width': { width: "100%" }
+            }
+                                                  //for (var selector in config) {
+                                                  //    $(selector).chosen(config[selector]);
+                                                 // }
+    </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+﻿
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Daily Fee Collection </title>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#pdates').change(function () {
+                var SCat = $(this).val();
+                $("#tdates").val(SCat);
+            });
+
+
+
+
+            $("#pdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#tdates").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+
+        });
+
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
+        function Save_confirm2() {
+            if ($("#pdates").val() != "" && $("#tdates").val() != "") {
+                return true;
+            }
+            else {
+
+                alert("Please specify the date range")
+                return false;
+            }
+        }
+
+
+    </script>
+    <div>
+        <br />
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;Daily Fees Collection</h4>
+    </div>
+
+    <div class="panel-body">
+
+        @using (Html.BeginForm("DailyCollectionView25", "Admin", FormMethod.Post))
+        {
+            @Html.ValidationSummary(true)
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">From Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("pdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">To Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("tdates", null, new { autocomplete = "off", @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <!--
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Class</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("cource", new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-4">Batch</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("batch", new SelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @Class = "form-control input-sm" })
+                        </div>
+                        <label class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            &nbsp;
+                        </div>
+                    </div>
+                        -->
+
+                    <div class="form-group">
+                        <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+                        <div class="col-lg-4">
+                            <input type="submit" onclick="return Save_confirm2()" value="View Report" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+
+
+
+    <br />
+    <br />
+
+</body>
+</html>
+
+
+
+
+

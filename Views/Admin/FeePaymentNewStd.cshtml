@@ -1,0 +1,353 @@
+﻿@model SMS_Core.Models.tblFeePayment
+@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Fee Payment New</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#FeeCourseName').change(function () {
+                var selectedIDcn = $('#FeeCourseName').val();
+                var SelectedIDbn = $.trim($('#FeeBatchName').val());
+
+            $.getJSON("@Url.Content("~/Admin/GetStudent")", { cname: selectedIDcn,bname: SelectedIDbn }, function (data) {
+                $('#FeeStudentName').empty();
+                $('#FeeStudentName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeStudentName').append("<option value=\"" + data[i]["UserName"] + "\">" + data[i]["RollName"] + "</option>");
+                }
+                });
+
+            });
+
+            $('#FeeBatchName').change(function () {
+                var selectedIDcn = $('#FeeCourseName').val();
+                var SelectedIDbn = $.trim($('#FeeBatchName').val());
+                $.getJSON("@Url.Content("~/Admin/GetStudent")", { cname: selectedIDcn, bname: SelectedIDbn }, function (data) {
+                    $('#FeeStudentName').empty();
+                    $('#FeeStudentName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#FeeStudentName').append("<option value=\"" + data[i]["UserName"] + "\">" + data[i]["RollName"] + "</option>");
+                }
+                });
+
+            });
+
+            //new changes for online
+
+            $('#FeeModeofPay1').change(function () {
+                if ($('#FeeModeofPay1').val() == 'Online') {
+                    $('#OnlinePayment').css("visibility", "visible");
+                    $('#frmsave').css("visibility", "hidden");
+            }
+            else {
+                    $('#OnlinePayment').css("visibility", "hidden");
+                    $('#frmsave').css("visibility", "visible");
+            }
+
+        });
+
+            //new changes for online end here
+
+            $('#FeeTotalAmount1').val('@ViewBag.feeamt')
+
+
+            $("#FeeReceiptDate1").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#FeeReceiptDate1").datepicker("setDate", new Date());
+
+
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                $('#FeeModeofPay').val($('#FeeModeofPay1').val())
+                $('#FeeRemark').val($('#FeeRemark1').val())
+                $('#FeeReceiptNo').val($('#FeeReceiptNo1').val())
+                $('#FeeReceiptDate').val($('#FeeReceiptDate1').val())
+                $('#FeeTotalAmount').val($('#FeeTotalAmount1').val())
+
+
+                if ($('#FeeTotalAmount1').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+
+                    }
+                }
+                else {
+                    alert("Receipt Amount should not be blank")
+                    return false;
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                $('#FeeModeofPay').val($('#FeeModeofPay1').val())
+                $('#FeeRemark').val($('#FeeRemark1').val())
+                $('#FeeReceiptNo').val($('#FeeReceiptNo1').val())
+                $('#FeeReceiptDate').val($('#FeeReceiptDate1').val())
+                $('#FeeTotalAmount').val($('#FeeTotalAmount1').val())
+
+                if ($('#FeeTotalAmount1').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                }
+                else {
+                    $('#frm').submit();
+                    //return false;
+                }
+            }
+                else {
+                    alert("Receipt Amount should not be blank")
+                    return false;
+                }
+            });
+
+            // New changes for online
+
+            $('#OnlinePayment').click(function (event) {
+                $('#FeeModeofPay').val($('#FeeModeofPay1').val())
+                $('#FeeRemark').val($('#FeeRemark1').val())
+                $('#FeeReceiptNo').val($('#FeeReceiptNo1').val())
+                $('#order_id').val($('#FeeReceiptNo1').val())
+
+
+                $('#FeeReceiptDate').val($('#FeeReceiptDate1').val())
+                $('#FeeTotalAmount').val($('#FeeTotalAmount1').val())
+
+                if ($('#FeeTotalAmount1').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        //return false;
+                    }
+                }
+                else {
+                    alert("Receipt Amount should not be blank, Click + sign to get receipt amount")
+                    return false;
+                }
+            });
+
+
+
+            // New changes for online end here
+
+
+        });
+
+    </script>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+
+            </div>
+            <h3>&nbsp;&nbsp;Fee Payment</h3>
+            <div class="panel">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Charges", "Admin", FormMethod.Post, new {  name = "razorpayForm", @class = "form-horizontal" }))
+                    {
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Cource Name</label>
+                            <div class="col-lg-4">
+                                @ViewBag.crcN
+                                @Html.HiddenFor(m => m.FeeCourseName, new { Value = ViewBag.crcN, @class = "form-control input-sm" })
+
+                                @Html.HiddenFor(m => m.FeePaymentId, new { Value = ViewBag.lpn, @class = "form-control input-sm" })
+
+                                @Html.HiddenFor(m => m.FeeModeofPay, new { @class = "form-control input-sm" })
+                                @Html.HiddenFor(m => m.FeeRemark, new { @class = "form-control input-sm" })
+                                @Html.HiddenFor(m => m.FeeReceiptNo, new { Value = ViewBag.rpn, @class = "form-control input-sm" })
+                                @Html.HiddenFor(m => m.FeeReceiptDate, new { @class = "form-control input-sm" })
+                                @Html.HiddenFor(m => m.FeeTotalAmount, new { Value = ViewBag.feeamt, @class = "form-control input-sm" })
+
+                                @Html.HiddenFor(m => m.FeeDescID, new { Value = ViewBag.feedescid, @class = "form-control input-sm" })
+
+                                @Html.HiddenFor(m => m.TotalAmoutPaying, new { Value = ViewBag.feeamt, @class = "form-control input-sm" })
+
+                                @Html.HiddenFor(m => m.FeeStudentID, new { Value = ViewBag.feeid, @class = "form-control input-sm" })
+
+                                @Html.Hidden("FeeCategory", "", new { Value = ViewBag.fcat, @class = "form-control input-sm" })
+
+                            </div>
+
+                            <div style="position:absolute;right:300px;height:250px;top:20px;overflow:auto" id="feeView" class="col-lg-4">
+                                @* @Html.Action("FeePaymentDashNew") *@
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Batch Name</label>
+                            <div class="col-lg-4">
+                                @Html.HiddenFor(m => m.FeeBatchName, new { Value = ViewBag.batN, @class = "form-control input-sm" })
+                                @ViewBag.batN
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Student Name</label>
+                            <div class="col-lg-4">
+                                @Html.HiddenFor(m => m.FeeStudentName, new { Value = ViewBag.name, @class = "form-control input-sm" })
+                                @ViewBag.name &nbsp; FeeID : @User.Identity.Name
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">For Acadamic Year</label>
+                            <div class="col-lg-4">
+                                @ViewBag.ay
+                            </div>
+                        </div>
+                        <div style="display:none" class="form-group">
+                            <table> 
+                                <tr>
+                                    <td>Order Id</td>
+                                    <td>
+                                        <input type="text" name="order_id" value=@ViewBag.rpn />
+
+                                        <input id="razorpay_payment_id" type="text" name="razorpay_payment_id" />
+                                        <input id="razorpay_order_id" type="text" name="razorpay_order_id" />
+                                        <input id="razorpay_signature" type="text" name="razorpay_signature" /> 
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td>Amount</td>
+                                    <td><input type="text" name="amount" value=@ViewBag.feeamt /></td>
+                                </tr> 
+                            </table> 
+                        </div>
+
+                    }
+
+                    <div class="form-group">
+                        <div id="partialPlaceHolder">
+                            You are paying for <b> @ViewBag.fcat </b>
+                            <!--@@Html.Action("FeePaymentNewDTStd")-->
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Mode of Payment </label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("FeeModeofPay1", new SelectList(new[] { "Online" }), new { @class = "form-control input-sm" })<br />
+
+                        </div>
+
+                        <label class="control-label col-lg-2">Receipt No</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("FeeReceiptNo1", "", new { Value = ViewBag.rpn, @readonly = true, @class = "form-control input-sm" })
+                        </div>
+                    </div>
+
+
+                    <br /><br />
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Receipt Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("FeeReceiptDate1", "", new { @readonly = true, @class = "form-control input-sm" })
+                        </div>
+
+                        <label class="control-label col-lg-2">Receipt Amount</label>
+                        <div class="col-lg-4">
+                            @Html.TextBox("FeeTotalAmount1", "", new { @readonly = true, @class = "form-control input-sm" })
+                        </div>
+                    </div>
+
+                    <br /><br />
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Remarks</label>
+                        <div class="col-lg-10">
+                            @Html.TextBox("FeeRemark1", "Thanks for Payment", new { @class = "form-control input-sm" })
+
+                        </div>
+                    </div>
+
+
+                    <br /><br /><br /><br /><br />
+                    <div class="form-group">
+                        <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                        <div class="col-lg-8">
+                            <input type="button" id="rzp-button1" name="rzp-button1" value="Online Payment" class="btn btn-primary" />
+                            <input type="button" id="frmsave" style="visibility:hidden" value="Save & Close" class="btn btn-primary" />
+                            <!--<button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+
+          
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script>
+                var orderId = "@ViewBag.orderid";
+
+        var options = {
+            "name": "Vidya Prasarak Mandal's",
+            "description": "VIDYA MANDIR",
+            "order_id": orderId,
+            "image": "https://www.vpmdahisar.co.in/Content/vpm1.jpg",
+            "prefill": {
+                "name": "@ViewBag.fname",
+                "email": "@ViewBag.email",
+                "contact": "@ViewBag.contactn",
+
+            },
+            "notes": {
+                "address": "@ViewBag.add",
+                "merchant_order_id": "@ViewBag.feenew",
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        }
+        // Boolean whether to show image inside a white frame. (default: true)
+        options.theme.image_padding = false;
+        options.handler = function (response) {
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_order_id').value = orderId;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+            document.razorpayForm.submit();
+        };
+        options.modal = {
+            ondismiss: function () {
+                alert('You are cancelling the Payment, Kindly contact Vidya Prasarak Mandal Vidya Mandir if any issue');
+               // document.razorpayForm.submit();
+                console.log("This code runs when the popup is closed");
+            },
+            // Boolean indicating whether pressing escape key
+            // should close the checkout form. (default: true)
+            escape: true,
+            // Boolean indicating whether clicking translucent blank
+            // space outside checkout form should close the form. (default: false)
+            backdropclose: false
+        };
+        var rzp = new Razorpay(options);
+        document.getElementById('rzp-button1').onclick = function (e) {
+            rzp.open();
+            e.preventDefault();
+        }
+            </script>
+
+        </div>
+    </div>
+</body>
+</html>
