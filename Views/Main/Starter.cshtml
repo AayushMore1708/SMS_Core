@@ -1,0 +1,329 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <style type="text/css">
+        body {
+            font-family: Open Sans, sans-serif;
+            background-color: #f9f9f9; /* Light gray background */
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #AF7AC5; /* Background color */
+            padding: 0.5rem 1rem; /* Reduce padding to make it denser */
+            border: 2px solid #8e44ad; /* Refined border with a dark purple color */
+            border-radius: 8px; /* Add a slight roundness to the corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+        }
+
+        .navbar-brand {
+            color: black;
+            font-weight: bold;
+            font-size: 1.2rem; /* Slightly increase the font size */
+            padding: 0; /* Remove any default padding */
+        }
+
+        .nav-link {
+            color: white; /* Navbar links in white */
+            font-weight: 500; /* Slightly bolder */
+            padding: 0.4rem 0.8rem; /* Reduce padding for a compact look */
+        }
+
+            .nav-link:hover {
+                color: #ccc; /* Color on hover */
+                text-decoration: none; /* No underline on hover */
+            }
+
+        .tile {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 90px;
+            border-radius: 10px;
+            box-shadow: 1 1 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            height: 150px;
+            text-decoration: none;
+            width: 200px;
+            margin: 30px;
+        }
+
+       
+
+        .tile:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .tile-content {
+            text-align: center;
+        }
+
+            .tile-content span {
+                font-size: 1.3rem;
+                color: black;
+                line-height: 1.1;
+                margin-top: 5px;
+                text-decoration: none;
+            }
+
+        .icon {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+
+
+        .col-md-3 {
+            background-color: #ECF0F1;
+            border-right: 1px solid #F7DC6F;
+            border-left: 1px solid #F7DC6F;
+            border-top: 1px solid #F7DC6F;
+            border-bottom: 1px solid #F7DC6F;
+            display: flex;
+            justify-content: center;
+            margin: 2px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .col-md-3:last-child {
+                margin-left: 0;
+                margin-right: auto;
+            }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 10px;
+        }
+
+        .tile-content span img {
+            margin-bottom: 15px; /* Add this line to add space between the icon and the text */
+        }
+
+
+        @@media (max-width: 608px) {
+            body {
+                color: white;
+                
+            }
+        }
+
+
+        @@media (max-width: 1200px) {
+            .tile {
+                padding: 60px;
+            }
+        }
+
+        @@media (max-width: 992px) {
+            .tile {
+                padding: 20px;
+            }
+
+            .navbar {
+                background-color: #AF7AC5;
+                padding: 1rem;
+                width: 100%; /* Set the width to auto */
+                max-width: 100%;
+                border: 4px solid #d;
+            }
+
+
+            .navbar-brand {
+                max-width: 100%; /* Adjust the max-width as needed */
+            }
+        }
+
+        @@media (max-width: 864px) {
+            .tile {
+                padding: 25px;
+            }
+
+            .tile-content span img {
+                height: 80px;
+            }
+
+            .tile-content span {
+                font-size: 1.1rem;
+            }
+        }
+
+        @@media (max-width: 839px) {
+            .tile {
+                padding: 20px;
+            }
+
+            .tile-content span img {
+                height: 70px;
+            }
+
+            .tile-content span {
+                font-size: 1rem;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .tile {
+                padding: 15px;
+            }
+
+            .tile-content span img {
+                height: 60px;
+            }
+
+            .tile-content span {
+                font-size: 0.9rem;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .tile {
+                padding: 5px;
+            }
+
+            .tile-content span img {
+                height: 100px;
+            }
+
+            .tile-content span {
+                line-height: 0.8;
+                font-size: 1.5rem;
+            }
+
+            .navbar {
+                background-color: #AF7AC5;
+                padding: 1rem;
+                width: 800px; /* Set the width to auto */
+                border: 4px solid #d;
+            }
+
+        }
+
+        @@media (max-width: 430px) {
+            .tile {
+                padding: 5px;
+            }
+
+            .tile-content span img {
+                height: 100px;
+            }
+
+            .tile-content span {
+                line-height: 0.8;
+                font-size: 1.5rem;
+            }
+
+            .navbar {
+                padding: 1rem;
+                width: 800px; /* Set the width to auto */
+            }
+        
+        }
+
+    
+    </style>
+</head>
+
+<body>
+    <header class="mb-1">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg ">
+                <a class="navbar-brand" href="#" title="SMS">
+                    <p >
+                        <span style="font-size:2.5vw;">Student Management System for the Academic Year : @Context.Session.GetString("AY")</span>
+                    </p>
+                </a>
+            </nav>
+        </div>
+    </header>
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Institute" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn-icons-png.flaticon.com/512/5310/5310672.png" alt="Institute"> </span> <span>Institute</span> </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/AcadamicYear" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn-icons-png.freepik.com/512/6195/6195762.png" alt="Academic Year Icon"> </span> <span>Academic Year</span> </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Student" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn-icons-png.freepik.com/512/2799/2799142.png" alt="Students Icon"> </span> <span>Students </span> </div>
+                    </a>
+                </div>
+
+                @if (Context.Session.GetString("AY") == "Jun 2024 - May 2025")
+                {
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Reports25" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn-icons-png.freepik.com/256/8480/8480222.png" alt="Reports Icon"> </span> <span>Reports</span> </div>
+                    </a>
+                </div>
+                }
+                else
+                {
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Reports" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn-icons-png.freepik.com/256/8480/8480222.png" alt="Reports Icon"> </span> <span>Reports</span> </div>
+                    </a>
+                </div>
+
+                }
+
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Employee" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn.iconscout.com/icon/free/png-256/free-employee-3704498-3085814.png" alt="Academic Year Icon"> </span> <span>Employee</span> </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Cources" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://static.vecteezy.com/system/resources/previews/007/127/411/original/noticeboard-icon-designed-on-flat-style-vector.jpg" alt="Academic Year Icon"> </span> <span>Cources</span> </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Batches" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn-icons-png.flaticon.com/512/2501/2501083.png" alt="Academic Year Icon"> </span> <span>Batches</span> </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/TeacherAllocation" class="tile" data-role="tile">
+                        <div class="tile-content iconic">
+                            <span> <img height="100" src="https://cdn-icons-png.flaticon.com/512/2472/2472253.png" alt="Academic Year Icon"> </span> <span>
+                                <br />Class Teacher Allocation
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Subject" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://ggstudyabroad.com/wp-content/uploads/2019/09/subject-icon-5.png" alt="Academic Year Icon"> </span> <span>Subjects</span> </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <a href="~/Admin/Backup" class="tile" data-role="tile">
+                        <div class="tile-content iconic"> <span> <img height="100" src="https://cdn-icons-png.freepik.com/512/10648/10648619.png" alt="Academic Year Icon"> </span> <span><br />Backup</span> </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

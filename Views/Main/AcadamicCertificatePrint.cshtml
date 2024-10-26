@@ -1,0 +1,89 @@
+﻿@model SMS_Core.Models.tblAcadamicCertificate
+@{
+    // Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Acadamic Certificate</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            });
+
+
+    </script>
+</head>
+<body>
+
+
+    <h3>&nbsp;&nbsp;Acadamic Certificate</h3>
+
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("CreatePurchaseReceipt", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Acadamic Certificate Date</label>
+                    <div class="col-lg-2">
+                        @string.Format("{0:dd-MM-yyyy}", Model.AwardedDated)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">School Name</label>
+                    <div class="col-lg-2">
+                        @Model.SchoolName
+                    </div>
+                </div>
+
+                 
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Student Name</label>
+                    <div class="col-lg-2">
+                        @Model.AwardedTo
+                    </div>
+                </div>
+
+                  
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Awarded For</label>
+                    <div class="col-lg-2">
+                        @Model.AwardedFor
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Awarded Session</label>
+                    <div class="col-lg-2">
+                        @Model.AwardedSession
+                    </div>
+                </div>
+
+             
+
+                <br /><br />
+                <br />
+
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-4">
+                        <label class="control-label col-lg-4">Authorised By</label>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+
+
+</body>
+</html>

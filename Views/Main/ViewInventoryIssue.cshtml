@@ -1,0 +1,110 @@
+﻿@model IEnumerable<SMS_Core.Models.tblInventoryIssue>
+@{
+    ViewBag.Title = "View Inventory Issue";
+}
+
+<!-- /play details -->
+
+<style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+</style>
+<div class="col-sm-12">
+    <div>
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Issue Inventory", "CreateInventoryIssue", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+
+    </div>
+    <br />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                <strong class="text-info">
+                    View Inventory Issue
+                </strong>
+            </span>
+        </div>
+
+        <div class="table-responsive">
+
+            <table id="dataTables-example" class="table   table-striped">
+                <thead class="text-info">
+                    <tr class="text-info">
+                        <th class="text-left">#</th>
+                        <th class="text-left">Date</th>
+                        <th class="text-left">User Type</th>
+                        <th class="text-left">User</th>
+                        <th class="text-left">Issue Item</th>
+                        <th class="text-left">Grand total</th>
+                        <th class="text-left">Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ReceiptNo)</td>
+                            <td>@string.Format("{0:dd-MMM-yyyy H:mm}", item.ReceiptDate)</td>
+
+                            <td>@Html.DisplayFor(modelItem => item.UserType)</td>
+                            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+
+                            <td>
+                                <table class="table   table-striped">
+                                    @foreach (var mri in item.tblInventoryIssueDtls)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => mri.InventoryItem)
+                                            </td>
+                                            <td> @Html.DisplayFor(modelItem => mri.Rate)</td>
+                                            <td> @Html.DisplayFor(modelItem => mri.InventoryQty)</td>
+                                            <td> @Html.DisplayFor(modelItem => mri.SubTotal)</td>
+
+                                        </tr>
+
+                                    }
+                                </table>
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
+                            <td>
+                                @Html.ActionLink("Issue Receipt", "ViewInventoryIssueDtl", new { id = item.InventoryIssueID,poid=item.InventoryIssueID }, new {target="new" })
+
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+<script src="~/Content/js/jquery.dataTables.js"></script>
+<script src="~/Content/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+
+</script>
+<br />
+
+<br />
+<!-- play details -->

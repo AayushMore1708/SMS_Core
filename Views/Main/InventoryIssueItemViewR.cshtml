@@ -1,0 +1,98 @@
+﻿@model IEnumerable<SMS_Core.Models.tblInventoryIssueDtl>
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#GrandTtl').val('@ViewBag.netamt');
+    })
+     var onSuccessd = function (result) {
+         alert("Record Has Been Deleted Successfully !!");
+         var poids = $('#Inventoryissueids').val();
+
+         $.ajax({
+             url: '@Url.Action("InventoryIssueItemView")',
+             type: 'GET',
+             cache: false,
+             data: { poid: poids},
+             success: function (result) {
+                 $('#partialPlaceHolder1').html(result);
+             }
+         });
+      }
+
+     var onFailure = function (result) {
+         alert("fail");
+         $("#partialPlaceHolder1").html("Oops There is error, please close and restart application");
+     }
+
+
+
+    </script>
+
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Inventory Issue Details</title>
+    <style>
+
+    .MyCssClass
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="text-info">
+                                <th class="text-left">Item Name</th>
+                                <th class="text-left">MRP</th>
+                                <th class="text-left">Qty</th>
+                                <th class="text-left">Net Amount</th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.InventoryItem)
+                                    </td>
+                                    <td> @Html.DisplayFor(modelItem => item.Rate)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.InventoryQty)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.SubTotal)</td>
+                                   
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+           // $('#dataTables-example').dataTable();
+        });
+
+    </script>
+</body>
+</html>

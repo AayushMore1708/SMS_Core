@@ -1,0 +1,72 @@
+﻿@model IEnumerable<SMS_Core.Models.tblPurchaseOrderDT>
+@{
+    Layout = null;
+
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        
+
+
+    });
+
+
+</script>
+
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-info">
+                            <th class="text-left">Category </th>
+                            <th class="text-left">Item Name</th>
+                            <th class="text-left">MRP</th>
+                            <th class="text-left">Rate</th>
+                            <th class="text-left">Discount %</th>
+                            <th class="text-left">Qty</th>
+                            <th class="text-left">Net Amount</th>
+                            <th class="text-left">CGST</th>
+                            <th class="text-left">SGST</th>
+                            <th class="text-left">IGST</th>
+                            <th class="text-left">Total Amount</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                           
+                        <tr>
+                            
+                            <td>@Html.TextBox("Category", @Model.ElementAt(i).ItemCategory, new {  @class = "form-control input-sm" })</td>  
+                        
+                            <td>@Html.TextBox("ItemName", @Model.ElementAt(i).PurchaseOrderItemName, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                            <td>@Html.TextBox("MRP", @Model.ElementAt(i).POItemMRP, new { @Readonly = true, @class = "form-control input-sm" }) </td>
+                            <td>@Html.TextBox("Rate", @Model.ElementAt(i).PurchaseOrderItemRate, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                            <td>@Html.TextBox("Discount", @Model.ElementAt(i).POItemDiscount, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                            <td>  @Html.TextBox("Qty", @Model.ElementAt(i).POItemQty, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                            <td>@Html.TextBox("NetAmount", @Model.ElementAt(i).POItemNetAmount, new { @Readonly = true, @class = "form-control input-sm" }) </td>
+                            <td>@Html.TextBox("CGST", @Model.ElementAt(i).POItemCGST, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                            <td>@Html.TextBox("SGST", @Model.ElementAt(i).POItemSGST, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                            <td>@Html.TextBox("IGST", @Model.ElementAt(i).POItemIGST, new { @Readonly = true, @class = "form-control input-sm" })</td>
+                            <td>@Html.TextBox("TotalAmount", @Model.ElementAt(i).POItemTotalAmount, new { @Readonly = true, @class = "form-control input-sm" })</td> 
+ 
+                        </tr>
+ 
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

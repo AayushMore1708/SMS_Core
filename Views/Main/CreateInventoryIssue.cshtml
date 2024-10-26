@@ -1,0 +1,163 @@
+﻿@model SMS_Core.Models.tblInventoryIssue
+@{
+    // Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Inventory Issue</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#InventoryIssueID').val( @ViewBag.mno);
+
+
+            $("#ReceiptDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+             $('#UserType').change(function () {
+               // var vna = $("#VendorIDn option:selected").text();
+                var ut = $("#UserType").val();
+                 alert(ut);
+                if (ut == "Employee") {
+                     $.getJSON("@Url.Content("~/Home/GetEmployee")", function (data) {
+                         $('#UserID').empty();
+                         $('#UserID').append("<option value=\"" + "" + "\">" + "Please Select" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#UserID').append("<option value=\"" + data[i]["UserName"] + "\">" + data[i]["EName"] + "</option>");
+                }
+                });
+                }
+                else {
+                     $.getJSON("@Url.Content("~/Home/GetStudent")", function (data) {
+                         $('#UserID').empty();
+                         $('#UserID').append("<option value=\"" + "" + "\">" + "Please Select" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#UserID').append("<option value=\"" + data[i]["UserName"] + "\">" + data[i]["Name"] + "</option>");
+                }
+                });
+                }
+
+            });
+
+            $('#UserID').change(function () {
+                var vna = $("#UserID option:selected").text();
+                $('#UserName').val(vna);
+
+            });
+
+            // $('#footer').hide();
+           
+
+            $('#frmsave').click(function (event) {
+                if ($('#UserID').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#TotalAmount').val($('#GrandTtl').val());
+                        $('#frm').submit();
+                        return false;
+                    }
+                }
+                else {
+                    alert("UserName should not be blank")
+                    return false;
+                }
+            });
+        });
+
+
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        @* <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp; @Ajax.ActionLink("SAVE & CLOSE", null, null, null, new { id = "sav" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *@
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Inventory Issue</h3>
+
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("CreateInventoryIssue", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Inventory Issue Receipt No.</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.ReceiptNo, new { Value = @ViewBag.mno, @class = "form-control input-sm" })
+                        @Html.HiddenFor(model => model.InventoryIssueID, new { Value = @ViewBag.mno, @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Inventory Issue Date</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.ReceiptDate, new {  @class = "form-control input-sm" })
+                      
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">User Type</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.UserType, new SelectList(new[] { "Employee", "Student" }), "", new { @style = "width:100px", @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">User</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.UserID, new SelectList(new[] { "", "" }), new { @class = "form-control input-sm" })
+
+                        @Html.HiddenFor(model => model.UserName, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Remarks</label>
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(model => model.Remarks, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(model => model.TotalAmount)
+                    </div>
+                </div>
+
+
+
+            }
+            <br /><br />
+            <div class="form-group">
+
+                @* @Html.Action("InventoryIssueItemDT") *@
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Grand Total</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("GrandTtl", "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                <div class="col-lg-12">
+                    <input type="submit" id="frmsave" value="Save" class="btn btn-primary" />
+                    <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

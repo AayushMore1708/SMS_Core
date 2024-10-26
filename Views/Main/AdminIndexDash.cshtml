@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "Welcome to Student Management System";
+}
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#footer').hide();
+         
+        var source =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'key' },
+                { name: 'cnt' }
+            ],
+            url: 'Piechart'
+        };
+
+                           var dataAdapter = new $.jqx.dataAdapter(source, { async: false, autoBind: true, loadError: function (xhr, status, error) { alert('Error loading "' + source.url + '" : ' + error); } });
+        // prepare jqxChart settings
+                           var settings1 = {
+                               title: "",
+                               description: "",
+                               enableAnimations: true,
+                               showLegend: true,
+                               showBorderLine: true,
+                               legendLayout: { left: 1, top: 2, width: 250, height: 150, flow: 'vertical' },
+                               padding: { left: 5, top: 5, right: 5, bottom: 5 },
+                               titlePadding: { left: 0, top: 0, right: 0, bottom: 10 },
+                               source: dataAdapter,
+                               colorScheme: 'scheme01',
+                               seriesGroups:
+                                   [
+                                       {
+                                           type: 'pie',
+                                           showLabels: true,
+                                           series:
+                                               [
+                                                   {
+                                                       dataField: 'cnt',
+                                                       displayText: 'key',
+                                                       labelRadius: 170,
+                                                       initialAngle: 15,
+                                                       radius: 145,
+                                                       centerOffset: 0,
+                                                       formatFunction: function (value) {
+                                                           if (isNaN(value))
+                                                               return value;
+                                                           return parseFloat(value) + '';
+                                                       },
+                                                   }
+                                               ]
+                                       }
+                                   ]
+                           };
+        // setup the chart
+                           $('#chartContainer1').jqxChart(settings1);
+
+    });
+</script>
+
+<!-- dashboard end-->
+
+<div class="container">
+    <div class="row col-sm-3">
+        <div class="form-group">
+
+            <div class="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title"><strong class="text-info">@ViewBag.ay </strong></span>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                            <tr>
+                                <td>
+                                    Students &nbsp; <span class="badge">@ViewBag.students</span> &nbsp;Courses &nbsp;<span class="badge">@ViewBag.courses</span>
+                                    &nbsp;Batch &nbsp;<span class="badge">@ViewBag.batches</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Total Fees &nbsp; <span class="badge">@ViewBag.ttlfees</span> &nbsp;Collected Fees &nbsp;<span class="badge">@ViewBag.feecollect</span>
+                                    &nbsp;Balance &nbsp;<span class="badge" style="color:red">@ViewBag.feebal</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Today's Attendnace : </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Teachers &nbsp;<span class="badge">@ViewBag.Tatt</span>&nbsp;Students &nbsp;<span class="badge">@ViewBag.Satt</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                                                                              <strong class="text-info">
+                                                                                  Circular &nbsp; (<a href="ViewTaskNew">All Task</a>)
+                                                                              </strong>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    @* @Html.Action("CircularsDash") *@
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title"><strong class="text-info">Task Status</strong></span> (<a href="ViewTaskNew">All Task</a>)
+                </div>
+                <div class="panel-body">
+                     @* @Html.Action("ViewTaskNewShort") *@
+
+                </div>
+
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title"><strong class="text-info">Course wise Student</strong></span>
+                </div>
+                <div class="panel-body">
+                    <div id="chartContainer1" style="width:380px;height:320px"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+

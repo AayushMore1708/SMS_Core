@@ -1,0 +1,120 @@
+﻿@model IEnumerable<SMS_Core.Models.tblStoreVendor>
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Vendors</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Vendor", "VendorNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Category", "InventoryCategoryNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Item", "StockItemNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Inventory", "InventoryItemNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New PO", "CreatePurchaseOrderD", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("View Purchase Order", "ViewPurchaseOrder", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("View Purchase Receipt", "ViewPurchaseReceipt", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            ||&nbsp;&nbsp;@Html.ActionLink("Issue Inventory", "ViewInventoryIssue", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+            ||&nbsp;&nbsp;@Html.ActionLink("Closing Stock", "ClosingStock", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+        </div>
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Vendors
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Vendor Category</th>
+                                    <th>Vendor Company</th> 
+                                    <th>Vendor Contact Person</th>
+                                    <th>Vendor Company Phone</th>
+                                    <th>Vendor Company Mobile</th>
+                                    <th>Vendor Company Email</th>
+                                    <th>Vendor Company Locality</th>
+                                    <th>Vendor Company Address</th>
+                                    <th>Vendor Company City</th>
+                                    <th>Vendor Company State</th>
+                                    <th>Vendor Company Country</th> 
+                                    <th>Vendor Bank Name</th>
+                                    <th>Vendor Branch Name</th>
+                                    <th>Vendor Account Number</th>
+                                    <th>Vendor IFSCCode</th> 
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCategory)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompany)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorContactPerson)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyPhone)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyMobile)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyEmail)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyLocality)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyAddress)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyCity)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyState)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorCompanyCountry)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorBankName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorBranchName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorAccountNumber)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.VendorIFSCCode)</td>
+                                    <td>
+                                        @Html.ActionLink(" ", "VendorEdit", new { id = item.VendorId }, new { @class = "MyCssClassE" })
+
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+
+    </script>
+</body>
+</html>

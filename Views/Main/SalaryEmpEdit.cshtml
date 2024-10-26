@@ -1,0 +1,346 @@
+﻿@model SMS_Core.Models.tblSalaryHD
+@{
+    // Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Employee Salary</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#BasicSalary').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val()) ));
+
+            });
+
+            $('#DA').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#HRA').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#Conveyance').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#MedicalExpenses').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#TravelAllowance').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#PF').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#ProfessionTax').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#TDS').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#Bonus').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+            $('#SalaryAdvance').change(function () {
+                $('#TotalSalary').val(Math.round(parseFloat($('#BasicSalary').val()) + parseFloat($('#DA').val()) + parseFloat($('#HRA').val()) + parseFloat($('#Conveyance').val()) + parseFloat($('#MedicalExpenses').val()) + parseFloat($('#TravelAllowance').val()) + parseFloat($('#Bonus').val())) - Math.round(parseFloat($('#PF').val()) + parseFloat($('#ProfessionTax').val()) + parseFloat($('#TDS').val()) + parseFloat($('#SalaryAdvance').val())));
+
+            });
+
+
+
+
+
+            $('#EmployeeID').change(function () {
+                var vn = $("#EmployeeID option:selected").val();
+                var vnn = $("#EmployeeID option:selected").text();
+                $('#EmployeeName').val(vnn)
+
+
+            $.getJSON("@Url.Content("~/Home/GetDesignation")", { vnd: vn }, function (data) {
+                $('#Designation').val(data.Designation);
+                $.getJSON("@Url.Content("~/Home/GetHolidays")", { vnd: data.Designation }, function (data) {
+                    $('#AllowedLeaves').val(data);
+                });
+
+                $.getJSON("@Url.Content("~/Home/GetHolidaysBalance")", { vnd: vn, mnt: $('#SalaryMonth').val(), yr: $('#SalaryYear').val() }, function (data) {
+                    $('#BalanceLeave').val($('#AllowedLeaves').val() - data);
+                });
+
+                 $.getJSON("@Url.Content("~/Home/GetSalaryMst")", { vnd: vn }, function (data) {
+                     //$('#TotalHoliday').val(data);
+                     $('#BasicSalary').val(data.BasicSalary);
+                     $('#DA').val(data.DA);
+                     $('#HRA').val(data.HRA);
+                     $('#Conveyance').val(data.Conveyance);
+                     $('#MedicalExpenses').val(data.MedicalExpenses);
+
+                     $('#TravelAllowance').val(data.TravelAllowance);
+                     $('#PF').val(data.PF);
+                     $('#ProfessionTax').val(data.ProfessionTax);
+                     $('#TDS').val(data.TDS);
+                     $('#CTC').val(data.CTC);
+                     $('#TotalSalary').val(data.CTC);
+                });
+
+            });
+            });
+
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                if ($('#VendorName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+                    }
+                }
+                else {
+                    alert("VendorName should not be blank")
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                if ($('#EmployeeID').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        //$('#GrandTotal').val($('#GrandTtl').val());
+                        $('#frm').submit();
+                        return false;
+                    }
+                }
+                else {
+                    alert("Employee Name should not be blank")
+                    return false;
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        @* <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp; @Ajax.ActionLink("SAVE & CLOSE", null, null, null, new { id = "sav" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *@
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Salary Employee Edit</h3>
+
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("SalaryEmpEdit", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Month</label>
+                    <div class="col-lg-1">
+                        @Html.DropDownListFor(model => model.SalaryMonth, new List<SelectListItem>
+    {
+               new SelectListItem() {Value = "0", Text="Select Month"},
+                        new SelectListItem() {Value = "1", Text="January"},
+                        new SelectListItem() {Value = "2", Text="February"},
+                        new SelectListItem() {Value = "3", Text="March"},
+                        new SelectListItem() {Value = "4", Text="April"},
+                        new SelectListItem() {Value = "5", Text="May"},
+                        new SelectListItem() {Value = "6", Text="June"},
+                        new SelectListItem() {Value = "7", Text="July"},
+                        new SelectListItem() {Value = "8", Text="August"},
+                        new SelectListItem() {Value = "9", Text="September"},
+                        new SelectListItem() {Value = "10", Text="October"},
+                        new SelectListItem() {Value = "11", Text="November"},
+                        new SelectListItem() {Value = "12", Text="December"}
+
+
+
+    }, new { @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-1">Year</label>
+                    <div class="col-lg-2">
+                        @Html.DropDownListFor(model => model.SalaryYear, new SelectList(new[] { "2020", "2021" }), "----Select Year---", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Employee Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.EmployeeID, new SelectList(ViewBag.vc, "UserID", "EName"), "", new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(model => model.EmployeeName, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(model => model.SalaryId, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Designation</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.Designation, new { @Readonly = true, @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Work Days</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.WorkDays, new { @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-1">Leave Allowed</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.AllowedLeaves, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Balance Leave</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model=>model.BalanceLeave, new { @class = "form-control input-sm" })
+                    </div>
+
+                    <label class="control-label col-lg-1">Leave Taken</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.LeaveTaken, new { @class = "form-control input-sm" })
+                    </div>
+
+                    <label class="control-label col-lg-1">Leave Type</label>
+                    <div class="col-lg-2">
+                        @Html.DropDownListFor(model => model.LeaveType, new SelectList(ViewBag.vl, "LeaveCategoryType", "LeaveCategoryType"), "", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Basic Salary</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.BasicSalary, new {  @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-1">PF</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.PF, new {  @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">DA</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.DA, new {  @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-1">Profession Tax</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.ProfessionTax, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">HRA</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.HRA, new {  @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-1">TDS</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.TDS, new {  @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Conveyance</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.Conveyance, new {  @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-2">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Medical Expenses</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.MedicalExpenses, new {  @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-2">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Travel Allowance</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.TravelAllowance, new {  @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-2">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Bonus</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.Bonus, new {  @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-2">Advance Deduction</label>
+                    <div class="col-lg-1">
+                        @Html.TextBoxFor(model => model.SalaryAdvance, new {  @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">CTC</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.CTC, new { @Readonly = true, @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-2">Payable Salary</label>
+                    <div class="col-lg-1">
+                        @Html.TextBoxFor(model => model.TotalSalary, new { @Readonly = true, @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+            }
+            <br /><br />
+
+
+
+
+            <div class="form-group">
+                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                <div class="col-lg-12">
+                    <input type="submit" id="frmsave" value="Update" class="btn btn-primary" />
+                    <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

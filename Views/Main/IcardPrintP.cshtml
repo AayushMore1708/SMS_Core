@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SMS_Core.Models.qryStudentAdmission>
+ 
+@{
+    ViewBag.Title = "LabelsPrintP";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Student ICard</title>
+    <link href="labels.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            width: 8.625in;
+            margin: 0.2in .1175in;
+        }
+
+        .label {
+            /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
+            width: 3.125in; /* plus .6 inches from padding */
+            height: 3.175in; /* plus .125 inches from padding */
+            padding: .15in .1in 0;
+            font-family: Verdana;
+            font-size: 11px;
+            float: left;
+            text-align: justify;
+            overflow: hidden;
+            outline: 1px dotted; /* outline doesn't occupy space like border does */
+            page-break-inside: avoid;
+        }
+
+        .page-break {
+            clear: left;
+            display: block;
+            page-break-inside: avoid;
+        }
+    </style>
+
+</head>
+<body>
+    @{
+        int i = 1;
+    }
+    @foreach (var item in Model)
+    {
+        
+    <div class="label">
+        <div class="page-break">
+            <h3>School Name</h3>
+            <b>
+                <img src="~/Content/Upload/@item.StudentPhoto" width="70" height="70" /><br />
+                Full Name &nbsp;&nbsp;@item.StudentFirstName &nbsp;@item.StudentMiddleName &nbsp;@item.StudentLastName<br />
+                Date of Birth &nbsp;&nbsp; @item.StudentDOB.Value.ToString("dd-MM-yyyy") <br />
+
+                RollName &nbsp;&nbsp; @item.StudentRollNo
+                <br />
+            </b>
+        </div>
+        <div>@item.StudentAddress</div>
+        <div>@item.StudentCity&nbsp;-&nbsp; @item.StudentPincode</div>
+        <br /><br />
+        <div>Batch &nbsp;&nbsp; @item.StudentBatch</div>
+        <div>Class&nbsp;&nbsp; @item.StudenntCourse</div>
+        <br />
+        <br />
+        Student's Signature &nbsp;&nbsp;&nbsp;Principal's Signature
+
+    </div>
+
+        i++;
+    }
+
+
+</body>
+</html>

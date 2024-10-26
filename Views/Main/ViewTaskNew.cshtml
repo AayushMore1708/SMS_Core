@@ -1,0 +1,541 @@
+﻿@model IEnumerable<SMS_Core.Models.TaskM>
+@{
+    //Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>View Task </title>
+
+    <style type="text/css" class="init">
+    </style>
+
+
+
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+
+
+    <style>
+
+        @@-moz-keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @@-webkit-keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+        /* IE */
+        @@-ms-keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+        /* Opera and prob css3 final iteration */
+        @@keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        .blink-image {
+            -moz-animation: blink normal 2s infinite ease-in-out; /* Firefox */
+            -webkit-animation: blink normal 2s infinite ease-in-out; /* Webkit */
+            animation: blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+        }
+
+        p.item {
+            position: relative;
+            min-height: 24px;
+            color: black;
+            width: 410px;
+            background-color: snow;
+            padding: 4px;
+            border: 0px solid red;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+
+        p {
+        }
+
+        pre.item {
+            position: relative;
+            min-height: 10px;
+            color: black;
+        }
+
+
+
+        a.toggle {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            display: inline-block;
+            background: white;
+            padding-left: 10px;
+        }
+
+        .chat {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            .chat li {
+                margin-bottom: 10px;
+                padding-bottom: 5px;
+                border-bottom: 1px dotted #B3A9A9;
+            }
+
+                .chat li.left .chat-body {
+                    margin-left: 60px;
+                }
+
+                .chat li.right .chat-body {
+                    margin-right: 60px;
+                }
+
+
+                .chat li .chat-body p {
+                    margin: 0;
+                }
+    </style>
+</head>
+
+
+<body>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table style="font-size:12px;width:100%" class="table   table-bordered " id="dataTables-example1">
+                <thead>
+                    <tr>
+
+                        <th>Department</th>
+                        <th>Type of Work</th>
+                        <th style="width:30%">
+                            Task Details &nbsp; (**Kindly Refresh for Latest Updates**)
+                        </th>
+                        <th>Task CC</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Due On</th>
+
+                        <!--
+                        DateTime dt = DateTime.Now;
+                        lblTimeZone.Text = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dt,
+                        TimeZoneInfo.Local.Id, ddlTimeZone.SelectedValue).ToString();
+                           -->
+                    </tr>
+                </thead>
+                <!--  <tfoot>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Status</th>
+                        <th>Progress</th>
+                        <th>Priority</th>
+                        <th>Task To</th>
+                        <th>Task From</th>
+                        <th>Task Details</th>
+                        <th>Task Assign Date</th>
+                        <th>Task Assign Time</th>
+                        <th>Due On Date</th>
+                        <th>Due On Time </th>
+                    </tr>
+
+                </tfoot>-->
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Depatment</td>
+                            <td>@item.TypeofWork <br /> @item.GroupTask</td>
+                            <td>
+                                <table style="width:100%">
+
+                                    @foreach (var pr in item.TaskDTMs.OrderByDescending(c => c.LastUpdatedDateTime))
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span style="display:none"> @pr.LastUpdatedDateTime.Value.ToString("yyyy-MM-ddTHH:mm:ss")</span>
+                                                <ul class="chat">
+                                                    @if (pr.LastUpdatedUser == item.TaskFrom)
+                                                    {
+                                                        <li @if (pr.TaskRead == "UNREAD" && User.Identity.Name != pr.LastUpdatedUser) { <text> style="background-color:gold" </text> }>
+                                                            <!--<span class="chat-img pull-left">
+                                                                @{
+                                                                    var imgU = @item.TaskFrom + ".jpg";
+                                                                }
+
+                                                                <img src="~/Content/upload/@imgU" width="50" height="50" alt="User Avatar" class="img-circle" />
+                                                            </span>-->
+                                                            <div class="clearfix">
+                                                                <div class="header" style="padding-bottom:0.5em">
+                                                                    <strong class="pull-left">
+                                                                        <span class="label label-primary"> From</span>&nbsp;@item.TaskFrom
+                                                                    </strong>
+
+
+                                                                    @if (pr.TaskRead == "UNREAD")
+                                                                    {
+
+                                                                        if (User.Identity.Name != item.TaskFrom)
+                                                                        {
+                                                                            <img src="~/Content/img/eyeclose.png" width="20" height="20" class="toggleI  img-circle" title="UNREAD" alt="@pr.TaskDTid" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="~/Content/img/eyeclose.png" width="12" height="12" class="img-circle" title="UNREAD" alt="@pr.TaskDTid" />
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (User.Identity.Name != item.TaskFrom)
+                                                                        {
+                                                                            <img src="~/Content/img/eyeopen.png" width="20" height="20" class="toggleI  img-circle" title="READ" alt="@pr.TaskDTid" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="~/Content/img/eyeopen.png" width="12" height="12" class="img-circle" title="READ" alt="@pr.TaskDTid" />
+                                                                        }
+
+                                                                    }
+                                                                    <span style="color:white">@pr.TaskRead</span>
+                                                                    <small class="pull-right ">
+                                                                        <span class="glyphicon glyphicon-time"></span>&nbsp;@pr.LastUpdatedDateTime
+                                                                    </small>
+                                                                </div>
+                                                                <p id="p01" class='item'>
+                                                                    @if (pr.TaskDetails.Length < 60)
+                                                                    {
+
+                                                                        @pr.TaskDetails
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @pr.TaskDetails <a href='#' class='toggle'>(more)</a>
+                                                                    }
+                                                                </p>
+                                                                <strong class="pull-right">
+                                                                    <span class="label label-danger"> To</span>&nbsp;@item.TaskTo
+                                                                </strong>
+                                                            </div>
+                                                        </li>
+
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <li @if (pr.TaskRead == "UNREAD") { if (User.Identity.Name != pr.LastUpdatedUser) { <text> style="background-color:gold" </text> } }>
+                                                            <!-- <span class="chat-img pull-right">
+                                                                                                                        @{
+
+                                                                                                                            var imgT = "noimage.jpg";
+                                                                                                                        }
+
+                                                                                                                        <img src="~/Content/upload/@imgT" width="50" height="50" class="img-circle" />
+                                                            </span>-->
+                                                            <div class="clearfix">
+                                                                <div class="header">
+                                                                    <small><span class="glyphicon glyphicon-time"></span>&nbsp;@pr.LastUpdatedDateTime</small>
+                                                                    <span style="color:white">@pr.TaskRead</span>
+
+                                                                    @if (pr.TaskRead == "UNREAD")
+                                                                    {
+                                                                        if (User.Identity.Name == item.TaskFrom)
+                                                                        {
+                                                                            <img src="~/Content/img/eyeclose.png" width="20" height="20" class="toggleI  img-circle" title="UNREAD" alt="@pr.TaskDTid" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="~/Content/img/eyeclose.png" width="12" height="12" class="img-circle" title="UNREAD" alt="@pr.TaskDTid" />
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (User.Identity.Name == item.TaskFrom)
+                                                                        {
+                                                                            <img src="~/Content/img/eyeopen.png" width="20" height="20" class="toggleI  img-circle" title="READ" alt="@pr.TaskDTid" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="~/Content/img/eyeopen.png" width="12" height="12" class="img-circle" title="READ" alt="@pr.TaskDTid" />
+                                                                        }
+
+                                                                    }
+                                                                    <strong class="pull-right primary-font">
+                                                                        <span class="label label-primary">Reply From </span>&nbsp;@pr.LastUpdatedUser
+                                                                    </strong>
+
+                                                                </div>
+                                                                <p id="p01" class='item'>
+                                                                    @if (pr.TaskDetails.Length < 60)
+                                                                    {
+                                                                        @pr.TaskDetails
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @pr.TaskDetails <a href='#' class='toggle'>(more)</a>
+                                                                    }
+                                                                </p>
+                                                                <strong class="pull-left">
+                                                                    <span class="label label-danger"> To</span>&nbsp;@item.TaskFrom
+
+                                                                </strong>
+                                                            </div>
+                                                        </li>
+
+                                                    }
+
+
+                                                </ul>
+
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </td>
+                            <td>
+                                @{
+
+
+                                    @item.TaskCC
+
+                                }
+                            </td>
+                            <td>@item.TaskPriority</td>
+                            <td @if (item.TaskStatus == "Completed") { <text> style="background-color:lightgreen" </text> }>
+                                @Html.ActionLink(@item.TaskStatus, "UpdateTask", new { TaskID = item.Taskid }, new { target = "myModal", @class = "btn-sm1" })
+                            </td>
+                            <td>
+                                <span style="display:none"> @item.TaskDueOn.Value.ToString("yyyy-MM-dd")</span>
+                                @string.Format("{0:dd-MM-yyyy}", item.TaskDueOn)&nbsp;@item.TaskDueOnTime
+                            </td>
+
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="modal" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title"><strong class="text-info">Update Task</strong></span>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div style="overflow-y:scroll;overflow-x: hidden;height:500px" class="tab-content">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="home">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+
+    $(document).ready(function () {
+
+        function collapse(item) {
+
+            var lineHeight = item.css('line-height') !== 'normal' ? parseInt(item.css('line-height')) : parseInt(item.css('font-size')) * 3.7;
+            var height = item.height();
+            if (lineHeight < height) {
+                item.css({ 'height': lineHeight + 'px', overflow: 'hidden' });
+                // item.children('a.toggle').length == 0 && item.append("<a href='#' class='toggle'>(more)</a>");
+            }
+        }
+
+        $('p.item').each(function () {
+            collapse($(this));
+        });
+
+        $('pre.item').each(function () {
+            collapse($(this));
+        });
+
+        $(".toggleI").click(function (event) {
+            if ($(this).attr("src").toString().indexOf('eyeclose.png') != -1) {
+                $.ajax({
+                    url: "/Home/UpdateTaskRead",
+                    data: {
+                        TaskDTID: $(this).attr("alt").toString()
+                    },
+                    type: "GET",
+                    dataType: "html",
+                    success: function (data) {
+                        this.src = this.src.replace("eyeclose.png", "eyeopen.png");
+                    },
+                    error: function (xhr, status) {
+                        alert("Sorry, there was a problem!");
+                    },
+                    complete: function (xhr, status) {
+                        this.src = this.src.replace("eyeclose.png", "eyeopen.png");
+                    }
+                });
+                this.src = this.src.replace("eyeclose.png", "eyeopen.png");
+
+            }
+            else {
+                $.ajax({
+                    url: "/Home/UpdateTaskRead",
+                    data: {
+                        TaskDTID: $(this).attr("alt").toString()
+                    },
+                    type: "GET",
+                    dataType: "html",
+                    success: function (data) {
+                        this.src = this.src.replace("eyeopen.png", "eyeclose.png");
+                    },
+                    error: function (xhr, status) {
+                        alert("Sorry, there was a problem!");
+                    },
+                    complete: function (xhr, status) {
+                        this.src = this.src.replace("eyeopen.png", "eyeclose.png");
+                    }
+                });
+                this.src = this.src.replace("eyeopen.png", "eyeclose.png");
+            }
+
+        });
+
+        $('a.toggle').click(function (event) {
+            event.preventDefault();
+
+            var toggle = $(this);
+            var item = toggle.parent('p');
+            if (toggle.text() == '(more)') {
+                toggle.text('(less)');
+                item.css({ 'overflow': 'auto', 'height': 'auto' });
+            } else {
+                toggle.text('(more)');
+                collapse(item);
+            }
+        });
+
+        var customerid;
+        var frametarget;
+        $("#footer").hide()
+        $('.btn-sm1').click(function () {
+            frametarget = $(this).attr('href');
+
+            // customerid = $(this).attr('TaskID');
+            var targetmodal = '#myModal';
+
+
+            $(targetmodal).on('show', function () {
+                //  $('iframe').attr("src", frametarget);
+                $('#home').load(frametarget);
+            });
+            $(targetmodal).modal({ show: true });
+            return false;
+
+        });
+
+        $('#dataTables-example1 thead tr').clone(true).appendTo('#dataTables-example1 thead');
+        $('#dataTables-example1 thead tr:eq(1) th').each(function (i) {
+            //if (i > 0) {
+            var title = $(this).text();
+
+            if (i == 5) {
+                $(this).html('<select class="form-control input-sm" id="col1_filter" ><option value="">All</option><option value = "UNREAD">Unread</option>');
+            }
+            else {
+                $(this).html('<input type="text" style="width:70px" />');
+            }
+            $('input', this).on('keyup change', function () {
+                if (table.column(i).search() !== this.value) {
+                    table
+                        .column(i)
+                        .search(this.value)
+                        .draw();
+                }
+            });
+
+
+
+            //}
+        });
+
+        var table = $('#dataTables-example1').DataTable({
+            "iDisplayLength": 25, "searchHighlight": true,
+            orderCellsTop: true,
+            fixedHeader: true,
+            "displayLength": 25,
+            "order": [[5, "desc"]]
+
+
+        });
+
+
+        $('#col1_filter').on('change', function () {
+            table.columns(5).search(this.value).draw();
+        });
+
+
+
+
+    });
+</script>
+
+

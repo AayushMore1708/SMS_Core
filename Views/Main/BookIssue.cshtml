@@ -1,0 +1,181 @@
+﻿@model SMS_Core.Models.tblBookIssue
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Add Book Issue </title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+    <style>
+        .styled-select1 {
+            background: transparent;
+            color: grey;
+            outline: none;
+            border: 0;
+            font-size: 24px;
+        }
+
+        .styled-select {
+            overflow: hidden;
+            float: left;
+            width: 255px;
+            margin-right: 10px;
+            background: transparent;
+        }
+
+            .styled-select select {
+                font-size: 24px;
+                color: grey;
+                outline: none;
+                border: none;
+                text-indent: 10px;
+                background: url(../_imgs/dropdown_refresh.png) no-repeat right center;
+                -webkit-appearance: none;
+            }
+
+            .styled-select optgroup {
+                font-size: 14px;
+            }
+
+            .styled-select option.service-small {
+                font-size: 14px;
+                padding: 5px;
+            }
+    </style>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#BookIssueDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+                dateFormat: 'dd-M-yy'
+            });
+
+            $("#BookDueDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+                dateFormat: 'dd-M-yy'
+            });
+
+
+            $('#frmsave').click(function (event) {
+                if (!confirm('Are you sure that you want to Save')) {
+                    event.preventDefault();
+                }
+                else {
+                    $('#frm').submit();
+                    //return false;
+
+                }
+            });
+        });
+
+       
+
+
+
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+    </div>
+
+    <h4>&nbsp;&nbsp;ADD BOOK ISSUE</h4>
+
+    @using (Html.BeginForm("BookIssue", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="panel">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book </label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BookIssueName, new SelectList(ViewBag.cat, "BookId", "BookDescription"),  new { @class = "form-control input-sm chosen-select" })
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book User Type</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BookIssueType, new SelectList(new[] { "Student", "Principal", "Teacher", "Director", "Employee", }), new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Select Book Issue To</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BookIssueEmployee, new SelectList(ViewBag.use, "UserName", "UserName"), "", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Select Course</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BookCourse, new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"),"", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Select Batch</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BookBatch, new SelectList(ViewBag.bat, "BatchName", "BatchName"),"", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book Issue Date</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookIssueDate, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book Return Date</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookDueDate, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                    <div class="col-lg-8">
+                        <input type="submit" id="frmsave" value="Save & Close" class="btn btn-primary" />
+                        <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    <script src="~/Content/js/chosen.jquery.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+            '.chosen-select-width': { width: "100%" }
+        }
+              //for (var selector in config) {
+              //    $(selector).chosen(config[selector]);
+             // }
+    </script>
+</body>
+</html>

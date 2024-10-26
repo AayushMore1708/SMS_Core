@@ -58,7 +58,7 @@ namespace SMS_Core.Controllers
         public IActionResult ViewTimeTable()
         {
             var timeTableData = _context.tblTimeTableHD.ToList(); // Fetch the data
-            return View("../Admin/TimeTable", timeTableData); // Path to the view file
+            return View("../Main/Index"); // Path to the view file
         }
 
 

@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SMS_Core.Models.tblCircular>
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Assignements</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div class="col-lg-12">
+            <div class="panel panel-default"> 
+                <div class="panel-heading">
+                    <b>Circular</b>&nbsp;&nbsp;&nbsp;
+                    @if (ViewBag.Desg != "Student" && ViewBag.Desg != "Employee")
+                    {
+                        <text>
+                            <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New", "CircularsNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+                        </text>
+                    }
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Circular Subject</th>
+                                    <th>Circular RefNo</th>
+                                    <th>Circular Contents</th>
+                                    <th>Circular Date</th>
+                                    <th>Course Name</th>
+                                    <th>Batch Name</th>
+                                    <th>Subject</th>
+                                    <th>Publish To Department</th>
+                                    <th>Publish To All</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.CircularSubject)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CircularRefNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CircularContents)</td>
+                                    <td>  @string.Format("{0:dd-MM-yyyy}", item.CircularDate)  </td>
+                                    <td>@Html.DisplayFor(modelItem => item.CourseName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.BatchName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PublishToDepartment)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PublishToAll)</td>
+                                    <td>
+                                        @if ((item.CircularDate <= DateTime.Now)|| ViewBag.erole == "admin" || User.Identity.Name == "kamlesh@satams.com")
+                                        {
+                                            @Html.ActionLink(" ", "CircularsEdit", new { id = item.CircularId, CourseName = item.CourseName, BatchName = item.BatchName }, new { @class = "MyCssClassE" })
+                                        }
+                                        </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+
+    </script>
+</body>
+</html>

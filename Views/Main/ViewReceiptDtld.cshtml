@@ -1,0 +1,72 @@
+﻿@model IEnumerable<SMS_Core.Models.tblStockInventoryItem>
+@{
+    Layout = null;
+
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+
+
+    });
+
+
+</script>
+
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-info">
+                            <th class="text-left">Category </th>
+                            <th class="text-left">Item Name</th>
+                            <th class="text-left">MRP</th>
+                            <th class="text-left">Rate</th>
+                            <th class="text-left">Discount %</th>
+                            <th class="text-left">Qty</th>
+                            <th class="text-left">Net Amount</th>
+                            <th class="text-left">CGST</th>
+                            <th class="text-left">SGST</th>
+                            <th class="text-left">IGST</th>
+                            <th class="text-left">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+
+                                <td>@item.ItemCategory  </td>
+
+                                <td>@item.InventoryItem   </td>
+                                <td>@item.MRP  </td>
+                                <td>@item.Rate   </td>
+                                <td>@item.Discount  </td>
+                                <td>@item.InventoryQuantity</td>
+                                <td>@item.POItemNetAmount   </td>
+                                <td>@item.POItemCGST   </td>
+                                <td>@item.POItemSGST </td>
+                                <td>@item.POItemIGST  </td>
+                                <td>@item.POItemTotalAmount</td>
+
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

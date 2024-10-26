@@ -1,0 +1,81 @@
+﻿@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Employee </title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .styled-select1 {
+            background: transparent;
+            font-size: 12px;
+            outline: none;
+            border: 0;
+        }
+
+        .styled-select {
+            overflow: hidden;
+            float: left;
+            width: 255px;
+            margin-right: 10px;
+            background: transparent;
+        }
+
+            .styled-select select {
+                font-size: 24px;
+                color: grey;
+                outline: none;
+                border: none;
+                text-indent: 10px;
+                background: url(../_imgs/dropdown_refresh.png) no-repeat right center;
+                -webkit-appearance: none;
+            }
+
+            .styled-select optgroup {
+                font-size: 14px;
+            }
+
+            .styled-select option.service-small {
+                font-size: 14px;
+                padding: 5px;
+            }
+    </style>
+
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+
+
+
+        </div>
+        <div id="DIV1" style="height: 95%;text-align:center">
+            <h2>Happy Birthday to </h2>
+            
+            
+
+           
+            @foreach (var stud in ViewBag.name)
+            {
+                <h1>@stud.Name</h1><br />
+                       }
+
+            
+
+
+            <img style="width:500px;height:300px" src="~/Content/Happy.jpg" />
+
+            <br /><br /><br />
+            <br />
+        </div>
+    </div>
+
+</body>
+</html>

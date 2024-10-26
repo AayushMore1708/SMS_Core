@@ -1,0 +1,228 @@
+﻿@model IEnumerable<SMS_Core.Models.TaskM>
+@{
+    //Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>View Task </title>
+
+    <style type="text/css" class="init">
+    </style>
+
+
+
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+
+
+    <style>
+
+        @@-moz-keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @@-webkit-keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+        /* IE */
+        @@-ms-keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+        /* Opera and prob css3 final iteration */
+        @@keyframes blink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        .blink-image {
+            -moz-animation: blink normal 2s infinite ease-in-out; /* Firefox */
+            -webkit-animation: blink normal 2s infinite ease-in-out; /* Webkit */
+            animation: blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+        }
+
+        p.item {
+            position: relative;
+            min-height: 24px;
+            color: black;
+            width: 410px;
+            background-color: snow;
+            padding: 4px;
+            border: 0px solid red;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+
+        p {
+        }
+
+        pre.item {
+            position: relative;
+            min-height: 10px;
+            color: black;
+        }
+
+
+
+        a.toggle {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            display: inline-block;
+            background: white;
+            padding-left: 10px;
+        }
+
+        .chat {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            .chat li {
+                margin-bottom: 10px;
+                padding-bottom: 5px;
+                border-bottom: 1px dotted #B3A9A9;
+            }
+
+                .chat li.left .chat-body {
+                    margin-left: 60px;
+                }
+
+                .chat li.right .chat-body {
+                    margin-right: 60px;
+                }
+
+
+                .chat li .chat-body p {
+                    margin: 0;
+                }
+    </style>
+</head>
+
+
+<body>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table style="font-size:12px;width:100%" class="table   table-bordered " id="dataTables-example1">
+                <thead>
+                    <tr>
+
+                         
+                        <th>Type of Work</th> 
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Due On</th>
+
+                        <!--
+                        DateTime dt = DateTime.Now;
+                        lblTimeZone.Text = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(dt,
+                        TimeZoneInfo.Local.Id, ddlTimeZone.SelectedValue).ToString();
+                           -->
+                    </tr>
+                </thead>
+                 
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                          
+                            <td>@item.TypeofWork </td> 
+                           
+                            <td>@item.TaskPriority</td>
+                            <td @if (item.TaskStatus == "Completed") { <text> style="background-color:lightgreen" </text> }>
+                                @Html.ActionLink(@item.TaskStatus, "UpdateTask", new { TaskID = item.Taskid }, new { target = "myModal", @class = "btn-sm1" })
+                            </td>
+                            <td>
+                                <span style="display:none"> @item.TaskDueOn.Value.ToString("yyyy-MM-dd")</span>
+                                @string.Format("{0:dd-MM-yyyy}", item.TaskDueOn)&nbsp;@item.TaskDueOnTime
+                            </td>
+
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+         
+
+    </div>
+</body>
+</html>
+<script>
+
+    $(document).ready(function () {
+          
+
+        var customerid;
+        var frametarget;
+        $("#footer").hide()
+        
+
+      //  $('#dataTables-example1 thead tr').clone(true).appendTo('#dataTables-example1 thead');
+         
+
+        var table = $('#dataTables-example1').DataTable({
+            "iDisplayLength": 25, "searchHighlight": true,
+            orderCellsTop: true,
+            fixedHeader: true,
+            "displayLength": 25,
+            "order": [[5, "desc"]]
+
+
+        });
+
+         
+
+    });
+</script>
+
+

@@ -1,0 +1,57 @@
+﻿ 
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>View Library </title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //table start
+            // prepare the data
+        });
+
+    </script>
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px;">
+            
+            @if (ViewBag.Desg  == "EmployeeTeacher" || ViewBag.Desg == "Administration Staff")
+            {
+                <text>
+                    <img src="~/_imgs/grid/EditRule_16.png" />&nbsp; &nbsp; @Html.ActionLink("Book Category", "BookCategoryNew", "Home")&nbsp; &nbsp;
+                    <img src="~/_imgs/grid/EditRule_16.png" />&nbsp; &nbsp; @Html.ActionLink("Add Book", "BookNew", "Home")&nbsp; &nbsp;
+                    <img src="~/_imgs/grid/EditRule_16.png" />&nbsp;&nbsp; @Html.ActionLink("Issue Book", "BookIssue", "Home")&nbsp;&nbsp;
+                </text>
+            }
+            <img src="~/_imgs/grid/EditRule_16.png" />&nbsp;&nbsp; @Html.ActionLink("View Book", "BookView", "Home")&nbsp;&nbsp;
+
+            <img src="~/_imgs/grid/EditRule_16.png" />&nbsp;&nbsp; @Html.ActionLink("View Issue Book", "BookIssueView", "Home")&nbsp;&nbsp;
+            <img src="~/_imgs/grid/EditRule_16.png" />&nbsp;&nbsp; @Html.ActionLink("Return Book View", "BookReturnView", "Home")&nbsp;&nbsp;
+        </div>
+
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <b> Library </b> 
+                </div>
+                <div class="panel-body">
+                     <img width="850" height="500" src="~/Images/library.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

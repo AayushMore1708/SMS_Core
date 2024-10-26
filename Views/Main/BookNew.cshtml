@@ -1,0 +1,198 @@
+﻿@model SMS_Core.Models.tblBook
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>New Book </title>
+
+    <style>
+        .styled-select1 {
+            background: transparent;
+            color: grey;
+            outline: none;
+            border: 0;
+            font-size: 24px;
+        }
+
+        .styled-select {
+            overflow: hidden;
+            float: left;
+            width: 255px;
+            margin-right: 10px;
+            background: transparent;
+        }
+
+            .styled-select select {
+                font-size: 24px;
+                color: grey;
+                outline: none;
+                border: none;
+                text-indent: 10px;
+                background: url(../_imgs/dropdown_refresh.png) no-repeat right center;
+                -webkit-appearance: none;
+            }
+
+            .styled-select optgroup {
+                font-size: 14px;
+            }
+
+            .styled-select option.service-small {
+                font-size: 14px;
+                padding: 5px;
+            }
+    </style>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#BookPurchaseDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+                dateFormat: 'dd-M-yy'
+            }); 
+
+        });
+
+        $('#frmsave').click(function (event) {
+            if (!confirm('Are you sure that you want to Save')) {
+                event.preventDefault();
+            }
+            else {
+                $('#frm').submit();
+                //return false;
+
+            }
+        });
+
+
+
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+    </div>
+
+    <h4>&nbsp;&nbsp;NEW BOOK</h4>
+
+    @using (Html.BeginForm("BookNew", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="panel">
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Purchase Date</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookPurchaseDate, new { @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">Bill No</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookBillNo, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book ISBN No</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookISBNNo, new { @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-2">Book No</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookNo, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book Title</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookTitle, new { @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">Author</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookAuthor, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Edition</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookEdition, new { @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">Book Category</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BookCategory, new SelectList(ViewBag.cat,"CategoryName", "CategoryName"), new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Publisher</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookPublisher, new { @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">No. of Copies</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookNoCopies, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Shelf No</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookShelfNo, new { @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">Book Position</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookPosition, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book Cost</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.BookCost, new { @class = "form-control input-sm" })
+
+                    </div>
+                    <label class="control-label col-lg-2">Language</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BookLanguage, new SelectList(new[] { "Marathi", "Hindi", "English" }), new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Book Condition</label>
+                    <div class="col-lg-4">                       
+                        @Html.DropDownListFor(model => model.BookLanguage, new SelectList(new[] { "As New", "Fine", "Very Good","Good","Fair","Poor","Missing","Lost" }), new { @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-2">Other Details</label>
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(model => model.Notes, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                    <div class="col-lg-8">
+                        <input type="submit" id="frmsave" value="Save & Close" class="btn btn-primary" />
+                        <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</body>
+</html>

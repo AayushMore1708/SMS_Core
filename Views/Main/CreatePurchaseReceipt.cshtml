@@ -1,0 +1,185 @@
+﻿@model SMS_Core.Models.tblPurchaseReceipt
+@{
+    // Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Purchase Order</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#PurcahseOrderId').val( @ViewBag.mno);
+
+
+
+            $("#PurchaseOrderDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+          
+            $('#PurchaseVendorIDaaa').change(function () {
+                var vna = $("#PurchaseVendorID option:selected").text();
+                 
+                $('#PurchaseVendor').val(vna);
+
+
+                $.getJSON("@Url.Content("~/Home/GetPO")", { vnd: $('#PurchaseVendorID').val()}, function (data) {
+                    $('#PurchaseOrderNo').empty();
+                    $('#PurchaseOrderNo').append("<option value=\"" + "" + "\">" + "Please Select" + "</option>");
+                for (i = 0; i < data.length; i++) {
+                    $('#PurchaseOrderNo').append("<option value=\"" + data[i]["PurchaseOrderNo"] + "\">" + data[i]["PurchaseOrderNo"] + "</option>");
+                }
+                });
+        
+            });
+        
+           
+
+
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                if ($('#PurchaseVendorID').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#GrandTotal').val($('#GrandTtl').val());
+                        $('#frm').submit();
+                        return false;
+                    }
+                }
+                else {
+                    alert("VendorName should not be blank")
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                if ($('#PurchaseVendorID').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#GrandTotal').val($('#GrandTtl').val());
+                        $('#frm').submit();
+                        return false;
+                    }
+                }
+                else {
+                    alert("VendorName should not be blank")
+                    return false;
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        @* <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp; @Ajax.ActionLink("SAVE & CLOSE", null, null, null, new { id = "sav" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *@
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Purchase Receipt</h3>
+
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("CreatePurchaseReceipt", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Purchase Receipt No.</label>
+                    <div class="col-lg-4">
+
+                        @Html.TextBoxFor(model => model.PurchaseReceiptId, new { Value = @ViewBag.mno, @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Vendors</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.PurchaseVendor, new { Value = @ViewBag.vendor, @class = "form-control input-sm" })
+                        @Html.HiddenFor(model => model.PurchaseVendorID, new { Value = @ViewBag.vendorid, @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Purchase Order No</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.PurchaseOrderNo, new { Value = @ViewBag.po, @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Invoice No</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.PurchaseInvoiceNo, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Invoice Amount</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.InvoiceAmount, new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Payment Mode</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.PaymentMode, new SelectList(new[] { "Cheque", "Cash", "Credit Card", "Other" }), new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Paid Amount</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.PaidAmount, new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Payment Remark</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.PaymentRemark, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(model => model.GrandTotal)
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    @* @Html.Action("PurchaseOrderRItem") *@
+                </div>
+
+            }
+            <br /><br />
+
+
+            <div class="form-group">
+                <label class="control-label col-lg-2">Grand Total</label>
+                <div class="col-lg-4">
+                    @Html.TextBox("GrandTtl", "", new { Value = @ViewBag.netamt, @Readonly = true, @class = "form-control input-sm" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                <div class="col-lg-12">
+                    <input type="submit" id="frmsave" value="Save" class="btn btn-primary" />
+                    <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

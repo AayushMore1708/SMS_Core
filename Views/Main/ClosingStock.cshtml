@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SMS_Core.Models.qryClosingStock>
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      
+    })
+      
+    </script>
+
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Closing Stock</title>
+     
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="crmContentPanel">
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Vendor", "VendorNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Category", "InventoryCategoryNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Item", "StockItemNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Inventory", "InventoryItemNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New PO", "CreatePurchaseOrderD", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("View Purchase Order", "ViewPurchaseOrder", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("View Purchase Receipt", "ViewPurchaseReceipt", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        ||&nbsp;&nbsp;@Html.ActionLink("Issue Inventory", "ViewInventoryIssue", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        ||&nbsp;&nbsp;@Html.ActionLink("Closing Stock", "ClosingStock", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table id="dataTables-example" class="table table-striped">
+                        <thead>
+                            <tr class="text-info">
+                                <th class="text-left">Vendor Name</th>
+                                <th class="text-left">Item Category</th>
+                                <th class="text-left">Item Name</th>
+                                <th class="text-left">Inventory Quantity</th>
+                                <th class="text-left">Issue Quantity</th>
+                                <th class="text-left">Closing Stock</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.VendorName)
+                                </td>
+                                <td> @Html.DisplayFor(modelItem => item.ItemCategory)</td>
+                                <td> @Html.DisplayFor(modelItem => item.InventoryItem)</td>
+                                <td> @Html.DisplayFor(modelItem => item.InventoryQuantity)</td>
+
+                                <td> @Html.DisplayFor(modelItem => item.IssueQty)</td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClosingStock)
+                                </td>
+
+
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+           $('#dataTables-example').dataTable();
+        });
+
+    </script>
+</body>
+</html>

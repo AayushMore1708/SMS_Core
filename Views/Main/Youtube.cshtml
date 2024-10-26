@@ -1,0 +1,30 @@
+﻿@{
+   // Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>YouTube Embed Video Class</title>
+
+</head>
+<body>
+
+    <iframe id="YouTubevideo" width="420" height="315"
+            frameborder="0"
+            allowfullscreen></iframe>
+   
+
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        
+         var url = '@ViewBag.yt';
+        url = url.split('v=')[1];
+
+         $("#YouTubevideo")[0].src = "//www.youtube.com/embed/" + url;
+    });
+    
+
+</script>

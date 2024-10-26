@@ -1,0 +1,165 @@
+﻿@model SMS_Core.Models.TaskM
+@{
+    //   Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Task </title>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            $('#multProductC').change(function () {
+                $('#TaskCC').val($('#multProductC').val());
+            }) 
+
+
+            $('#multProductT').change(function () {
+                $('#TaskTo').val($('#multProductT').val());
+            }) 
+            /*
+            $("#TaskDateTime").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+*/
+            $("#TaskDueOn").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+             
+            $('#frmsave').click(function (event) {
+                if ($('#TaskDetails').val() != "" && $('#TaskTo').val() != "" ) {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+                    }
+                }
+                else {
+                    alert("TaskDetails and Task Assign To should not be blank")
+                    return false;
+                }
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title"><strong class="text-info">Create Task</strong></span>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("CreateTask", "Home", FormMethod.Post, new { id = "frm", @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Task Date</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.TaskDateTime, new { @class = "form-control input-sm", @Readonly = "true", @Value = @DateTime.Now.ToString("dd-MMM-yyyy") })
+                        @Html.HiddenFor(model => model.TaskTime, new { @Value = @DateTime.Now.ToString("HH:mm") })
+
+                    </div>
+                </div>
+                 
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Type of Work</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.TypeofWork, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Task Details</label>
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(model => model.TaskDetails, new { @class = "form-control input-sm" })
+                        @Html.HiddenFor(model => model.TaskFromEmail, new { @Value = @ViewBag.email })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Priority</label>
+                    <div class="col-lg-2">
+                        @Html.DropDownListFor(model => model.TaskPriority, new SelectList(new[] { "Low", "Medium", "Hold", "Semi High", "High" }), new { @class = "form-control input-sm chosen-select" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Department</label>
+                    <div class="col-lg-2">
+
+                        @Html.DropDownListFor(model => model.Depatment, new SelectList(ViewBag.dept, "Department", "Department"), "----Please Select---", new { @class = "form-control input-sm chosen-select" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Task Assign to</label>
+                    <div class="col-lg-4">
+                        @Html.ListBox("multProductT", new MultiSelectList(ViewBag.qryEmp, "UserName", "EName"), new { @class = "form-control  chosen-select" })
+
+                        @Html.HiddenFor(model => model.TaskTo)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Task Assign CC</label>
+                    <div class="col-lg-4">
+                        @Html.ListBox("multProductC", new MultiSelectList(ViewBag.qryEmp, "UserName", "EName"), new { @class = "form-control chosen-select" })
+                        @Html.HiddenFor(model => model.TaskCC)
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Due On Date</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.TaskDueOn, new { @class = "form-control input-sm", @Value = @DateTime.Now.ToString("dd-MMM-yyyy") })
+                    </div>
+
+                    <label class="control-label col-lg-1">Time</label>
+                    <div class="col-lg-1">
+                        @Html.TextBoxFor(model => model.TaskDueOnTime, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+        <div>
+            <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+            <div class="col-lg-2">
+                <input type="submit" id="frmsave" value="Save & Close" class="btn btn-primary" />
+            </div>
+            <label for="tags" class="control-label col-lg-2">&nbsp;</label>
+            <div class="col-lg-2">
+
+                <button id="cancel" onclick="window.history.back()" class="btn btn-primary"><i class="icon-refresh icon-white"></i> Cancel</button>
+            </div>
+        </div>
+
+    </div>
+    <br /><br />
+
+</body>
+</html>

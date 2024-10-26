@@ -1,0 +1,118 @@
+﻿@model IEnumerable<SMS_Core.Models.tblPurchaseReceipt>
+@{
+    ViewBag.Title = "View Purchase Receipt";
+}
+
+<!-- /play details -->
+
+<style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+</style>
+<div class="col-sm-12">
+    <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Vendor", "VendorNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Category", "InventoryCategoryNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Item", "StockItemNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New Inventory", "InventoryItemNew", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("New PO", "CreatePurchaseOrderD", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("View Purchase Order", "ViewPurchaseOrder", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="~/_imgs/grid/Add_16_New.png" />&nbsp;@Html.ActionLink("View Purchase Receipt", "ViewPurchaseReceipt", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    ||&nbsp;&nbsp;@Html.ActionLink("Issue Inventory", "ViewInventoryIssue", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    ||&nbsp;&nbsp;@Html.ActionLink("Closing Stock", "ClosingStock", "Home")&nbsp;&nbsp;&nbsp;&nbsp;
+    <br /><br />
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                <strong class="text-info">
+                    View Purchase Receipt
+                </strong>
+            </span>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table   table-striped">
+                <thead class="text-info">
+                    <tr class="text-info">
+                        <th class="text-left">#</th>
+                        <th class="text-left">Date</th>
+                        <th class="text-left">Vendor</th>
+
+                        <th class="text-left">Purchase Order No</th>
+                        <th class="text-left">Purchase Item</th>
+                        <th class="text-left">Grand total</th>
+                        <th class="text-left">Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.PurchaseReceiptId)</td>
+                        <td>@string.Format("{0:dd-MMM-yyyy H:mm}", item.ReceiptDate)</td>
+
+                        <td>@Html.DisplayFor(modelItem => item.PurchaseVendor)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PurchaseInvoiceNo)</td>
+
+                        <td>
+                            <table class="table   table-striped">
+                                @foreach (var mri in item.tblStockInventoryItems)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => mri.InventoryItem)
+                                    </td>
+                                    <td> @Html.DisplayFor(modelItem => mri.MRP)</td>
+                                    <td> @Html.DisplayFor(modelItem => mri.Rate)</td>
+                                    <td> @Html.DisplayFor(modelItem => mri.Discount)</td>
+                                    <td> @Html.DisplayFor(modelItem => mri.InventoryQuantity)</td>
+                                    <td> @Html.DisplayFor(modelItem => mri.POItemNetAmount)</td>
+                                    <td> @Html.DisplayFor(modelItem => mri.POItemCGST)</td>
+
+                                    <td> @Html.DisplayFor(modelItem => mri.POItemSGST)</td>
+
+                                    <td> @Html.DisplayFor(modelItem => mri.POItemIGST)</td>
+                                    <td> @Html.DisplayFor(modelItem => mri.POItemTotalAmount)</td>
+                                </tr>
+
+                                }
+                            </table>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.GrandTotal)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PaymentRemark)</td>
+                        <td>
+                            @Html.ActionLink("ReceiptDtl", "ViewReceiptDtl", new { purchaseorderreceiptid = item.PurchaseReceiptId})
+
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+<br />
+
+<br />
+<!-- play details -->

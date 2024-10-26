@@ -1,0 +1,191 @@
+﻿@model SMS_Core.Models.tblVisitor
+@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Visitor New</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#VisitDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+
+            $('#VisitTime').timepicker({
+                timeFormat: 'HH:mm'
+            });
+            // $('#footer').hide();
+            $('#sav').click(function (event) { 
+                if ($('#VisitorName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+
+                    }
+                }
+                else {
+                    alert("Visitor Name should not be blank")
+                    return false;
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                if ($('#VisitorName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        //return false;
+                    }
+                }
+                else {
+                    alert("Visitor Name should not be blank")
+                    return false;
+                }
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        @* <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp; @Ajax.ActionLink("SAVE & CLOSE", null, null, null, new { id = "sav" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *@
+    </div>
+    <h3>&nbsp;&nbsp;Visitor New</h3>
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("VisitorNew", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Visitor Date</label>
+                    <div class="col-lg-2">
+                        @Html.TextBoxFor(model => model.VisitDate, DateTime.Now.ToString("dd-MMM-yyyy"), new { @Style = "width:150px", @class = "form-control input-sm" })
+                    </div>
+                    <label class="control-label col-lg-1">Time</label>
+                    <div class="col-lg-1">
+                        @Html.TextBoxFor(model => model.VisitTime, "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Visitor Category</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.VisitorCategory, new SelectList(new[] { "Parent", "School Staff", "Vendors", "Marketing", "Visitor", "Service Man", "Other" }), new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Visitor Name</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.VisitorName, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Visitor Details</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.VisitorDetails, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Whom to Visit Category</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.WhomToVisitCategory, new SelectList(new[] { "Principal", "Teacher", "Student", "Director", "Fee Office", "Administrator Office", "Receiption", "Other" }), new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Visit Purpose</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.WhomToVisitCategory, new SelectList(new[] { "For Admission", "Admission Enquiry", "Student", "Registration for Scholership", "Fee Submit", "Parent Teacher Meeting (PTM)", "Student Performance","Complaints by parent","Student leave early","Official","Bill Submit","Payment Collection", "Other" }), new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Whom to Visit</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.WhomToVisit, new SelectList(ViewBag.use, "UserName", "UserName"), "", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+
+                <div class="form-group"> 
+                    <label class="control-label col-lg-2">Cource Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.CourseName, new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Batch Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.BatchName, new SelectList(ViewBag.bat, "BatchName", "BatchName"), "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Status</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(model => model.VisitorStatus, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                    <div class="col-lg-8">
+                        <input type="button" id="frmsave" value="Save & Close" class="btn btn-primary" />
+                        <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                    </div>
+                </div>
+
+            }
+
+
+
+
+
+        </div>
+    </div>
+    <script src="~/Content/js/chosen.jquery.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+                '.chosen-select-width': { width: "100%" }
+            }
+                          //for (var selector in config) {
+                          //    $(selector).chosen(config[selector]);
+                         // }
+    </script>
+</body>
+</html>

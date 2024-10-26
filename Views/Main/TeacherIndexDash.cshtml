@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Welcome to Student Management System";
+}
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#footer').hide();
+    });
+</script>
+
+<!-- dashboard end-->
+
+<div class="container">
+    <div class="row col-sm-3">
+        <div class="form-group">
+
+            <div class="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title"><strong class="text-info">Acadamic Year @ViewBag.ay </strong></span>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+                            <tr>
+                                <td>
+                                    Total Students in Your classes &nbsp; <span class="badge">@ViewBag.ttlstd</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Total Courses assigned to you &nbsp;<span class="badge">@ViewBag.ttlc</span>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total Batch assigned to you &nbsp;<span class="badge">@ViewBag.ttlb</span>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Leave History</b> &nbsp;: Balance Leave &nbsp;&nbsp;<span class="badge">@ViewBag.leavbl</span>
+
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-signal"></span>&nbsp;<span class="panel-title">
+                                                                              <strong class="text-info">
+                                                                                  Today's (@DateTime.Now.DayOfWeek) Time Table (<a href="../Admin/TimeTable">Detail Timetable</a>)
+                                                                              </strong>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    @* @Html.Action("TimeTableDash") *@
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title"><strong class="text-info">Communication</strong></span>
+                </div>
+                <div class="panel-body">
+                    @* @Html.Action("ConversationView","Admin") *@
+
+                </div>
+
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title"><strong class="text-info">Task Status</strong></span>
+                </div>
+                <div class="panel-body">
+                    @* @Html.Action("ViewTaskNewShort") *@
+
+                </div>
+
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="panel-title"><strong class="text-info">Subject Handled</strong></span>
+                </div>
+                <div class="panel-body">
+                    @* @Html.Action("SubjectAllocationDash", "Admin") *@
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+

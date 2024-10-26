@@ -1,0 +1,198 @@
+﻿@model SMS_Core.Models.tblLeavingCertificate
+@{
+    // Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Leaving Certificate</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#StudentNames').change(function () {
+                var selectedIDcn = $('#StudentNames').val();
+                var aaa = selectedIDcn.split(" ")
+                
+                $('#StudentID').val(aaa[0]);
+            
+               
+                var SelectedIDbn = $("#StudentNames option:selected").text();
+               // alert(SelectedIDbn)
+                var sss = SelectedIDbn.split(" ");
+                
+                $('#StudentRollNumber').val(sss[0]); 
+                $('#StudentName').val(sss[1] + ' ' + sss[2] + ' ' + sss[3]);
+                $('#BirthYear').val(sss[4]);
+                //
+                //$.getJSON("@Url.Content("~/Admin/GetStudent")", { cname: selectedIDcn, bname: SelectedIDbn }, function (data) {
+             //   $('#StudentName').empty();
+             //   $('#StudentName').append("<option value=\"" + "" + "\">" + "" + "</option>");
+             //   for (i = 0; i < data.length; i++) {
+               //     $('#StudentName').append("<option value=\"" + data[i]["UserName"] + "\">" + data[i]["RollName"] + "</option>");
+            //    }
+           // });
+
+            });
+
+            $("#LeavingCertificateDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd-M-yy'
+            });
+            // $('#footer').hide();
+            $('#sav').click(function (event) {
+                if ($('#StudentName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                    }
+                    else {
+                        $('#frm').submit();
+                        return false;
+
+                    }
+                }
+                else {
+                    alert("Student Name should not be blank")
+                }
+            });
+
+            $('#frmsave').click(function (event) {
+                if ($('#StudentName').val() != "") {
+                    if (!confirm('Are you sure that you want to Save')) {
+                        event.preventDefault();
+                }
+                else {
+                    $('#frm').submit();
+                    return false;
+                }
+            }
+                else {
+                    alert("Student Name should not be blank")
+                    return false;
+                }
+            });
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        @* <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp; @Ajax.ActionLink("SAVE & CLOSE", null, null, null, new { id = "sav" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *@
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Leaving Certificate</h3>
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("LeavingCertificateNew", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Leaving Certificate Date</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.LeavingCertificateDate, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">School Name</label>
+                    <div class="col-lg-4">
+                        @Html.TextBoxFor(m => m.SchoolName, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">School Address</label>
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(m => m.SchoolAddress, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Student Name</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownList("StudentNames", new MultiSelectList(ViewBag.std, "UName", "UNameD"), "", new { @class = "form-control input-sm" })
+                        @Html.Hidden("StudentIDm")&nbsp;
+                        @Html.Hidden("StudentUserNamem")&nbsp;
+                        @Html.Hidden("StudentRollNumberm")&nbsp;
+                        @Html.Hidden("StudentNamem")
+
+                        @Html.HiddenFor(m => m.StudentID)
+                        @Html.HiddenFor(m => m.StudentName)
+                        @Html.HiddenFor(m => m.StudentRollNumber)
+                        @Html.HiddenFor(m => m.BirthYear)
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Gender</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.Gender, new SelectList(new[] { "Male", "Female", "Other" }), "", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Nationality</label>
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(m => m.Nationality, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Admitted Class</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.AdmittedClass, new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @class = "form-control input-sm" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Highest Class</label>
+                    <div class="col-lg-4">
+                        @Html.DropDownListFor(model => model.HighestClass, new SelectList(ViewBag.crc, "AcadamicCourceName", "AcadamicCourceName"), "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Remarks</label>
+                    <div class="col-lg-4">
+                        @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+
+
+            }
+
+
+            <div class="form-group">
+                <label for="tags" class="control-label col-lg-4">&nbsp;</label>
+                <div class="col-lg-8">
+                    <input type="submit" id="frmsave" value="Save & Close" class="btn btn-primary" />
+                    <button class="btn btn-primary"><i class="icon-refresh icon-white"></i> Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/chosen.jquery.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+                '.chosen-select-width': { width: "100%" }
+            }
+                          //for (var selector in config) {
+                          //    $(selector).chosen(config[selector]);
+                         // }
+    </script>
+</body>
+</html>

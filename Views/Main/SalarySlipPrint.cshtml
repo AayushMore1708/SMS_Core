@@ -1,0 +1,190 @@
+﻿@model SMS_Core.Models.tblSalaryHD
+@{
+    // Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Employee Salary Slip</title>
+    <link rel="stylesheet" href="~/Content/css/chosen.css">
+
+    <script type="text/javascript">
+      
+             
+
+    </script>
+</head>
+<body>
+    <div style="font-size:12px;height:40px;vertical-align:top;margin-left:10px">
+        @* <img src="~/_imgs/grid/SaveAndClose_16.png" />&nbsp;&nbsp; @Ajax.ActionLink("SAVE & CLOSE", null, null, null, new { id = "sav" })&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *@
+    </div>
+
+
+    <h3>&nbsp;&nbsp;Salary Employee Slip</h3>
+
+    <div class="panel">
+        <div class="panel-body">
+            @using (Html.BeginForm("SalaryEmpEdit", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm", @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Month</label>
+                    <div class="col-lg-1">
+                        @Model.SalaryMonth
+                        
+                    </div>
+                    <label class="control-label col-lg-1">Year</label>
+                    <div class="col-lg-2">
+                       @Model.SalaryYear
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Employee Name</label>
+                    <div class="col-lg-4">
+                       @Model.EmployeeName
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Designation</label>
+                    <div class="col-lg-4">
+                       @Model.Designation
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Work Days</label>
+                    <div class="col-lg-2">
+                       @Model.WorkDays
+                    </div>
+                    <label class="control-label col-lg-1">Leave Allowed</label>
+                    <div class="col-lg-2">
+                       @Model.AllowedLeaves
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Balance Leave</label>
+                    <div class="col-lg-2">
+                       @Model.BalanceLeave
+                    </div>
+
+                    <label class="control-label col-lg-1">Leave Taken</label>
+                    <div class="col-lg-2">
+                       @Model.LeaveTaken
+                    </div>
+
+                    <label class="control-label col-lg-1">Leave Type</label>
+                    <div class="col-lg-2">
+                       @Model.LeaveType
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Basic Salary</label>
+                    <div class="col-lg-2">
+                       @Model.BasicSalary
+
+                    </div>
+                    <label class="control-label col-lg-1">PF</label>
+                    <div class="col-lg-2">
+                       @Model.PF
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">DA</label>
+                    <div class="col-lg-2">
+                       @Model.DA
+                    </div>
+                    <label class="control-label col-lg-1">Profession Tax</label>
+                    <div class="col-lg-2">
+                        @Model.ProfessionTax
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">HRA</label>
+                    <div class="col-lg-2">
+                       @Model.HRA
+
+                    </div>
+                    <label class="control-label col-lg-1">TDS</label>
+                    <div class="col-lg-2">
+                       @Model.TDS
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Conveyance</label>
+                    <div class="col-lg-2">
+                        @Model.Conveyance
+
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-2">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Medical Expenses</label>
+                    <div class="col-lg-2">
+                      @Model.MedicalExpenses
+
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-2">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Travel Allowance</label>
+                    <div class="col-lg-2">
+                       @Model.TravelAllowance
+                    </div>
+                    <label class="control-label col-lg-2">&nbsp;</label>
+                    <div class="col-lg-2">
+                        &nbsp;
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">Bonus</label>
+                    <div class="col-lg-2">
+                       @Model.Bonus
+                    </div>
+                    <label class="control-label col-lg-2">Advance Deduction</label>
+                    <div class="col-lg-1">
+                      @Model.SalaryAdvance
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">CTC</label>
+                    <div class="col-lg-2">
+                       @Model.CTC
+                    </div>
+                    <label class="control-label col-lg-2">Payable Salary</label>
+                    <div class="col-lg-1">
+                        @Model.TotalSalary
+                    </div>
+                </div>
+
+            }
+            <br /><br />
+
+
+
+
+            
+        </div>
+    </div>
+
+
+
+</body>
+</html>

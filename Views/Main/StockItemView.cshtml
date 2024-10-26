@@ -1,0 +1,92 @@
+﻿@model IEnumerable<SMS_Core.Models.tblStockItem>
+@{
+    // Layout = null;
+    @* Html.EnableClientValidation(); *@
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="jQuery Splitter, Splitter Widget, Splitter, jqxSplitter" />
+    <meta name="description" content="This page demonstrates splitter's events" />
+    <title id='Description'>Item List</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .MyCssClassD
+{
+  background:url(@Url.Content("~/Content/ico/delete.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+        .MyCssClassE
+{
+  background:url(@Url.Content("~/Content/ico/edit.png")) no-repeat;display:block; height:24px; width:24px;
+}
+
+
+    </style>
+
+
+
+    <link href="~/Content/css/dataTables.bootstrap.css" rel="stylesheet" />
+</head>
+<body class='default'>
+    <div id="abc">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Stock Item
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Category Name</th>
+                                <th>Item Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
+                                <td>
+                                    @Html.ActionLink(" ", "StockItemEdit", new { id = item.ItemId }, new { @class = "MyCssClassE" })
+                                    @* @Ajax.ActionLink(" ", "DeleteStockItem", new { id = item.ItemId }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccessd", Confirm = "Do you want to delete this record?" }, new { @class = "MyCssClassD" }) *@
+                                     
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Content/js/jquery.dataTables.js"></script>
+    <script src="~/Content/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+         var onSuccessd = function (result) {
+         alert("Record Has Been Deleted Successfully !!");
+           
+         $.ajax({
+             url: '@Url.Action("StockItemView")',
+             type: 'GET',
+             cache: false,
+              
+             success: function (result) {
+                 $('#abc').html(result);
+             }
+         });
+      }
+    </script>
+</body>
+</html>

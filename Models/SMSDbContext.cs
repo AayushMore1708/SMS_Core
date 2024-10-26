@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SMS_Core.Models;
 
 namespace SMS_Core.Models
@@ -23,5 +23,6 @@ namespace SMS_Core.Models
         // Define your DbSets (tables) here
         public DbSet<tblStudentAdmission> tblStudentAdmission { get; set; }
         public DbSet<tblTimeTableHD> tblTimeTableHD { get; set; }
+        public DbSet<SMS_Core.Models.AspNetUser> AspNetUser { get; set; } = default!;
     }
 }
