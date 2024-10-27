@@ -11,10 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class qryEmployee
-    {        [Key]
+    {
         public string UserName { get; set; }
+        [Key]
         public int Id { get; set; }
         public Nullable<int> EmpCode { get; set; }
         public string UserID { get; set; }

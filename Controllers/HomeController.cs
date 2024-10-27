@@ -124,7 +124,37 @@ namespace SMS_Core.Controllers
             return View("../Admin/ExamTermEdit", exam); // Pass the list to the view
         }
 
-       
+        public ActionResult EmployeeIndexDash()
+        {
+            var ayr = from acyear in _context.tblAcadamicYear.Where(x => x.AcadamicStatus == "Started")
+                      select new
+                      {
+                          acadamic = acyear.AcadamicStartMonth + " " + acyear.AcadamicStartYear + "- " + acyear.AcadamicEndMonth + " " + acyear.AcadamicEndYear
+                      };
+
+            ViewBag.ay = ayr.Select(x => x.acadamic).SingleOrDefault();
+
+            var ab = _context.qryEmployee.Where(x => x.UserName == User.Identity.Name).SingleOrDefault();
+
+            var userid = _context.qryEmployee.Where(x => x.UserName == User.Identity.Name).Select(x => x.UserID).SingleOrDefault();
+
+            var ay = ayr.Select(x => x.acadamic).SingleOrDefault();
+            ViewBag.userid = userid;
+
+            ViewBag.al = _context.tblSalaryHD.Where(x => x.EmployeeID == userid && x.AcadamicYear == ay).OrderByDescending(x => x.SalaryId).Select(x => x.AllowedLeaves).SingleOrDefault();
+            var al = ViewBag.al;
+            ViewBag.lt = _context.tblSalaryHD.Where(x => x.EmployeeID == userid && x.AcadamicYear == ay).Max(x => x.LeaveTaken);
+            var lt = ViewBag.lt;
+            double bl = 0;
+            if (al != null && lt != null)
+            {
+                bl = (al - lt);
+            }
+
+            ViewBag.bl = bl;
+
+            return View(ab);
+        }
 
 
 

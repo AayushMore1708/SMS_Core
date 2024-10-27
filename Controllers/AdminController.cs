@@ -23,8 +23,8 @@ namespace SMS_Core.Controllers
 
         public ActionResult Notes()
         {
-            var lp = _context.tblAssignmentNote.ToList();
-            return View(lp);
+            var lp = _context.tblAssignmentNotes.ToList();
+            return View("../Admin/Notes", lp);
         }
         [HttpGet]
         public IActionResult ViewAssignments()
@@ -68,7 +68,7 @@ namespace SMS_Core.Controllers
                             .FirstOrDefault();
 
                 asbu.AcadamicYear = ayr;
-                _context.tblAssignmentNote.Add(asbu);
+                _context.tblAssignmentNotes.Add(asbu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("../Admin/Assignement");
             }
@@ -88,7 +88,7 @@ namespace SMS_Core.Controllers
             ViewBag.bat = _context.tblCourseBatch;
             ViewBag.sbu = _context.tblSubject;
 
-            var ae = _context.tblAssignmentNote.Find(id);
+            var ae = _context.tblAssignmentNotes.Find(id);
 
             return View(ae);
         }
@@ -113,6 +113,62 @@ namespace SMS_Core.Controllers
 
 
         //Notes for Syllabus end
+
+
+        public ActionResult ViewEmployeeData()
+        {
+            // Get the academic year with status "Started"
+            var ayr = _context.tblAcadamicYear
+                              .Where(x => x.AcadamicStatus == "Started")
+                              .Select(acyear => new
+                              {
+                                  Acadamic = acyear.AcadamicStartMonth + " " + acyear.AcadamicStartYear
+                                          + " - " + acyear.AcadamicEndMonth + " " + acyear.AcadamicEndYear
+                              })
+                              .FirstOrDefault();  // Use FirstOrDefault to prevent sequence issues
+
+            ViewBag.ay = ayr?.Acadamic ?? "No academic year found.";  // Handle null case
+
+            // Get the current employee based on the logged-in user
+            var employee = _context.qryEmployee
+                                   .Where(x => x.UserName == User.Identity.Name)
+                                   .FirstOrDefault();  // Use FirstOrDefault
+
+            if (employee == null)
+            {
+                ViewBag.Error = "Employee not found.";
+                return View("../Main/EmployeeIndexDash", new List<qryEmployee>());
+            }
+
+            var userId = employee.UserID;
+            ViewBag.userid = userId;
+
+            // Get the allowed leaves for the employee for the current academic year
+            var allowedLeaves = _context.tblSalaryHD
+                                        .OrderByDescending(x => x.SalaryId)
+                                        .Select(x => x.AllowedLeaves)
+                                        .FirstOrDefault();  // Use FirstOrDefault
+
+            ViewBag.al = allowedLeaves;
+
+            // Get the maximum leave taken by the employee for the current academic year
+            var leaveTaken = _context.tblSalaryHD
+                                     .Max(x => (int?)x.LeaveTaken) ?? 0;  // Use nullable to avoid null issues
+
+            ViewBag.lt = leaveTaken;
+
+            // Calculate balance leave
+            double balanceLeave = (allowedLeaves ?? 0) - leaveTaken;
+            ViewBag.bl = balanceLeave;
+
+            // Get the list of employees for the view
+            var employees = _context.qryEmployee
+                                    .OrderByDescending(x => x.EmpCode)
+                                    .ThenByDescending(x => x.FirstName)
+                                    .ToList();
+
+            return View("../Main/EmployeeIndexDash", employees);
+        }
 
     }
 }

@@ -77,7 +77,7 @@ namespace SMS_Core.Models
         public DbSet<tblExamMarkObtained> tblExamMarkObtained { get; set; }
         public DbSet<tblCertification> tblCertification { get; set; }
         public DbSet<tblAssignment> tblAssignment { get; set; }
-        public DbSet<tblAssignmentNote> tblAssignmentNote { get; set; }
+        public DbSet<tblAssignmentNote> tblAssignmentNotes { get; set; }
         public DbSet<tblConversation> tblConversation { get; set; }
         public DbSet<tblInventoryIssue> tblInventoryIssue { get; set; }
         public DbSet<tblInventoryIssueDtl> tblInventoryIssueDtl { get; set; }
@@ -105,5 +105,6 @@ namespace SMS_Core.Models
         public DbSet<HDdailyUpdate> HDdailyUpdate { get; set; }
         public DbSet<DTDailyUpdate> DTDailyUpdate { get; set; }
         public DbSet<tblAutoIncrement> tblAutoIncrement { get; set; }
+        public DbSet<qryEmployee> qryEmployee { get; set; }
     }
 }
