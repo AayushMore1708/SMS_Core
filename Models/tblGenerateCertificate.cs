@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblGenerateCertificate
-    {
+    {        [Key]
         public int GenerateCertificateId { get; set; }
         public string CertificateType { get; set; }
         public string CertificateTemplate { get; set; }

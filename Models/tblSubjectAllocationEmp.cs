@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblSubjectAllocationEmp
-    {
+    {        [Key]
         public int SubjectAllocationEmpId { get; set; }
         public string SubjectAllocationDepartment { get; set; }
         public string SubjectAllocationEmp { get; set; }

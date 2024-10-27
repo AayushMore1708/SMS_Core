@@ -7,7 +7,7 @@ namespace SMS_Core.Models
 {
     public class qryClosingStock
     {
-       
+               [Key]
         public string VendorName { get; set; }
        
         public string ItemCategory { get; set; }

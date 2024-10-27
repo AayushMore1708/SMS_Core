@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class qryBook
-    {
+    {        [Key]
         public int BookId { get; set; }
         public Nullable<System.DateTime> BookPurchaseDate { get; set; }
         public string BookISBNNo { get; set; }

@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblLeaveApplication
-    {
+    {        [Key]
         public int LeaveApplicationId { get; set; }
         public Nullable<System.DateTime> LeaveFromDate { get; set; }
         public Nullable<System.DateTime> LeaveToDate { get; set; }

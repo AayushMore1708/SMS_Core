@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblCircular
     {
+                [Key]
         public int CircularId { get; set; }
         public string CircularSubject { get; set; }
         public string CircularRefNo { get; set; }

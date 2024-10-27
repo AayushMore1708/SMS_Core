@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblSubject
-    {
+    {        [Key]
         public int SubjectId { get; set; }
         public string SubjectName { get; set; }
         public string SubjectCode { get; set; }

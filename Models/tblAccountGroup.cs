@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblAccountGroup
-    {
+    {        [Key]
         public int AccountGroupId { get; set; }
         public string AccountName { get; set; }
         public string AccountGroup { get; set; }

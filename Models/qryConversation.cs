@@ -11,10 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class qryConversation
     {
-        public int ID { get; set; }
+        [Key]
+         public int ID { get; set; }
         public string Conv { get; set; }
         public string ConvBy { get; set; }
         public string ConvTo { get; set; }

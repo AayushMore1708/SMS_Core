@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class qryClassTeacher
-    {
+    {        [Key]
         public string CourseName { get; set; }
         public string CourseBatch { get; set; }
         public string TeacherEmpUserName { get; set; }

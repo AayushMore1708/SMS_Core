@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblVoucher
-    {
+    {        [Key]
         public int VoucherId { get; set; }
         public Nullable<int> VoucherNo { get; set; }
         public Nullable<System.DateTime> VoucherTransactionDate { get; set; }

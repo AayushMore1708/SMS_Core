@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblFeeWaiver
-    {
+    {        [Key]
         public int FeeWaiverId { get; set; }
         public string FeeCategoryName { get; set; }
         public string FeeSubCategoryName { get; set; }

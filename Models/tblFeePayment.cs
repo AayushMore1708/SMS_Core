@@ -19,7 +19,7 @@ namespace SMS_Core.Models
         {
             this.tblFeePaymentDTs = new HashSet<tblFeePaymentDT>();
         }
-    
+            [Key]
         public int FeePaymentId { get; set; }
         public string FeeModeofPay { get; set; }
         public string FeeRemark { get; set; }

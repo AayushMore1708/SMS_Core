@@ -19,7 +19,7 @@ namespace SMS_Core.Models
         {
             this.tblPurchaseOrderDTs = new HashSet<tblPurchaseOrderDT>();
         }
-    
+            [Key]
         public int PurcahseOrderId { get; set; }
         public Nullable<int> VendorID { get; set; }
         public string VendorName { get; set; }

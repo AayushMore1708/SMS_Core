@@ -11,9 +11,10 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class tblExamTerm
     {
+        [Key]
         public int ExamId { get; set; }
         public string TermName { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }

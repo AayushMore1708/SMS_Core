@@ -11,7 +11,8 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TaskM
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +20,8 @@ namespace SMS_Core.Models
         {
             this.TaskDTMs = new HashSet<TaskDTM>();
         }
-    
+
+        [Key]
         public int Taskid { get; set; }
         public string TaskDetails { get; set; }
         public string TaskTo { get; set; }
@@ -44,7 +46,7 @@ namespace SMS_Core.Models
         public string GroupTask { get; set; }
         public string CustomerType { get; set; }
         public string AcadamicYear { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskDTM> TaskDTMs { get; set; }
     }

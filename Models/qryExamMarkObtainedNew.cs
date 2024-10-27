@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class qryExamMarkObtainedNew
-    {
+    {        [Key]
         public string TermName { get; set; }
         public Nullable<int> cnt { get; set; }
         public int ExamId { get; set; }

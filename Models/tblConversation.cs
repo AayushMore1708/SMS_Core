@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblConversation
     {
+                [Key]
         public int ID { get; set; }
         public string Conv { get; set; }
         public string ConvBy { get; set; }

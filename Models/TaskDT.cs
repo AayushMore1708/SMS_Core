@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class TaskDT
-    {
+    {        [Key]
         public int TaskDTid { get; set; }
         public Nullable<int> Taskid { get; set; }
         public string TaskPriority { get; set; }

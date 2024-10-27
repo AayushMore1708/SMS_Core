@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblPurchaseOrderDT
-    {
+    {        [Key]
         public int PurchaseOrderDTID { get; set; }
         public Nullable<int> PurcahseOrderId { get; set; }
         public string PurchaseOrderItemCode { get; set; }

@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class qryCategoryName
-    {
+    {        [Key]
         public int FeeCategoryId { get; set; }
         public string FeeCategoryName { get; set; }
         public string ReceiptNoPrefix { get; set; }

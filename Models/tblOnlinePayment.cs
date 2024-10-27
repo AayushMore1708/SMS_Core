@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblOnlinePayment
-    {
+    {        [Key]
         public int OnlineID { get; set; }
         public string TrackingID { get; set; }
         public string Orderid { get; set; }

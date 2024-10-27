@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblLeavingCertificate
-    {
+    {        [Key]
         public int LeavingCertificateID { get; set; }
         public string SchoolName { get; set; }
         public string SchoolAddress { get; set; }

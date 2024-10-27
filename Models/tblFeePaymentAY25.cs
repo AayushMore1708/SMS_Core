@@ -11,7 +11,8 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblFeePaymentAY25
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +20,7 @@ namespace SMS_Core.Models
         {
             this.tblFeePaymentDTAY25 = new HashSet<tblFeePaymentDTAY25>();
         }
-    
+        [Key]
         public int FeePaymentId { get; set; }
         public string FeeModeofPay { get; set; }
         public string FeeRemark { get; set; }
@@ -52,7 +53,7 @@ namespace SMS_Core.Models
         public string BankName { get; set; }
         public Nullable<System.DateTime> ValueDate { get; set; }
         public Nullable<System.DateTime> CancelDate { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblFeePaymentDTAY25> tblFeePaymentDTAY25 { get; set; }
     }

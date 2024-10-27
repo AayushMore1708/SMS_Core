@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblClassTeacherAllocation
     {
+                [Key]
         public int ClassTeacherId { get; set; }
         public string CourseName { get; set; }
         public string CourseBatch { get; set; }

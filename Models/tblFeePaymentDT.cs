@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class tblFeePaymentDT
     {
+        [Key]
         public int FeePaymentIDDT { get; set; }
         public Nullable<int> FeePaymentID { get; set; }
         public string FeeCategoryName { get; set; }

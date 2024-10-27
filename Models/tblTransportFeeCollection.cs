@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblTransportFeeCollection
-    {
+    {        [Key]
         public int TransportFeeId { get; set; }
         public string TransportUserTyp { get; set; }
         public string TransportCouseName { get; set; }

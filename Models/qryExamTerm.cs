@@ -14,7 +14,8 @@ namespace SMS_Core.Models
     
     public partial class qryExamTerm
     {
-        public int ExamId { get; set; }
+        [Key]
+                public int ExamId { get; set; }
         public string ExamDesc { get; set; }
     }
 }

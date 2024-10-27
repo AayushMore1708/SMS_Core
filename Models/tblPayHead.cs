@@ -14,7 +14,8 @@ namespace SMS_Core.Models
     
     public partial class tblPayHead
     {
-        public int PayHeadId { get; set; }
+        [Key]
+                public int PayHeadId { get; set; }
         public string PayHeadName { get; set; }
         public string PayHeadDescription { get; set; }
         public string PayHeadAdditionDeduction { get; set; }

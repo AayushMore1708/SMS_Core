@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblStudentAttendance
-    {
+    {        [Key]
         public int AttendanceStudentID { get; set; }
         public string CourseName { get; set; }
         public string BatchName { get; set; }

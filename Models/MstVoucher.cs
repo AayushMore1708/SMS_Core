@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class MstVoucher
     {
+        [Key]
         public int VoucherId { get; set; }
         public string VoucherName { get; set; }
         public string CreditDebit { get; set; }

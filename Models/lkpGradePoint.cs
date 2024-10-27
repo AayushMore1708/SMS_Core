@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class lkpGradePoint
     {
+        [Key]
         public int GradePointID { get; set; }
         public string Point { get; set; }
         public string Grade { get; set; }

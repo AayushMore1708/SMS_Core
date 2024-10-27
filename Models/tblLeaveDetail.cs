@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblLeaveDetail
-    {
+    {        [Key]
         public int LeaveDetailsId { get; set; }
         public string LeaveCategory { get; set; }
         public string EmpDesignation { get; set; }

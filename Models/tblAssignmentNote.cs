@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblAssignmentNote
     {
+        [Key]
         public int AssignmentNotesId { get; set; }
         public string AssignTitleNotes { get; set; }
         public string AssignDescriptionNotes { get; set; }

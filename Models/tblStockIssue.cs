@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblStockIssue
-    {
+    {        [Key]
         public int StockIssueId { get; set; }
         public string StockIssueUser { get; set; }
         public Nullable<int> EmployeeCode { get; set; }

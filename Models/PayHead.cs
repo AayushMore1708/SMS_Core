@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class PayHead
-    {
+    {        [Key]
         public int PayHeadID { get; set; }
         public string PayHeadName { get; set; }
         public string PayDescription { get; set; }

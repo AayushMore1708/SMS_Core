@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblAutoIncrement
     {
+        [Key]
         public int AutoIncrementID { get; set; }
         public Nullable<int> lessonPlanningId { get; set; }
         public Nullable<int> FeePaymentId { get; set; }

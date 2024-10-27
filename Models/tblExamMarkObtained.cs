@@ -11,9 +11,10 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class tblExamMarkObtained
     {
+        [Key]
         public int MarkObtainedID { get; set; }
         public string ExamName { get; set; }
         public string CourseName { get; set; }

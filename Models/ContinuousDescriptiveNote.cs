@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class ContinuousDescriptiveNote
     {
+        [Key]
         public int CDNId { get; set; }
         public string StudentID { get; set; }
         public string AcadamicYear { get; set; }

@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblCourseBatch
     {
+                [Key]
         public int BatchId { get; set; }
         public string CourseName { get; set; }
         public string BatchName { get; set; }

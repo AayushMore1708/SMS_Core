@@ -47,7 +47,7 @@ namespace SMS_Core.Controllers
 
 
 
-        //All Views : -
+        // All Views : -
         [HttpGet]
         public IActionResult ViewLibrary() => View("ViewLibrary");
 
@@ -60,6 +60,74 @@ namespace SMS_Core.Controllers
             var timeTableData = _context.tblTimeTableHD.ToList(); // Fetch the data
             return View("../Main/Index"); // Path to the view file
         }
+
+        [HttpGet]
+        public IActionResult ViewInstituteData()
+        {
+            var institute = _context.tblInstitute.FirstOrDefault(i => i.InstituteId == 1);
+            if (institute == null)
+            {
+                return NotFound(); // Handle case if institute is not found
+            }
+            return View("../Admin/Institute", institute); // Pass the institute to the view
+        }
+
+        public ActionResult BookCategoryNew()
+        {
+            var desg = _context.AspNetUsers.Where(x => x.UserName == User.Identity.Name).Select(x => x.UserType).FirstOrDefault();
+
+            // if (desg == "Student" || desg == "Employee")
+            // {
+            //     return HttpNotFound();
+            // }
+            return View("../Main/BookCategoryNew");
+        }
+
+        [HttpPost]
+        public ActionResult BookCategoryNew(tblBookCategory bc)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                _context.tblBookCategory.Add(bc);
+                _context.SaveChanges();
+                return RedirectToAction("BookCategoryNew");
+            }
+            return View(bc);
+        }
+
+        [HttpGet]
+        public IActionResult ViewAcademicYear()
+        {
+            var academicYears = _context.tblAcadamicYear.ToList(); // Fetch all academic years
+            return View("../Admin/AcadamicYear", academicYears); // Pass the list to the view
+        }
+
+        [HttpGet]
+        public IActionResult ViewVisitorData()
+        {
+            var Visitors = _context.tblVisitor.ToList(); // Fetch all academic years
+            return View("../Main/Visitors", Visitors); // Pass the list to the view
+        }
+
+        [HttpGet]
+        public IActionResult ViewLeaveData()
+        {
+            return View("../Main/Leave"); // Pass the list to the view
+        }
+
+        [HttpGet]
+        public IActionResult ViewExamData()
+        {
+            var exam = _context.tblExamTerm.ToList(); // Fetch all academic years
+            return View("../Admin/ExamTermEdit", exam); // Pass the list to the view
+        }
+
+       
+
+
+
 
 
 

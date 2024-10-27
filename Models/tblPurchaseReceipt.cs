@@ -19,7 +19,7 @@ namespace SMS_Core.Models
         {
             this.tblStockInventoryItems = new HashSet<tblStockInventoryItem>();
         }
-    
+            [Key]
         public int PurchaseReceiptId { get; set; }
         public string PurchaseInvoiceNo { get; set; }
         public string PurchaseVendor { get; set; }

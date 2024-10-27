@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class qryAcadamicYear
-    {
+    {        [Key]
         public int AcadamicYearId { get; set; }
         public string AcadamicYear { get; set; }
         public string AcadamicStatus { get; set; }

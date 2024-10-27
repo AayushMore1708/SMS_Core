@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblCertification
     {
+                [Key]
         public int CertificationId { get; set; }
         public string CertificationType { get; set; }
         public string CertificationTemplate { get; set; }

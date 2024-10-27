@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblMiscCat
-    {
+    {        [Key]
         public int AcadamicMiscId { get; set; }
         public string AcadamicMiscDesc { get; set; }
         public string AcadamicMiscCategory { get; set; }

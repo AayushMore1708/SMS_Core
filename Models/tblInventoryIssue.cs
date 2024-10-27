@@ -19,7 +19,7 @@ namespace SMS_Core.Models
         {
             this.tblInventoryIssueDtls = new HashSet<tblInventoryIssueDtl>();
         }
-    
+            [Key]
         public int InventoryIssueID { get; set; }
         public string UserType { get; set; }
         public string UserName { get; set; }

@@ -14,7 +14,8 @@ namespace SMS_Core.Models
     
     public partial class lkpDesignation
     {
-        public int ID { get; set; }
+        [Key]
+                public int ID { get; set; }
         public string Designation { get; set; }
     }
 }

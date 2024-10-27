@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblTransportDriver
-    {
+    {        [Key]
         public int DriverId { get; set; }
         public string VehicleNo { get; set; }
         public string DriverName { get; set; }

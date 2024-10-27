@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblStockItem
-    {
+    {        [Key]
         public int ItemId { get; set; }
         public string CategoryName { get; set; }
         public string ItemName { get; set; }

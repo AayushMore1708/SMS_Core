@@ -19,7 +19,7 @@ namespace SMS_Core.Models
         {
             this.tblLessonPlanningDTs = new HashSet<tblLessonPlanningDT>();
         }
-    
+            [Key]
         public int LessonPlanningId { get; set; }
         public Nullable<int> LessonPlanningCourseID { get; set; }
         public string LessonPlanningCourseName { get; set; }

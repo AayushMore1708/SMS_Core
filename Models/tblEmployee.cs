@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblEmployee
     {
+                [Key]
         public int Id { get; set; }
         public Nullable<int> EmpCode { get; set; }
         public string UserID { get; set; }

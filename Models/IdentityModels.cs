@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 namespace SMS_Core.Models
 {
     public class ApplicationUser : IdentityUser
-    {
+    {        [Key]
         public string UserType { get; set; }
         public string StudentFirstName { get; set; }
         public string StudentMiddleName { get; set; }

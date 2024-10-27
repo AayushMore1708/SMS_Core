@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblAcadamicCource
     {
+        [Key]        
         public int AcadamicCourceId { get; set; }
         public string AcadamicCourceName { get; set; }
         public string AcadamicCourceDescription { get; set; }

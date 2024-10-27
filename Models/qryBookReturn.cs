@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class qryBookReturn
-    {
+    {        [Key]
         public int BookId { get; set; }
         public string BookDescription { get; set; }
         public int BookReturnId { get; set; }

@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;    
     
     public partial class lkpExam
     {
+        [Key]
         public int ExamID { get; set; }
         public string ExamName { get; set; }
     }

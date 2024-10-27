@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblSalaryMaster
-    {
+    {        [Key]
         public int SalarymstID { get; set; }
         public string EmployeeID { get; set; }
         public string EmployeeName { get; set; }

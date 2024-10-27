@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class HDdailyUpdate
     {
+        [Key]
         public int DailyUpdateID { get; set; }
         public string ClassName { get; set; }
         public string ClassDiv { get; set; }

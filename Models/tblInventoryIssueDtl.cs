@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblInventoryIssueDtl
     {
+                [Key]
         public int InventoryIssueDtlID { get; set; }
         public Nullable<int> InventoryIssueID { get; set; }
         public string InventoryCategory { get; set; }

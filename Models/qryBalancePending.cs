@@ -14,7 +14,7 @@ namespace SMS_Core.Models
     
     public partial class qryBalancePending
     {
-        public string StandardRoman { get; set; }
+        [Key]        public string StandardRoman { get; set; }
         public string BALANCE222023 { get; set; }
         public string FeeIDNo { get; set; }
         public string NameofStudent { get; set; }

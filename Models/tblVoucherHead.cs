@@ -11,9 +11,10 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class tblVoucherHead
     {
+        [Key]
         public int VoucherHeadId { get; set; }
         public string VoucherHead { get; set; }
         public string VoucherMaster { get; set; }

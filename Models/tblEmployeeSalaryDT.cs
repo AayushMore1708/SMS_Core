@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblEmployeeSalaryDT
     {
+                [Key]
         public int EmployeeSalaryDTId { get; set; }
         public Nullable<int> EmployeeSalaryId { get; set; }
         public string PayHead { get; set; }

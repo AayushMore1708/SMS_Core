@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblBookIssue
     {
+        [Key]
         public int BookIssueId { get; set; }
         public string BookIssueType { get; set; }
         public string BookCourse { get; set; }

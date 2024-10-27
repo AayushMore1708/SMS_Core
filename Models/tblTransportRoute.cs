@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblTransportRoute
-    {
+    {        [Key]
         public int VehicleRouteId { get; set; }
         public string VehicleNo { get; set; }
         public string TransportRouteCode { get; set; }

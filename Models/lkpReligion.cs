@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class lkpReligion
-    {
+    {        [Key]
         public int ID { get; set; }
         public string Religion { get; set; }
     }

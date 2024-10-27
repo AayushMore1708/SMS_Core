@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblStoreVendor
-    {
+    {        [Key]
         public int VendorId { get; set; }
         public string VendorCompany { get; set; }
         public string VendorCompanyPhone { get; set; }

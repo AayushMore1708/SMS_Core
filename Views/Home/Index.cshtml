@@ -61,15 +61,14 @@
                         </div>
                         <div class="mb-3 d-flex justify-content-between align-items-center">
                             <div>
-                                <label asp-for="SelectedAcademicYear" class="form-label w-auto mx-auto">Select Academic
-                                    Year</label>
+                                <label asp-for="SelectedAcademicYear" class="form-label w-auto mx-auto">Select Academic Year</label>
                                 <select asp-for="SelectedAcademicYear" class="form-select" required>
                                     <option value="2019">2019</option>
                                     <option value="2020">2020</option>
                                     <option value="2021">2021</option>
                                     <option value="2022">2022</option>
                                     <option value="2023">2023</option>
-                                    <option value="2024">2024</option>
+                                    <option value="2024" selected>2024</option>
                                 </select>
                             </div>
                             <div class="form-check">
@@ -114,7 +113,7 @@
             // Optionally, submit the form after a delay
             setTimeout(() => {
                 event.target.submit(); // Submit the form
-            }, 2000); // Adjust delay as needed
+            }, 500); // Adjust delay as needed
         }
     </script>
 

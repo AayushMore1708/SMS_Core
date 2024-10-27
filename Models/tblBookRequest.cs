@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblBookRequest
     {
+                [Key]
         public int BookRequestId { get; set; }
         public string BookRequestUserType { get; set; }
         public string BookRequestUser { get; set; }

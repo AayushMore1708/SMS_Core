@@ -6,14 +6,15 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class tblFeeSubCategoryFine
     {
+        [Key]
         public int FeeSubCategoryFineId { get; set; }
         public string FeeCategoryName { get; set; }
         public string FeeSubCategoryName { get; set; }

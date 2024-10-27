@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class qryCollectionSummaryNew
-    {
+    {        [Key]
         public Nullable<long> id { get; set; }
         public Nullable<System.DateTime> FeeReceiptDate { get; set; }
         public decimal Cash { get; set; }

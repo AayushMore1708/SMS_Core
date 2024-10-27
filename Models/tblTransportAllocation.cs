@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblTransportAllocation
-    {
+    {        [Key]
         public int TransportAllocationId { get; set; }
         public string TransportRoute { get; set; }
         public string TransportDestination { get; set; }

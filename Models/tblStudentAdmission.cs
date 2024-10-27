@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblStudentAdmission
-    {   
+    {           [Key]
         public int StudentAdmissionId { get; set; }
         public Nullable<int> StudentAdmissionNo { get; set; }
         public Nullable<System.DateTime> StudentAdmissionDate { get; set; }

@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class tblFeeSubCategory
     {
+        [Key]
         public int FeeSubCategoryId { get; set; }
         public string FeeCategoryName { get; set; }
         public string FeeSubCategoryName { get; set; }

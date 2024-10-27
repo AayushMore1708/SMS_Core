@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblLessonPlanningDT
-    {
+    {        [Key]
         public int LessonPlanningDTId { get; set; }
         public Nullable<int> LessonPlanningId { get; set; }
         public string LessonPlanningLectureCode { get; set; }

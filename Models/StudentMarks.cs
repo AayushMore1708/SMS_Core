@@ -11,19 +11,16 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using System.ComponentModel.DataAnnotations;
-
-    public partial class DTDailyUpdate
+    public partial class StudentMarks
     {
 
-        public int DTDailyUpdate1 { get; set; }
         [Key]
-        public Nullable<int> DailyUpdateID { get; set; }
-        public Nullable<int> Period { get; set; }
-        public string Subject { get; set; }
-        public string ClassWork { get; set; }
-        public string HomeAssignment { get; set; }
-        public string AcadamicYear { get; set; }
+        public int StudentMarksID { get; set; } // Corresponds to [StudentMarksID]
+        public string AcadamicYear { get; set; } // Corresponds to [AcadamicYear]
+        public string SchoolName { get; set; } // Corresponds to [SchoolName]
+        public string Semester { get; set; } // Corresponds to [Semester]
+        public int StudentID { get; set; } // Corresponds to [StudentID]
+        public string GRNo { get; set; } // Corresponds to [GRNo]
     }
 }

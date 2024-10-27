@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class PrimEngFee
-    {
+    {        [Key]
         public int id { get; set; }
         public string Mediam { get; set; }
         public string FeeIDNo { get; set; }

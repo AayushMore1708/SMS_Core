@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblBookReturn
     {
+                [Key]
         public int BookReturnId { get; set; }
         public Nullable<int> BookReferenceID { get; set; }
         public string BookReturnTitle { get; set; }

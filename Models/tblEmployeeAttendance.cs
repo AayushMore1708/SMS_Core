@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class tblEmployeeAttendance
     {
+                [Key]
         public int AttendanceEmployeeID { get; set; }
         public string Department { get; set; }
         public Nullable<System.DateTime> AttendanceDate { get; set; }

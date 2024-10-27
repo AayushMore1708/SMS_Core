@@ -7,6 +7,7 @@ namespace SMS_Core.Models
 {
     public class EmployeeAttN
     {
+        [Key]
         public int Id { get; set; }
         public string EmployeeName { get; set; }
         public DateTime? AttendanceDate { get; set; }

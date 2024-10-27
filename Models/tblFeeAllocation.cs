@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblFeeAllocation
-    {
+    {        [Key]
         public int FeeAllocationId { get; set; }
         public string FeeCategoryName { get; set; }
         public string FeeSubCategoryName { get; set; }

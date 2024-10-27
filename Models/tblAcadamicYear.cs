@@ -11,9 +11,11 @@ namespace SMS_Core.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class tblAcadamicYear
     {
+
+        [Key]
         public int AcadamicYearId { get; set; }
         public string AcadamicStartYear { get; set; }
         public string AcadamicStartMonth { get; set; }

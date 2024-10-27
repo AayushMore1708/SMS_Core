@@ -13,7 +13,7 @@ namespace SMS_Core.Models
     using System.Collections.Generic;
     
     public partial class tblStudentGatePass
-    {
+    {        [Key]
         public int StudentGatePassId { get; set; }
         public Nullable<int> StudentID { get; set; }
         public string PersonName { get; set; }
