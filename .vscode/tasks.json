@@ -5,10 +5,9 @@
     "tasks": [
         {
             "label": "Run with Live Changes",
-            "command": "dotnet",
+            "command": "dotnet watch --property WarningLevel=0",
             "type": "shell",
             "args": [
-                "watch",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

@@ -80,6 +80,41 @@ namespace SMS_Core.Controllers
             return View(asbu);
         }
 
+        [HttpGet]
+        public IActionResult LessonPlanning()
+        {
+            var lp = _context.tblLessonPlanning.ToList();
+            return View("../admin/LessonPlanning", lp);
+        }
+        public ActionResult LessonPlanningNew()
+        {
+            ViewBag.crc = _context.tblAcadamicCource;
+            ViewBag.bat = _context.tblCourseBatch;
+            ViewBag.sbu = _context.tblSubject;
+
+            int lpn = _context.tblAutoIncrement.Max(x => (Int32?)x.lessonPlanningId) ?? 0;
+            if (lpn == 0)
+            {
+                lpn = 1;
+            }
+            else
+            {
+                lpn = lpn + 1;
+            }
+
+            ViewBag.lpn = lpn;
+
+            tblAutoIncrement ai = _context.tblAutoIncrement.Find(2);
+            ai.lessonPlanningId = lpn;
+            var ayr = _context.tblAcadamicYear.Where(x => x.AcadamicStatus == "Started").Select(x => x.AcadamicYear).FirstOrDefault();
+            ai.AcadamicYear = ayr;
+            _context.Entry(ai).State = EntityState.Modified;
+            _context.SaveChanges();
+
+   
+            return View("../Admin/LessonPlanningNew");
+        }
+
 
 
         public ActionResult NotesEdit(int id)

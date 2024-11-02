@@ -58,7 +58,7 @@ namespace SMS_Core.Controllers
         public IActionResult ViewTimeTable()
         {
             var timeTableData = _context.tblTimeTableHD.ToList(); // Fetch the data
-            return View("../Main/Index"); // Path to the view file
+            return View("../Admin/Timetable",timeTableData); // Path to the view file
         }
 
         [HttpGet]
@@ -123,6 +123,8 @@ namespace SMS_Core.Controllers
             var exam = _context.tblExamTerm.ToList(); // Fetch all academic years
             return View("../Admin/ExamTermEdit", exam); // Pass the list to the view
         }
+
+        
 
         public ActionResult EmployeeIndexDash()
         {

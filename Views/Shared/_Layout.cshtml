@@ -4,103 +4,292 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management System</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/?size=100&id=23319&format=png&color=000000">
+
+    <!-- Load Bootstrap and Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>SMS</title>
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=23319&format=png&color=000000">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.unobtrusive-ajax.min.js"></script>
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            font-family: "Gowun Dodum";
+        :root {
+            --primary-color: #9b26e4;
+            --secondary-color: #8e24aa;
+            --footer-color: #9c66f8;
+            --text-color: #fff;
+            --font-family: "Gowun Dodum", sans-serif;
+            --font-size: large;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size);
+            margin: 0;
+        }
+
+
+
+        .app-bar {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 15px;
+            display: flex;
             font-size: large;
+            font-weight: bold;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .footer {
-            width: 100%;
-            background-color: #9c66f8;
-            color: #fff;
+            background-color: var(--footer-color);
+            color: var(--text-color);
             padding: 10px 0;
             text-align: center;
-            position: relative;
+            position: fixed;
             bottom: 0;
+            width: 100%;
         }
 
         .footer a {
-            color: white;
+            color: var(--text-color);
             text-decoration: none;
         }
 
-        .app-bar {
-            background-color: #9b26e4;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
         }
 
-        .app-bar>div {
-            display: flex;
-            align-items: center;
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
         }
 
-        .app-bar>div>span {
-            margin-right: 10px;
-
+        .close {
+            cursor: pointer;
+            font-size: 28px;
+            font-weight: bold;
         }
 
-        .app-bar>div>a {
-            color: white;
-            text-decoration: none;
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        a {
+            font-size: large;
+            font-weight: bold;
         }
     </style>
-
 </head>
 
 <body>
     <header class="app-bar sticky-top">
-        <div class="d-flex align-items-center">
-            <span id="app-title">Student Management System</span>
-        </div>
-        <div class="icons d-flex align-items-center">
-            <a href="#" data-toggle="tooltip" title="Settings" class="d-flex flex-column align-items-center me-2">
+        <h1 class="h6" id="app-title" style=" margin-top: 10px;">
+            <a href="https://www.satams.com" style="color: inherit; text-decoration: none;">Student Management
+                System</a>
+        </h1>
+        <nav class="icons d-flex align-items-center">
+            <a href="javascript:void(0);" title="Settings" class="d-flex flex-column align-items-center me-2"
+                onclick="openModal('settingsModal')">
                 <i class="fas fa-cog"></i>
-                <span class="text-center">Settings</span>
+                <span>Settings</span>
             </a>
-            <a href="#" data-toggle="tooltip" title="Help" class="d-flex flex-column align-items-center me-2">
+            <a href="javascript:void(0);" title="Help" class="d-flex flex-column align-items-center me-2"
+                onclick="openModal('aboutModal')">
                 <i class="fas fa-question-circle"></i>
-                <span class="text-center">Help</span>
+                <span>Help</span>
             </a>
-            <a href="/home/Index" data-toggle="tooltip" title="Logout" class="d-flex flex-column align-items-center">
+            <a href="javascript:void(0);" title="Logout" class="d-flex flex-column align-items-center"
+                onclick="openModal('logoutModal')">
                 <i class="fa-solid fa-right-from-bracket"></i>
-                <span class="text-center">Logout</span>
+                <span>Logout</span>
             </a>
-        </div>
-
+        </nav>
     </header>
 
-    <div>
-        <main role="main">
-            @RenderBody()
-        </main>
+    <main role="main" class="container my-4">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <span><a href="http://www.satams.com">Powered by</a> SATAMS</span>
+    </footer>
+
+    <!-- Modals -->
+    <div id="settingsModal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Settings</h5>
+                <span class="close" role="button" onclick="closeModal('settingsModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h6>General Settings</h6>
+                <div class="mb-3">
+                    <label for="languageSelect" class="form-label">Preferred Language</label>
+                    <select class="form-select" id="languageSelect">
+                        <option selected>English</option>
+                        <option>Spanish</option>
+                        <option>French</option>
+                        <option>German</option>
+                    </select>
+                </div>
+
+                <h6>User Preferences</h6>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="emailNotifications" checked>
+                    <label class="form-check-label" for="emailNotifications">Enable Email Notifications</label>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="smsNotifications">
+                    <label class="form-check-label" for="smsNotifications">Enable SMS Notifications</label>
+                </div>
+
+                <h6>Academic Settings</h6>
+                <div class="mb-3">
+                    <label for="academicYear" class="form-label">Academic Year</label>
+                    <select class="form-select" id="academicYear">
+                        <option selected>2023-2024</option>
+                        <option>2024-2025</option>
+                        <option>2025-2026</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="gradingScale" class="form-label">Grading Scale</label>
+                    <select class="form-select" id="gradingScale">
+                        <option selected>Percentage</option>
+                        <option>GPA (4.0 Scale)</option>
+                        <option>GPA (5.0 Scale)</option>
+                        <option>Letter Grades</option>
+                    </select>
+                </div>
+
+                <h6>Appearance</h6>
+                <div class="mb-3">
+                    <label for="themeSelect" class="form-label">Theme</label>
+                    <select class="form-select" id="themeSelect">
+                        <option selected>Default</option>
+                        <option>Dark Mode</option>
+                        <option>Light Mode</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="fontSizeSelect" class="form-label">Font Size</label>
+                    <select class="form-select" id="fontSizeSelect">
+                        <option>Small</option>
+                        <option selected>Medium</option>
+                        <option>Large</option>
+                    </select>
+                </div>
+
+                <h6>Security</h6>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="twoFactorAuth">
+                    <label class="form-check-label" for="twoFactorAuth">Enable Two-Factor Authentication</label>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-danger" onclick="openModal('resetPasswordModal')">Reset Password</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('settingsModal')">Close</button>
+            </div>
+        </div>
     </div>
 
 
 
-    <footer class="footer" style="position: fixed; bottom: 0; width: 100%;">
-        <span><a href="http://www.satams.com">Powered by</a> SATAMS</span>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <div id="aboutModal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">About</h5>
+                <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>About Test Company: This company is dedicated to...</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('aboutModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="logoutModal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Logout</h5>
+                <span class="close" onclick="closeModal('logoutModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to logout?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closeModal('logoutModal')">Cancel</button>
+                <a href="/home/Index" class="btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openModal(modalId) {
+            console.log(`Opening modal with ID: ${modalId}`);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add("show");
+                modal.style.display = "block";
+                modal.removeAttribute("aria-hidden");
+                modal.setAttribute("aria-modal", "true");
+
+                // Close other modals
+                document.querySelectorAll('.modal').forEach(m => {
+                    if (m.id !== modalId) closeModal(m.id);
+                });
+            }
+        }
+
+        function closeModal(modalId) {
+            console.log(`Closing modal with ID: ${modalId}`);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove("show");
+                modal.style.display = "none";
+                modal.setAttribute("aria-hidden", "true");
+                modal.removeAttribute("aria-modal");
+            }
+        }
+
+        window.addEventListener("click", function (event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) closeModal(modal.id);
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

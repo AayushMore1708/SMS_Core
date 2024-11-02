@@ -230,6 +230,7 @@
         /* Include padding in width */
         font-weight: bold;
         text-align: center;
+        flex-direction: column;
         border-radius: 8px;
         cursor: pointer;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -274,6 +275,54 @@
         text-decoration: none;
         color: white;
     }
+
+    .tile .icon {
+        font-size: 24px;
+        /* Adjust icon size */
+        margin-bottom: 8px;
+        /* Space between icon and text */
+    }
+
+
+
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Black with opacity */
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        font-size: x-large;
+        width: 80%;
+        max-width: 400px;
+        border-radius: 8px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>
 </head>
 
@@ -282,36 +331,168 @@
         <div>
             <h1>Main Menu</h1>
         </div>
-        <div class="grid">
-            <a href="/home/ViewInstituteData" class="tile institute">Institutes</a>
-            <a href="/home/ViewAcademicYear" class="tile academic-year">Academic Year</a>
-            <a href="/home/ViewStudData" class="tile students">Students</a>
-            <a href="/home/ViewVisitorData" class="tile visitors">Visitors</a>
-            <a href="/home/ViewLeaveData" class="tile leave">Leave</a>
-            <a href="/home/ViewExamData" class="tile exam">Exam</a>
-            <a href="/admin/ViewAssignments" class="tile assignments">Assignments</a>
-            <a href="/admin/Notes" class="tile notes">Notes</a>
-            <a href="/admin/ViewEmployeeData" class="tile employee">Employee</a>
-            <a href="/home/ViewTimetable" class="tile timetable">TimeTable</a>
-            <a href="/home/ViewLessonPlan" class="tile lesson-plan">Lesson Plan</a>
-            <a href="/home/ViewCourses" class="tile courses">Courses</a>
-            <a href="/home/ViewBatches" class="tile batches">Batches</a>
-            <a href="/home/ClassTeacherAllocation" class="tile class-teacher-allocation">Class Teacher Allocation</a>
-            <a href="/home/ViewSubjects" class="tile subject">Subject</a>
-            <a href="/home/StudentAttendance" class="tile student-attendance">Student Attendance</a>
-            <a href="/home/EmployeeAttendance" class="tile emp-attendance">Employee Attendance</a>
-            <a href="/home/ViewFeeData" class="tile fee">Fee</a>
-            <a href="/home/ViewVendors" class="tile vendor">Vendor</a>
-            <a href="/home/ViewCirculars" class="tile circulars">Circulars</a>
-            <a href="/home/ViewSalary" class="tile salary">Salary</a>
-            <a href="/home/ViewLibrary" class="tile library">Library</a>
-            <a href="/home/ViewCertificate" class="tile certificate">Certificate</a>
-            <a href="/home/ViewTaskApp" class="tile task-app">TaskApp</a>
-            <a href="/home/ViewCommunication" class="tile communication">Communication</a>
-            <a href="/home/StudentEnquiry" class="tile student-enquiry">Student Enquiry</a>
-
+        <div id="featureModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Feature in Progress</p>
+            </div>
         </div>
-    </div>
+
+        <div class="grid">
+            <a href="/home/ViewInstituteData" class="tile institute">
+                <i class="icon fas fa-school"></i> <!-- Institute icon -->
+                <span>Institutes</span>
+            </a>
+            <a href="/home/ViewAcademicYear" class="tile academic-year">
+                <i class="icon fas fa-calendar-alt"></i> <!-- Academic Year icon -->
+                <span>Academic Year</span>
+            </a>
+            <a href="/home/ViewStudData" class="tile students">
+                <i class="icon fas fa-user-graduate"></i> <!-- Students icon -->
+                <span>Students</span>
+            </a>
+            <a href="/home/ViewVisitorData" class="tile visitors">
+                <i class="icon fas fa-users"></i> <!-- Visitors icon -->
+                <span>Visitors</span>
+            </a>
+            <a href="/home/ViewLeaveData" class="tile leave">
+                <i class="icon fas fa-calendar-check"></i> <!-- Leave icon -->
+                <span>Leave</span>
+            </a>
+            <a href="/home/ViewExamData" class="tile exam">
+                <i class="icon fas fa-file-alt"></i> <!-- Exam icon -->
+                <span>Exam</span>
+            </a>
+            <a href="/admin/ViewAssignments" class="tile assignments">
+                <i class="icon fas fa-tasks"></i> <!-- Assignments icon -->
+                <span>Assignments</span>
+            </a>
+            <a href="/admin/Notes" class="tile notes">
+                <i class="icon fas fa-sticky-note"></i> <!-- Notes icon -->
+                <span>Notes</span>
+            </a>
+            <a href="/admin/ViewEmployeeData" class="tile employee">
+                <i class="icon fas fa-user-tie"></i> <!-- Employee icon -->
+                <span>Employee</span>
+            </a>
+            <a href="/home/ViewTimetable" class="tile timetable">
+                <i class="icon fas fa-calendar"></i> <!-- Timetable icon -->
+                <span>TimeTable</span>
+            </a>
+            <a href="/admin/LessonPlanning" class="tile lesson-plan">
+                <i class="icon fas fa-chalkboard-teacher"></i> <!-- Lesson Plan icon -->
+                <span>Lesson Plan</span>
+            </a>
+            <a href="/home/ViewCourses" class="tile courses">
+                <i class="icon fas fa-book"></i> <!-- Courses icon -->
+                <span>Courses</span>
+            </a>
+            <a href="/home/ViewBatches" class="tile batches">
+                <i class="icon fas fa-layer-group"></i> <!-- Batches icon -->
+                <span>Batches</span>
+            </a>
+            <a href="/home/ClassTeacherAllocation" class="tile class-teacher-allocation">
+                <i class="icon fas fa-user-check"></i> <!-- Class Teacher Allocation icon -->
+                <span>Class Teacher Allocation</span>
+            </a>
+            <a href="/home/ViewSubjects" class="tile subject">
+                <i class="icon fas fa-book-open"></i> <!-- Subject icon -->
+                <span>Subject</span>
+            </a>
+            <a href="/home/StudentAttendance" class="tile student-attendance">
+                <i class="icon fas fa-user-clock"></i> <!-- Student Attendance icon -->
+                <span>Student Attendance</span>
+            </a>
+            <a href="/home/EmployeeAttendance" class="tile emp-attendance">
+                <i class="icon fas fa-user-clock"></i> <!-- Employee Attendance icon -->
+                <span>Employee Attendance</span>
+            </a>
+            <a href="/home/ViewFeeData" class="tile fee">
+                <i class="icon fas fa-dollar-sign"></i> <!-- Fee icon -->
+                <span>Fee</span>
+            </a>
+            <a href="/home/ViewVendors" class="tile vendor">
+                <i class="icon fas fa-truck"></i> <!-- Vendor icon -->
+                <span>Vendor</span>
+            </a>
+            <a href="/home/ViewCirculars" class="tile circulars">
+                <i class="icon fas fa-envelope-open-text"></i> <!-- Circulars icon -->
+                <span>Circulars</span>
+            </a>
+            <a href="/home/ViewSalary" class="tile salary">
+                <i class="icon fas fa-money-bill-wave"></i> <!-- Salary icon -->
+                <span>Salary</span>
+            </a>
+            <a href="/home/ViewLibrary" class="tile library">
+                <i class="icon fas fa-book-reader"></i> <!-- Library icon -->
+                <span>Library</span>
+            </a>
+            <a href="/home/ViewCertificate" class="tile certificate">
+                <i class="icon fas fa-certificate"></i> <!-- Certificate icon -->
+                <span>Certificate</span>
+            </a>
+            <a href="/home/ViewTaskApp" class="tile task-app">
+                <i class="icon fas fa-tasks"></i> <!-- TaskApp icon -->
+                <span>TaskApp</span>
+            </a>
+            <a href="/home/ViewCommunication" class="tile communication">
+                <i class="icon fas fa-comments"></i> <!-- Communication icon -->
+                <span>Communication</span>
+            </a>
+            <a href="/home/StudentEnquiry" class="tile student-enquiry">
+                <i class="icon fas fa-question-circle"></i> <!-- Student Enquiry icon -->
+                <span>Student Enquiry</span>
+            </a>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const linksToShowModal = [
+                    ".courses",
+                    ".batches",
+                    ".class-teacher-allocation",
+                    ".subject",
+                    ".student-attendance",
+                    ".emp-attendance",
+                    ".fee",
+                    ".vendor",
+                    ".circulars",
+                    ".salary",
+                    ".library",
+                    ".certificate",
+                    ".task-app",
+                    ".communication",
+                    ".student-enquiry"
+                ];
+
+                // Get the modal and close button
+                const modal = document.getElementById("featureModal");
+                const closeButton = document.querySelector(".modal .close");
+
+                // Show modal function
+                function showModal(event) {
+                    event.preventDefault();
+                    modal.style.display = "block";
+                }
+
+                // Add event listeners to each link
+                linksToShowModal.forEach(selector => {
+                    document.querySelector(selector)?.addEventListener("click", showModal);
+                });
+
+                // Close the modal when the close button is clicked
+                closeButton.onclick = function () {
+                    modal.style.display = "none";
+                };
+
+                // Close the modal when clicking outside of the modal content
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                };
+            });
+        </script>
 
 
 
