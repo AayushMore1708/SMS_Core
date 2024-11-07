@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<SMS_Core.Models.tblSubject>
 
 @{
-    Layout = null;
     @* WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: true); *@
 }
 
@@ -11,7 +10,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <style type="text/css">
+   <style type="text/css">
         body {
             font-family: Arial;
             font-size: 10pt;
@@ -20,26 +19,22 @@
         .Grid {
             border: 1px solid #ccc;
             border-collapse: collapse;
+            width: 100%; /* Make the table take full width */
         }
 
-            .Grid th {
-                background-color: #F7F7F7;
-                font-weight: bold;
-            }
+        .Grid th {
+            background-color: #F7F7F7;
+            font-weight: bold;
+        }
 
-            .Grid th, .Grid td {
-                padding: 5px;
-                width: 150px;
-                border: 1px solid #ccc;
-            }
+        .Grid th, .Grid td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
 
-            .Grid, .Grid table td {
-                border: 0px solid #ccc;
-            }
-
-                .Grid th a, .Grid th a:visited {
-                    color: #333;
-                }
+        .Grid th a, .Grid th a:visited {
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -124,5 +119,40 @@
             $(this).hide();
         });
     </script>
+
+    <table class="Grid">
+    <thead>
+        <tr>
+            <th>Subject ID</th>
+            <th>Subject Name</th>
+            <th>Subject Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="SubjectId">
+                    <span class="label">@item.SubjectId</span>
+                </td>
+                <td class="SubjectName">
+                    <span class="label">@item.SubjectName</span>
+                    <input class="text" type="text" value="@item.SubjectName" style="display:none" />
+                </td>
+                <td class="SubjectDescription">
+                    <span class="label">@item.SubjectDescription</span>
+                    <input class="text" type="text" value="@item.SubjectDescription" style="display:none" />
+                </td>
+                <td>
+                    <a class="Edit" href="javascript:;">Edit</a>
+                    <a class="Update" href="javascript:;" style="display:none">Update</a>
+                    <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 </body>
 </html>

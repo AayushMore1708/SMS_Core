@@ -14,6 +14,7 @@ namespace SMS_Core.Models
     
     public partial class qryFeeSubCategory
     {
+        [Key]
         public int FeeSubCategoryId { get; set; }
         public string FeeCategoryName { get; set; }
         public string FeeSubCategoryName { get; set; }

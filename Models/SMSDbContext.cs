@@ -60,6 +60,7 @@ namespace SMS_Core.Models
         public DbSet<lkpGradePoint> lkpGradePoint { get; set; }
         public DbSet<tblTimeTableDT> tblTimeTableDT { get; set; }
         public DbSet<MstVoucher> MstVoucher { get; set; }
+        public DbSet<qryFeeSubCategory> qryFeeSubCategory { get; set; }
         public DbSet<tblTimeTableHD> tblTimeTableHD { get; set; }
         public DbSet<tblBookCategory> tblBookCategory { get; set; }
         public DbSet<tblBook> tblBook { get; set; }

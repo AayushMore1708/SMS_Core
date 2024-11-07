@@ -54,23 +54,9 @@ namespace SMS_Core.Controllers
         [HttpGet]
         public IActionResult GridButtonMenu() => View("GridButtonMenu");
 
-        [HttpGet]
-        public IActionResult ViewTimeTable()
-        {
-            var timeTableData = _context.tblTimeTableHD.ToList(); // Fetch the data
-            return View("../Admin/Timetable",timeTableData); // Path to the view file
-        }
 
-        [HttpGet]
-        public IActionResult ViewInstituteData()
-        {
-            var institute = _context.tblInstitute.FirstOrDefault(i => i.InstituteId == 1);
-            if (institute == null)
-            {
-                return NotFound(); // Handle case if institute is not found
-            }
-            return View("../Admin/Institute", institute); // Pass the institute to the view
-        }
+
+
 
         public ActionResult BookCategoryNew()
         {
@@ -97,34 +83,15 @@ namespace SMS_Core.Controllers
             return View(bc);
         }
 
-        [HttpGet]
-        public IActionResult ViewAcademicYear()
-        {
-            var academicYears = _context.tblAcadamicYear.ToList(); // Fetch all academic years
-            return View("../Admin/AcadamicYear", academicYears); // Pass the list to the view
-        }
 
-        [HttpGet]
-        public IActionResult ViewVisitorData()
-        {
-            var Visitors = _context.tblVisitor.ToList(); // Fetch all academic years
-            return View("../Main/Visitors", Visitors); // Pass the list to the view
-        }
 
-        [HttpGet]
-        public IActionResult ViewLeaveData()
-        {
-            return View("../Main/Leave"); // Pass the list to the view
-        }
 
-        [HttpGet]
-        public IActionResult ViewExamData()
-        {
-            var exam = _context.tblExamTerm.ToList(); // Fetch all academic years
-            return View("../Admin/ExamTermEdit", exam); // Pass the list to the view
-        }
 
-        
+
+
+
+
+
 
         public ActionResult EmployeeIndexDash()
         {

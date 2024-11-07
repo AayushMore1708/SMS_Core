@@ -239,11 +239,21 @@
 
     .tile:hover {
         background-color: #333;
-        /* Darker background on hover */
         transform: scale(1.5);
-        /* Slightly enlarge on hover */
         box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        /* Increase shadow on hover */
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        /* Add the sound effect */
+        cursor: pointer;
+    }
+
+    .tile:hover::after {
+        content: '';
+        /* Play the sound on hover */
+        display: block;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+        position: fixed;
     }
 
 
@@ -339,11 +349,11 @@
         </div>
 
         <div class="grid">
-            <a href="/home/ViewInstituteData" class="tile institute">
+            <a href="/admin/ViewInstituteData" class="tile institute">
                 <i class="icon fas fa-school"></i> <!-- Institute icon -->
                 <span>Institutes</span>
             </a>
-            <a href="/home/ViewAcademicYear" class="tile academic-year">
+            <a href="/admin/ViewAcademicYear" class="tile academic-year">
                 <i class="icon fas fa-calendar-alt"></i> <!-- Academic Year icon -->
                 <span>Academic Year</span>
             </a>
@@ -351,15 +361,15 @@
                 <i class="icon fas fa-user-graduate"></i> <!-- Students icon -->
                 <span>Students</span>
             </a>
-            <a href="/home/ViewVisitorData" class="tile visitors">
+            <a href="/main/ViewVisitorData" class="tile visitors">
                 <i class="icon fas fa-users"></i> <!-- Visitors icon -->
                 <span>Visitors</span>
             </a>
-            <a href="/home/ViewLeaveData" class="tile leave">
+            <a href="/main/ViewLeaveData" class="tile leave">
                 <i class="icon fas fa-calendar-check"></i> <!-- Leave icon -->
                 <span>Leave</span>
             </a>
-            <a href="/home/ViewExamData" class="tile exam">
+            <a href="/admin/ViewExamData" class="tile exam">
                 <i class="icon fas fa-file-alt"></i> <!-- Exam icon -->
                 <span>Exam</span>
             </a>
@@ -371,11 +381,11 @@
                 <i class="icon fas fa-sticky-note"></i> <!-- Notes icon -->
                 <span>Notes</span>
             </a>
-            <a href="/admin/ViewEmployeeData" class="tile employee">
+            <a href="/main/ViewEmployeeData" class="tile employee">
                 <i class="icon fas fa-user-tie"></i> <!-- Employee icon -->
                 <span>Employee</span>
             </a>
-            <a href="/home/ViewTimetable" class="tile timetable">
+            <a href="/admin/ViewTimetable" class="tile timetable">
                 <i class="icon fas fa-calendar"></i> <!-- Timetable icon -->
                 <span>TimeTable</span>
             </a>
@@ -383,11 +393,11 @@
                 <i class="icon fas fa-chalkboard-teacher"></i> <!-- Lesson Plan icon -->
                 <span>Lesson Plan</span>
             </a>
-            <a href="/home/ViewCourses" class="tile courses">
+            <a href="/admin/ViewCourses" class="tile courses">
                 <i class="icon fas fa-book"></i> <!-- Courses icon -->
                 <span>Courses</span>
             </a>
-            <a href="/home/ViewBatches" class="tile batches">
+            <a href="/admin/ViewBatches" class="tile batches">
                 <i class="icon fas fa-layer-group"></i> <!-- Batches icon -->
                 <span>Batches</span>
             </a>
@@ -395,19 +405,19 @@
                 <i class="icon fas fa-user-check"></i> <!-- Class Teacher Allocation icon -->
                 <span>Class Teacher Allocation</span>
             </a>
-            <a href="/home/ViewSubjects" class="tile subject">
+            <a href="/main/ViewSubjects" class="tile subject">
                 <i class="icon fas fa-book-open"></i> <!-- Subject icon -->
                 <span>Subject</span>
             </a>
-            <a href="/home/StudentAttendance" class="tile student-attendance">
+            <a href="/admin/ViewAttendance" class="tile student-attendance">
                 <i class="icon fas fa-user-clock"></i> <!-- Student Attendance icon -->
                 <span>Student Attendance</span>
             </a>
-            <a href="/home/EmployeeAttendance" class="tile emp-attendance">
+            <a href="/admin/ViewEmpAtt" class="tile emp-attendance">
                 <i class="icon fas fa-user-clock"></i> <!-- Employee Attendance icon -->
                 <span>Employee Attendance</span>
             </a>
-            <a href="/home/ViewFeeData" class="tile fee">
+            <a href="/admin/ViewFeeData" class="tile fee">
                 <i class="icon fas fa-dollar-sign"></i> <!-- Fee icon -->
                 <span>Fee</span>
             </a>
@@ -446,53 +456,57 @@
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const linksToShowModal = [
-                    ".courses",
-                    ".batches",
-                    ".class-teacher-allocation",
-                    ".subject",
-                    ".student-attendance",
-                    ".emp-attendance",
-                    ".fee",
-                    ".vendor",
-                    ".circulars",
-                    ".salary",
-                    ".library",
-                    ".certificate",
-                    ".task-app",
-                    ".communication",
-                    ".student-enquiry"
-                ];
+        document.addEventListener("DOMContentLoaded", function () {
+        const linksToShowModal = [
+        ".vendor",
+        ".student-attendance",
+        ".emp-attendance",
+        ".class-teacher-allocation",
+        ".circulars",
+        ".salary",
+        ".library",
+        ".certificate",
+        ".task-app",
+        ".communication",
+        ".student-enquiry"
+        ];
 
-                // Get the modal and close button
-                const modal = document.getElementById("featureModal");
-                const closeButton = document.querySelector(".modal .close");
+        // Get the modal and close button
+        const modal = document.getElementById("featureModal");
+        const closeButton = document.querySelector(".modal .close");
 
-                // Show modal function
-                function showModal(event) {
-                    event.preventDefault();
-                    modal.style.display = "block";
-                }
+        // Show modal function
+        function showModal(event) {
+        event.preventDefault();
+        modal.style.display = "block";
+        }
 
-                // Add event listeners to each link
-                linksToShowModal.forEach(selector => {
-                    document.querySelector(selector)?.addEventListener("click", showModal);
+        // Add event listeners to each link
+        linksToShowModal.forEach(selector => {
+        document.querySelector(selector)?.addEventListener("click", showModal);
+        });
+
+        // Close the modal when the close button is clicked
+        closeButton.onclick = function () {
+        modal.style.display = "none";
+        };
+
+        // Close the modal when clicking outside of the modal content
+        window.onclick = function (event) {
+        if (event.target == modal) {
+        modal.style.display = "none";
+        }
+        };
+        });
+
+              document.querySelectorAll('.tile').forEach(tile => {
+                tile.addEventListener('mouseenter', () => {
+                    // Play an online sound using the Audio constructor
+                    new Audio('http://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a').play();
                 });
-
-                // Close the modal when the close button is clicked
-                closeButton.onclick = function () {
-                    modal.style.display = "none";
-                };
-
-                // Close the modal when clicking outside of the modal content
-                window.onclick = function (event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                };
             });
         </script>
+
 
 
 

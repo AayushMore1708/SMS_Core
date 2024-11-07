@@ -24,13 +24,13 @@ namespace SMS_Core.Controllers
         public ActionResult Notes()
         {
             var lp = _context.tblAssignmentNotes.ToList();
-            return View("../Admin/Notes", lp);
+            return View("Notes", lp);
         }
         [HttpGet]
         public IActionResult ViewAssignments()
         {
             var Assignments = _context.tblAssignment.ToList(); // Fetch all academic years
-            return View("../Admin/Assignement", Assignments); // Pass the list to the view
+            return View("Assignement", Assignments); // Pass the list to the view
         }
         public ActionResult AssignementNew()
         {
@@ -40,7 +40,52 @@ namespace SMS_Core.Controllers
 
             return View("../Admin/AssignementNew");
         }
+        [HttpGet]
+        public IActionResult ViewCourses() => View("CourcesNew");
+        [HttpGet]
+          public IActionResult ViewBatches()
+        {
+            var batches = _context.tblCourseBatch.ToList(); // Fetch all academic years
+            return View("Batches", batches); // Pass the list to the view
+        }
 
+         [HttpGet]
+          public IActionResult ViewEmpAtt()
+        {
+            var empatt = _context.qryEmployee.ToList(); // Fetch all academic years
+            return View("Employee", empatt); // Pass the list to the view
+        }
+
+          [HttpGet]
+          public IActionResult ViewFeeData()
+        {
+            var fee = _context.qryFeeSubCategory.ToList(); // Fetch all academic years
+            return View("Fee", fee); // Pass the list to the view
+        }
+
+         [HttpGet]
+          public IActionResult ViewAttendance()
+        {
+            return View("AttendanceNew"); // Pass the list to the view
+        }
+
+
+        [HttpGet] 
+        public IActionResult ViewAcademicYear()
+        {
+            var academicYears = _context.tblAcadamicYear.ToList(); // Fetch all academic years
+            return View("AcadamicYear", academicYears); // Looks in `Views/Home/AcadamicYear.cshtml`
+        }
+        [HttpGet]
+        public IActionResult ViewInstituteData()
+        {
+            var institute = _context.tblInstitute.FirstOrDefault(i => i.InstituteId == 1);
+            if (institute == null)
+            {
+                return NotFound(); // Handle case if institute is not found
+            }
+            return View("Institute", institute); // Pass the institute to the view
+        }
         [HttpPost]
         public async Task<ActionResult> AssignmentNew(tblAssignmentNote asbu, IFormFile file)
         {
@@ -84,7 +129,7 @@ namespace SMS_Core.Controllers
         public IActionResult LessonPlanning()
         {
             var lp = _context.tblLessonPlanning.ToList();
-            return View("../admin/LessonPlanning", lp);
+            return View("LessonPlanning", lp);
         }
         public ActionResult LessonPlanningNew()
         {
@@ -111,8 +156,8 @@ namespace SMS_Core.Controllers
             _context.Entry(ai).State = EntityState.Modified;
             _context.SaveChanges();
 
-   
-            return View("../Admin/LessonPlanningNew");
+
+            return View("LessonPlanningNew");
         }
 
 
@@ -150,59 +195,20 @@ namespace SMS_Core.Controllers
         //Notes for Syllabus end
 
 
-        public ActionResult ViewEmployeeData()
+
+
+
+        [HttpGet]
+        public IActionResult ViewExamData()
         {
-            // Get the academic year with status "Started"
-            var ayr = _context.tblAcadamicYear
-                              .Where(x => x.AcadamicStatus == "Started")
-                              .Select(acyear => new
-                              {
-                                  Acadamic = acyear.AcadamicStartMonth + " " + acyear.AcadamicStartYear
-                                          + " - " + acyear.AcadamicEndMonth + " " + acyear.AcadamicEndYear
-                              })
-                              .FirstOrDefault();  // Use FirstOrDefault to prevent sequence issues
-
-            ViewBag.ay = ayr?.Acadamic ?? "No academic year found.";  // Handle null case
-
-            // Get the current employee based on the logged-in user
-            var employee = _context.qryEmployee
-                                   .Where(x => x.UserName == User.Identity.Name)
-                                   .FirstOrDefault();  // Use FirstOrDefault
-
-            if (employee == null)
-            {
-                ViewBag.Error = "Employee not found.";
-                return View("../Main/EmployeeIndexDash", new List<qryEmployee>());
-            }
-
-            var userId = employee.UserID;
-            ViewBag.userid = userId;
-
-            // Get the allowed leaves for the employee for the current academic year
-            var allowedLeaves = _context.tblSalaryHD
-                                        .OrderByDescending(x => x.SalaryId)
-                                        .Select(x => x.AllowedLeaves)
-                                        .FirstOrDefault();  // Use FirstOrDefault
-
-            ViewBag.al = allowedLeaves;
-
-            // Get the maximum leave taken by the employee for the current academic year
-            var leaveTaken = _context.tblSalaryHD
-                                     .Max(x => (int?)x.LeaveTaken) ?? 0;  // Use nullable to avoid null issues
-
-            ViewBag.lt = leaveTaken;
-
-            // Calculate balance leave
-            double balanceLeave = (allowedLeaves ?? 0) - leaveTaken;
-            ViewBag.bl = balanceLeave;
-
-            // Get the list of employees for the view
-            var employees = _context.qryEmployee
-                                    .OrderByDescending(x => x.EmpCode)
-                                    .ThenByDescending(x => x.FirstName)
-                                    .ToList();
-
-            return View("../Main/EmployeeIndexDash", employees);
+            var exam = _context.tblExamTerm.ToList(); // Fetch all academic years
+            return View("ExamTermEdit", exam); // Pass the list to the view
+        }
+        [HttpGet]
+        public IActionResult ViewTimeTable()
+        {
+            var timeTableData = _context.tblTimeTableHD.ToList(); // Fetch the data
+            return View("Timetable", timeTableData); // Path to the view file
         }
 
     }
