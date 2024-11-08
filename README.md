@@ -1,7 +1,7 @@
 # .NET Core Project Commands
 
 # Watch for file changes, automatically rebuilds/restarts on changes. Suppresses warnings.
-dotnet watch --property WarningLevel=0
+dotnet watch --property WarningLevel=0 -m
 
 # Run the application from source, building if necessary. Suppresses warnings.
 dotnet run --property WarningLevel=0
