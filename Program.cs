@@ -20,16 +20,24 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddDbContext<SMSDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole(); // Add a console logger to output to the console
+});
+
+
+
 // Add support for MVC controllers and views
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+app.Logger.LogInformation($"Current environment: {app.Environment.EnvironmentName}");
+
 
 // Configure the HTTP request pipeline
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); // Enforce HSTS for production
+    app.UseDeveloperExceptionPage();  // Show detailed error pages in development
 }
 
 app.UseHttpsRedirection();
