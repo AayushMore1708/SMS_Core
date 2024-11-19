@@ -25,3 +25,7 @@ dotnet publish -c Release
 
 # Run the application in the "Production" environment, loading production-specific configurations.
 dotnet run --environment "Production"
+
+
+# To create models in the project using cmd of dbcontext from ssms directly:
+dotnet ef dbcontext scaffold "Server=MOREPC\SQLEXPRESS;Database=AcademixHub;Trusted_Connection=True;Integrated Security=true;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -o Models
